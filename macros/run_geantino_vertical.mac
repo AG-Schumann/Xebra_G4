@@ -1,0 +1,49 @@
+################
+#VERBOSITY
+/control/verbose 2
+/run/verbose 2
+/event/verbose 2
+/tracking/verbose 2
+/xebra/gun/verbose 2
+
+#################
+#SEED
+/run/random/setRandomSeed 0
+
+##################
+# isotropic emission
+/xebra/gun/type  Point
+/xebra/gun/center 0. 0. 4000. mm
+/xebra/gun/angtype direction
+/xebra/gun/direction  0 0 -1 
+
+
+##################
+# Select the volume to confine the source. For cryostat studies choose:
+# InnerCryostat - for the inner vessel
+# OuterCryostat - for the outer vessel
+# HexapodPlatformPhysical  HexapodLegPhysical_1 HexapodLegPhysical_2 - for the Hexapod (platform and legs)
+#/xebra/gun/confine PMT*
+
+##################
+/xebra/gun/particle geantino
+
+
+##################
+# MC acceleration techniques for gammas. AP playground: if false it is not used
+/run/forced/setVarianceReduction false
+
+#
+# Scintillation processes in the LXe
+#
+/Xe/detector/setLXeScintillation false
+
+#
+# Scintillation processes in the LScint (only when material selected is "Gd_LScint")
+#
+/Xe/detector/setGdLScintScintillation false
+
+# Tree Filling options
+/run/writeEmpty false
+
+

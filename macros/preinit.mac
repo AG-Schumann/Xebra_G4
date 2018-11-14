@@ -1,0 +1,13 @@
+# Preinit macro for Xebra G4 MC - as of: 15.05.2018
+
+
+# physics list to select
+/run/physics/setEMlowEnergyModel emlivermore
+/run/physics/setHadronicModel    QGSP_BERT_HP
+/run/physics/setCerenkov         false
+
+
+
+#run overlapCheck
+/xebra/detector/setCheckOverlap true
+
