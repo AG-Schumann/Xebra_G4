@@ -1,0 +1,71 @@
+################
+#VERBOSITY
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 2
+/xebra/gun/verbose 2
+
+#################
+#SEED
+/run/random/setRandomSeed 0
+
+##################
+# isotropic emission
+/xebra/gun/angtype iso
+
+# make sure the volume below is a bit larger than the object the source will be confined to
+/xebra/gun/type   Volume
+/xebra/gun/shape  Cylinder
+/xebra/gun/center 0. 0. 0. cm
+/xebra/gun/radius 250.0 cm
+/xebra/gun/halfz  250.0 cm
+
+##################
+# Select the volume to confine the source. For cryostat studies choose:
+
+#/xebra/gun/confine Cu_FSR_Logical
+/xebra/gun/confine LXe_*
+#/xebra/gun/confine LXe_extra_filling_outside_Logical
+#/xebra/gun/confine LXe_Physical
+
+
+##################
+# particle type + energy spectrum
+
+/xebra/gun/energy 0 keV
+/xebra/gun/particle ion
+
+# Co60
+#/xebra/gun/ion 27 60 0 0
+
+# K40
+#/xebra/gun/ion 19 40 0 0
+
+# U238->Ra226
+#/xebra/gun/ion 92 238 0 0
+#/grdm/nucleusLimits 238 230 92 90
+
+# Ar110m
+#/xebra/gun/ion 47 110 0 118.
+
+# Rb83->Kr83
+#/xebra/gun/ion 37 83 0 0 
+#/grdm/nucleusLimits 83 83 37 36
+
+# Kr85
+/xebra/gun/ion 36 85 0 0 
+
+
+
+##################
+# MC acceleration techniques for gammas. AP playground: if false it is not used
+/run/forced/setVarianceReduction false
+
+# Scintillation processes in the LXe
+/Xe/detector/setLXeScintillation false
+
+# Tree Filling options
+/run/writeEmpty true
+
+
