@@ -7,7 +7,7 @@ Generic Geant4 Monte Carlo for XEBRA simulation:
 
 
 ## Instructions for git:
--  git clone [-b "BRANCH_NAME"] https://github.com/Xebra-DarkMatter/Xebra_G4.git 
+-  git clone [-b "BRANCH_NAME"] https://github.com/AG-Schumann/Xebra_G4.git
 -  cd Xebra_G4
 -  git checkout -b "BRACH_NAME"
 -  rsync -avP ../DIR_WITH_UPDATE/include/ include/  
