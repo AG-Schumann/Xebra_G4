@@ -23,9 +23,9 @@
 
 ##################
 # Select the volume to confine the source. For cryostat studies choose:
-
 /xebra/gun/confine InnerCryostatVessel
-/xebra/gun/confine OuterCryostatVessel
+# /xebra/gun/confine OuterCryostatVessel
+
 ##################
 #/xebra/gun/energytype Spectrum
 #/xebra/gun/energyspectrum ./macros/spectra/neutron/flat.dat
