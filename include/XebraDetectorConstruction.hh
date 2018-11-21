@@ -70,17 +70,17 @@ private:
 	G4LogicalVolume *LabLogicalVolume;
 	G4VPhysicalVolume *LabPhysicalVolume;
 
-	//LOGICAL VOLUMES (Patricia)
-        G4LogicalVolume *VetoLogicalVolume;
-        G4LogicalVolume *NeutronVetoScintillatorLogicalVolume;
-        G4LogicalVolume *CryostatLogicalVolume;
+	//LOGICAL VOLUMES
+        //a// G4LogicalVolume *VetoLogicalVolume;
+        //a// G4LogicalVolume *NeutronVetoScintillatorLogicalVolume;
+        //a-temp// G4LogicalVolume *CryostatLogicalVolume;
         G4LogicalVolume *TPCLogicalVolume;
 
 
-	// PHYSICAL VOLUMES (Patricia)
-	G4VPhysicalVolume *VetoPhysicalVolume;	
-        G4VPhysicalVolume *NeutronVetoScintillatorPhysicalVolume;
-        G4VPhysicalVolume *CryostatPhysicalVolume;
+	// PHYSICAL VOLUMES
+	//a// G4VPhysicalVolume *VetoPhysicalVolume;	
+        //a// G4VPhysicalVolume *NeutronVetoScintillatorPhysicalVolume;
+        //a-temp// G4VPhysicalVolume *CryostatPhysicalVolume;
         G4VPhysicalVolume *TPCPhysicalVolume;
 
 

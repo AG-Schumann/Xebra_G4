@@ -36,90 +36,90 @@ private:
    G4double cryostat_innerRadius;
    G4double cryostat_innerHeight;
    G4double GXe_height;
-   G4double activeTPC_height;
-   G4double activeTPC_innerRadius;
-   G4double reflector_bottom_height;
-   G4double reflector_offsetZ;
-   G4double reflector_thickness;
-   G4double electrodes_frame_thickness;
-   G4double electrodes_top_frame_height;
-   G4double cathode_frame_height;
-   G4double bottomscreen_frame_height;
-   G4double LXe_extra_filling;
-   G4double FSR_thickness;
-   G4double FSR_height;
-   G4double FSR_innerRadius;
-   G4double FSR_number;
-   G4double FSR_offsetZ;
-   G4double FSR_separation;
-   G4double pillar_width;
-   G4double pillar_thickness;
-   G4double pillar_number;
-   G4double sensor_thickness;
+   //a// G4double activeTPC_height;
+   //a// G4double activeTPC_innerRadius;
+   //a// G4double reflector_bottom_height;
+   //a// G4double reflector_offsetZ;
+   //a// G4double reflector_thickness;
+   //a// G4double electrodes_frame_thickness;
+   //a// G4double electrodes_top_frame_height;
+   //a// G4double cathode_frame_height;
+   //a// G4double bottomscreen_frame_height;
+   //a// G4double LXe_extra_filling;
+   //a// G4double FSR_thickness;
+   //a// G4double FSR_height;
+   //a// G4double FSR_innerRadius;
+   //a// G4double FSR_number;
+   //a// G4double FSR_offsetZ;
+   //a// G4double FSR_separation;
+   //a// G4double pillar_width;
+   //a// G4double pillar_thickness;
+   //a// G4double pillar_number;
+   //a// G4double sensor_thickness;
  
    //Solids
    G4Tubs *TPC_cylinder;
    G4Tubs *GXe_cylinder; 
-   G4Tubs *PTFE_reflector;
-   G4Tubs *PTFE_reflector_top;
-   G4Tubs *PTFE_reflector_bottom;
-   G4Tubs *SS304_electrodes_top_frame;
-   G4Tubs *SS304_cathode_frame;
-   G4Tubs *SS304_bottomscreen_frame; 
-   G4Tubs *LXe_extra_filling_inside;
-   G4Tubs *LXe_extra_filling_outside;
-   G4Tubs *LXe_sensitive; 
-   G4Tubs *Cu_Fsr;
-   G4Box *PTFE_pillar;
-   G4Box *PTFE_pillar_bottom;
+   //a// G4Tubs *PTFE_reflector;
+   //a// G4Tubs *PTFE_reflector_top;
+   //a// G4Tubs *PTFE_reflector_bottom;
+   //a// G4Tubs *SS304_electrodes_top_frame;
+   //a// G4Tubs *SS304_cathode_frame;
+   //a// G4Tubs *SS304_bottomscreen_frame; 
+   //a// G4Tubs *LXe_extra_filling_inside;
+   //a// G4Tubs *LXe_extra_filling_outside;
+   //a// G4Tubs *LXe_sensitive; 
+   //a// G4Tubs *Cu_Fsr;
+   //a// G4Box *PTFE_pillar;
+   //a// G4Box *PTFE_pillar_bottom;
 
    //LogicalVolumes
    G4LogicalVolume *TPC_Logical;
    G4LogicalVolume *LXe_Logical;
    G4LogicalVolume *GXe_Logical;
 
-   G4LogicalVolume *PTFE_reflector_Logical;
-   G4LogicalVolume *PTFE_reflector_top_Logical;
-   G4LogicalVolume *PTFE_reflector_bottom_Logical;
+   //a// G4LogicalVolume *PTFE_reflector_Logical;
+   //a// G4LogicalVolume *PTFE_reflector_top_Logical;
+   //a// G4LogicalVolume *PTFE_reflector_bottom_Logical;
 
-   G4LogicalVolume *SS304_electrodes_top_frame_Logical;
-   G4LogicalVolume *SS304_cathode_frame_Logical;
-   G4LogicalVolume *SS304_bottomscreen_frame_Logical;
+   //a// G4LogicalVolume *SS304_electrodes_top_frame_Logical;
+   //a// G4LogicalVolume *SS304_cathode_frame_Logical;
+   //a// G4LogicalVolume *SS304_bottomscreen_frame_Logical;
 
-   G4LogicalVolume *LXe_extra_filling_inside_Logical;
-   G4LogicalVolume *LXe_extra_filling_outside_Logical;
-   G4LogicalVolume *LXe_sensitive_Logical; 
+   //a// G4LogicalVolume *LXe_extra_filling_inside_Logical;
+   //a// G4LogicalVolume *LXe_extra_filling_outside_Logical;
+   //a// G4LogicalVolume *LXe_sensitive_Logical; 
 
-   G4LogicalVolume *Cu_FSR_Logical;
+   //a// G4LogicalVolume *Cu_FSR_Logical;
 
-   G4LogicalVolume *PTFE_pillar_Logical;
-   G4LogicalVolume *PTFE_pillar_bottom_Logical;
+   //a// G4LogicalVolume *PTFE_pillar_Logical;
+   //a// G4LogicalVolume *PTFE_pillar_bottom_Logical;
 
-   G4LogicalVolume *PMT_sensorarray_Logical;
+   //a// G4LogicalVolume *PMT_sensorarray_Logical;
 
    //PhysicalVolumes
    G4VPhysicalVolume *LXe_Physical;
    G4VPhysicalVolume *GXe_Physical; 
 
-   G4VPhysicalVolume *PTFE_reflector_Physical;
-   G4VPhysicalVolume *PTFE_reflector_top_Physical;
-   G4VPhysicalVolume *PTFE_reflector_bottom_Physical;
+   //a// G4VPhysicalVolume *PTFE_reflector_Physical;
+   //a// G4VPhysicalVolume *PTFE_reflector_top_Physical;
+   //a// G4VPhysicalVolume *PTFE_reflector_bottom_Physical;
 
-   G4VPhysicalVolume *SS304_electrodes_top_frame_Physical;
-   G4VPhysicalVolume *SS304_cathode_frame_Physical;
-   G4VPhysicalVolume *SS304_bottomscreen_frame_Physical;
+   //a// G4VPhysicalVolume *SS304_electrodes_top_frame_Physical;
+   //a// G4VPhysicalVolume *SS304_cathode_frame_Physical;
+   //a// G4VPhysicalVolume *SS304_bottomscreen_frame_Physical;
  
-   G4VPhysicalVolume *LXe_extra_filling_inside_Physical;
-   G4VPhysicalVolume *LXe_extra_filling_outside_Physical;
-   G4VPhysicalVolume *LXe_sensitive_Physical;
+   //a// G4VPhysicalVolume *LXe_extra_filling_inside_Physical;
+   //a// G4VPhysicalVolume *LXe_extra_filling_outside_Physical;
+   //a// G4VPhysicalVolume *LXe_sensitive_Physical;
 
-   G4VPhysicalVolume *Cu_FSR_Physical;  
+   //a// G4VPhysicalVolume *Cu_FSR_Physical;  
 
-   G4VPhysicalVolume *PTFE_pillar_Physical;
-   G4VPhysicalVolume *PTFE_pillar_bottom_Physical;
+   //a// G4VPhysicalVolume *PTFE_pillar_Physical;
+   //a// G4VPhysicalVolume *PTFE_pillar_bottom_Physical;
 
-   G4VPhysicalVolume *PMT_sensorarray_bottom_Physical;
-   G4VPhysicalVolume *PMT_sensorarray_top_Physical;
+   //a// G4VPhysicalVolume *PMT_sensorarray_bottom_Physical;
+   //a// G4VPhysicalVolume *PMT_sensorarray_top_Physical;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
