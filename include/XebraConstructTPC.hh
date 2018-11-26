@@ -32,94 +32,61 @@ private:
    G4Material *Copper;
    G4Material *PMT_material;
 
+   G4Material *Aluminium;
+
    //Parameters
    G4double cryostat_innerRadius;
    G4double cryostat_innerHeight;
    G4double GXe_height;
-   //a// G4double activeTPC_height;
-   //a// G4double activeTPC_innerRadius;
-   //a// G4double reflector_bottom_height;
-   //a// G4double reflector_offsetZ;
-   //a// G4double reflector_thickness;
-   //a// G4double electrodes_frame_thickness;
-   //a// G4double electrodes_top_frame_height;
-   //a// G4double cathode_frame_height;
-   //a// G4double bottomscreen_frame_height;
-   //a// G4double LXe_extra_filling;
-   //a// G4double FSR_thickness;
-   //a// G4double FSR_height;
-   //a// G4double FSR_innerRadius;
-   //a// G4double FSR_number;
-   //a// G4double FSR_offsetZ;
-   //a// G4double FSR_separation;
-   //a// G4double pillar_width;
-   //a// G4double pillar_thickness;
-   //a// G4double pillar_number;
-   //a// G4double sensor_thickness;
+
+   G4double TPC_dimension_z;
+   G4double TPC_dimension_r;
+   G4double TPC_offsetOrigin_z;
+
+   G4RotationMatrix* rmz45;
+   G4RotationMatrix* rmz120;	
+   G4RotationMatrix* rmz165;	
+   G4RotationMatrix* rmz285;
  
    //Solids
    G4Tubs *TPC_cylinder;
    G4Tubs *GXe_cylinder; 
-   //a// G4Tubs *PTFE_reflector;
-   //a// G4Tubs *PTFE_reflector_top;
-   //a// G4Tubs *PTFE_reflector_bottom;
-   //a// G4Tubs *SS304_electrodes_top_frame;
-   //a// G4Tubs *SS304_cathode_frame;
-   //a// G4Tubs *SS304_bottomscreen_frame; 
-   //a// G4Tubs *LXe_extra_filling_inside;
-   //a// G4Tubs *LXe_extra_filling_outside;
-   //a// G4Tubs *LXe_sensitive; 
-   //a// G4Tubs *Cu_Fsr;
-   //a// G4Box *PTFE_pillar;
-   //a// G4Box *PTFE_pillar_bottom;
+
+   G4Tubs* TPC_SS_PMTfixture_solid_orig;
+   G4Box* TPC_SS_PMTfixture_solid_union1;	
+   G4VSolid* TPC_SS_PMTfixture_solid_1;
+   G4VSolid* TPC_SS_PMTfixture_solid_2;
+   G4VSolid* TPC_SS_PMTfixture_solid;
+
+   G4Tubs* TPC_Al_filler_solid_orig;
+   G4Tubs* TPC_Al_filler_solid_sub1;
+   G4VSolid* TPC_Al_filler_solid_1;
+   G4Tubs* TPC_Al_filler_solid_sub2_orig;
+   G4Box* TPC_Al_filler_solid_sub2_union1;	
+   G4VSolid* TPC_Al_filler_solid_sub2_1;
+   G4VSolid* TPC_Al_filler_solid_sub2_2;
+   G4VSolid* TPC_Al_filler_solid_sub2;   
+   G4VSolid* TPC_Al_filler_solid_2;
+   G4VSolid* TPC_Al_filler_solid;
 
    //LogicalVolumes
+   G4LogicalVolume *test_Logical;
+
    G4LogicalVolume *TPC_Logical;
    G4LogicalVolume *LXe_Logical;
    G4LogicalVolume *GXe_Logical;
 
-   //a// G4LogicalVolume *PTFE_reflector_Logical;
-   //a// G4LogicalVolume *PTFE_reflector_top_Logical;
-   //a// G4LogicalVolume *PTFE_reflector_bottom_Logical;
-
-   //a// G4LogicalVolume *SS304_electrodes_top_frame_Logical;
-   //a// G4LogicalVolume *SS304_cathode_frame_Logical;
-   //a// G4LogicalVolume *SS304_bottomscreen_frame_Logical;
-
-   //a// G4LogicalVolume *LXe_extra_filling_inside_Logical;
-   //a// G4LogicalVolume *LXe_extra_filling_outside_Logical;
-   //a// G4LogicalVolume *LXe_sensitive_Logical; 
-
-   //a// G4LogicalVolume *Cu_FSR_Logical;
-
-   //a// G4LogicalVolume *PTFE_pillar_Logical;
-   //a// G4LogicalVolume *PTFE_pillar_bottom_Logical;
-
-   //a// G4LogicalVolume *PMT_sensorarray_Logical;
+   G4LogicalVolume* TPC_SS_PMTfixture_log;
+   G4LogicalVolume* TPC_Al_filler_log;
 
    //PhysicalVolumes
+   G4VPhysicalVolume *test_phys;
+
    G4VPhysicalVolume *LXe_Physical;
    G4VPhysicalVolume *GXe_Physical; 
 
-   //a// G4VPhysicalVolume *PTFE_reflector_Physical;
-   //a// G4VPhysicalVolume *PTFE_reflector_top_Physical;
-   //a// G4VPhysicalVolume *PTFE_reflector_bottom_Physical;
-
-   //a// G4VPhysicalVolume *SS304_electrodes_top_frame_Physical;
-   //a// G4VPhysicalVolume *SS304_cathode_frame_Physical;
-   //a// G4VPhysicalVolume *SS304_bottomscreen_frame_Physical;
- 
-   //a// G4VPhysicalVolume *LXe_extra_filling_inside_Physical;
-   //a// G4VPhysicalVolume *LXe_extra_filling_outside_Physical;
-   //a// G4VPhysicalVolume *LXe_sensitive_Physical;
-
-   //a// G4VPhysicalVolume *Cu_FSR_Physical;  
-
-   //a// G4VPhysicalVolume *PTFE_pillar_Physical;
-   //a// G4VPhysicalVolume *PTFE_pillar_bottom_Physical;
-
-   //a// G4VPhysicalVolume *PMT_sensorarray_bottom_Physical;
-   //a// G4VPhysicalVolume *PMT_sensorarray_top_Physical;
+   G4VPhysicalVolume* TPC_SS_PMTfixture_phys;
+   G4VPhysicalVolume* TPC_Al_filler_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
@@ -130,8 +97,6 @@ private:
    G4VisAttributes *BottomscreenVisAtt;
    G4VisAttributes *RingsVisAtt;
    G4VisAttributes *SensorVisAtt;
-
-
 
 };
 

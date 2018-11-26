@@ -1,10 +1,8 @@
 #include "XebraDetectorConstruction.hh"
 
 // Detector components
-//a// #include "XebraConstructVeto.hh" //element 1
-//a// #include "XebraConstructNeutronVeto.hh" //element 2
-//a-temp// #include "XebraConstructCryostat.hh" //element 3
-#include "XebraConstructTPC.hh" //element 4
+//a-temp// #include "XebraConstructCryostat.hh"
+#include "XebraConstructTPC.hh"
 
 //G4 Header Files
 #include <G4SystemOfUnits.hh>
@@ -38,26 +36,9 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
     //a-temp//XebraConstructCryostat *cryostat = new XebraConstructCryostat(this);
     //a-temp//CryostatLogicalVolume = cryostat->Construct();
 
-    //a// XebraConstructNeutronVeto *neutronveto = new XebraConstructNeutronVeto(this);
-    //a// NeutronVetoScintillatorLogicalVolume = neutronveto->Construct( cryostat->GetOuterRadiusCryostat(), cryostat->GetOuterHeightCryostat() );
-
-    //a// XebraConstructVeto *veto = new XebraConstructVeto(this);
-    //a// VetoLogicalVolume = veto->Construct();
-
     /////////////////Place Components////////////////////
 
     MotherLogicalVolume = LabLogicalVolume;
-    //a// VetoPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(),
-    //a//                                               VetoLogicalVolume,"MuonVetoVolume",
-    //a//                                               MotherLogicalVolume, false, 0);
-
-    //a// MotherLogicalVolume = veto->GetMotherVolume();
-
-    //a// NeutronVetoScintillatorPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(),
-    //a//                                                           NeutronVetoScintillatorLogicalVolume,"NeutronVetoVolume",
-    //a//                                                           MotherLogicalVolume, false, 0);
-
-    //a// MotherLogicalVolume = neutronveto->GetMotherVolume();
     
     //a-temp//CryostatPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(),
     //a-temp//                                           CryostatLogicalVolume,"CryostatVolume",
@@ -72,8 +53,6 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 
    //////////////// Geometry Information /////////////////// 
    G4cout << "########################################################################################" << G4endl;
-   //a// PrintGeometryInformation();   
-   //a// neutronveto->PrintGeometryInformation();
    //a-temp//cryostat->PrintGeometryInformation();
    tpc->PrintGeometryInformation();
    G4cout << "########################################################################################" << G4endl;
@@ -103,18 +82,7 @@ void XebraDetectorConstruction::ConstructLaboratory()
 	LabLogicalVolume->SetVisAttributes(G4VisAttributes::Invisible);
 }
 
-void XebraDetectorConstruction::PrintGeometryInformation()
-{
-
-  //a// //================================== Water ===============================================================
-  //a// const G4double WaterMass = VetoLogicalVolume->GetMass(false, false)/kg;
-  //a// const G4double WaterVolume = WaterMass*1000.0;
-  //a// G4cout << "Water:                               " << WaterMass << " kg " << "     =============    " << WaterVolume << " m3 " << G4endl;
-  //a// G4cout << "                                          =================================================== " << G4endl;
-  //a// G4cout << "Total Water:                         " << WaterMass << " kg " << "     =============    " << WaterVolume << " m3 " << G4endl;
-  //a// G4cout << "============================================================================================= " << G4endl;
-
-}
+void XebraDetectorConstruction::PrintGeometryInformation(){;}  //removed water from here, now empty
 
 
 void XebraDetectorConstruction::SecondOverlapCheck()

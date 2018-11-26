@@ -17,15 +17,22 @@
 # make sure the volume below is a bit larger than the object the source will be confined to
 /xebra/gun/type   Volume  
 /xebra/gun/shape  Cylinder
-/xebra/gun/center 0. 0. 0. cm
-/xebra/gun/radius 3.0 m
-/xebra/gun/halfz  3.0 m
+#/xebra/gun/center 0. 0. 0. cm
+#/xebra/gun/radius 0.1 m
+#/xebra/gun/halfz  0.25 m
+
+# confine to PMT ficture height:
+/xebra/gun/center 0. 0. -15.25 cm
+/xebra/gun/radius 0.1 m
+/xebra/gun/halfz  0.0025 m
 
 ##################
-# Select the volume to confine the source. For cryostat studies choose:
-#/xebra/gun/confine InnerCryostatVessel
-# /xebra/gun/confine OuterCryostatVessel
-/xebra/gun/confine PTFE*
+# Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
+# /xebra/gun/confine test*
+# /xebra/gun/confine LXe*
+# /xebra/gun/confine TPC_SS*
+/xebra/gun/confine TPC_Al*
+
 
 ##################
 #/xebra/gun/energytype Spectrum
