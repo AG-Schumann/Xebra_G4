@@ -36,7 +36,7 @@ void XebraMaterials::DefineMaterials() {
     
     double fractionmass;
     int atomnumber;
-    // elements for GSRock                                  //EDIT PAOLO
+    // elements for GSRock                                  
     G4Element *Ca = pNistManager->FindOrBuildElement("Ca");
     G4Element *Mg = pNistManager->FindOrBuildElement("Mg");
     
@@ -45,7 +45,7 @@ void XebraMaterials::DefineMaterials() {
     G4Element *Mo = pNistManager->FindOrBuildElement("Mo");
     // G4Element *Pb = pNistManager->FindOrBuildElement("Pb");
     
-    // elements for Concrete                                //EDIT PAOLO
+    // elements for Concrete                                
     G4Element *Na = pNistManager->FindOrBuildElement("Na");
     G4Element *P = pNistManager->FindOrBuildElement("P");
     G4Element *S = pNistManager->FindOrBuildElement("S");
@@ -1017,7 +1017,7 @@ void XebraMaterials::DefineMaterials() {
     G4Material *Concrete = new G4Material("Concrete", 2.4 * g / cm3, 13);
     Concrete->AddElement(H, 0.89 * perCent);
     Concrete->AddElement(C, 7.99 * perCent);
-    Concrete->AddElement(O, 48.43 * perCent);
+    Concrete->AddElement(O, 49.64 * perCent); // changed from 48.43 in order to have sum fractional masses 1
     Concrete->AddElement(Na, 0.6 * perCent);
     Concrete->AddElement(Mg, 0.85 * perCent);
     Concrete->AddElement(Al, 0.9 * perCent);
@@ -1063,5 +1063,15 @@ void XebraMaterials::DefineMaterials() {
     PMT_material->AddMaterial(CoatingAluminium, 0.32 * perCent); //CoatingAluminium=Pure Aluminium
     PMT_material->AddMaterial(SS304LSteel, 10.19 * perCent);
     PMT_material->AddMaterial(Ceramic, 8.40 * perCent);
+
+    //---------------------------------------------------------------------------------
+    //------------------------------------ Additional Xebra Materials
+    //------------------------------------ added by Alex
+    //---------------------------------------------------------------------------------
+
+    //---------------------------------- aluminium
+    //----------------------------------
+    G4Material *Aluminium = new G4Material("Aluminium", 2.7 * g / cm3, 1, kStateSolid);
+    Aluminium->AddElement(Al, 1.0);
     
 }
