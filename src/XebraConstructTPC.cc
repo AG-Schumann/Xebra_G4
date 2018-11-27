@@ -28,7 +28,6 @@ using std::stringstream;
   SS304LSteel = G4Material::GetMaterial("SS304LSteel");
   Copper = G4Material::GetMaterial("Copper");
   PMT_material  = G4Material::GetMaterial("PMT_material");
-
 	Aluminium  = G4Material::GetMaterial("Aluminium");
 
 	// General useful functions
@@ -37,14 +36,43 @@ using std::stringstream;
 	rmz120 = new G4RotationMatrix();
 	rmz120->rotateZ(120.*deg);	
 	rmz165 = new G4RotationMatrix();
-	rmz165->rotateZ(165.*deg);	
+	rmz165->rotateZ(165.*deg);
+	rmz225 = new G4RotationMatrix();
+	rmz225->rotateZ(225.*deg);	
 	rmz285 = new G4RotationMatrix();
 	rmz285->rotateZ(285.*deg);
  
   // Parameters Cryostat, TPC and Teflon
 	TPC_dimension_z = 310.0 * mm;
 	TPC_dimension_r = 72.0 * mm;
-	TPC_offsetOrigin_z = 0.0 * mm; // ToDo: adjust so that origin at gate
+	TPC_offsetOrigin_z = 0.0 * mm; // ToDo: shift origin of coordinate system from center entire setup to gate
+
+	TPC_PTFE_pillar_number = 6;
+	TPC_PTFE_pillar_dimension_y = 15.0 * mm;
+	TPC_PTFE_pillar_a_dimension_x = 9.8 * mm;
+	TPC_PTFE_pillar_a_dimension_z = 5.2 * mm;
+	TPC_PTFE_pillar_a_position_r = 70.0*mm-(TPC_PTFE_pillar_a_dimension_x/2);
+	TPC_PTFE_pillar_b_dimension_x = 20.0 * mm;
+  TPC_PTFE_pillar_b_dimension_z = 6.8 * mm;
+  TPC_PTFE_pillar_b_position_r = 70.0*mm-(TPC_PTFE_pillar_b_dimension_x/2);
+	TPC_PTFE_pillar_c_dimension_x = 9.8 * mm;
+  TPC_PTFE_pillar_c_dimension_z = 3.5 * mm;
+  TPC_PTFE_pillar_c_position_r = 70.0*mm-(TPC_PTFE_pillar_c_dimension_x/2);
+	TPC_PTFE_pillar_d_dimension_x = 20.0 * mm;
+  TPC_PTFE_pillar_d_dimension_z = 3.0 * mm; // repeats 6 times
+  TPC_PTFE_pillar_d_position_r = 70.0*mm-(TPC_PTFE_pillar_d_dimension_x/2);
+	TPC_PTFE_pillar_e_dimension_x = 14.8 * mm;
+  TPC_PTFE_pillar_e_dimension_z = 10.2 * mm; // repeats 5 times
+  TPC_PTFE_pillar_e_position_r = 70.0*mm-(TPC_PTFE_pillar_e_dimension_x/2);
+	TPC_PTFE_pillar_f_dimension_x = 20.0 * mm;
+  TPC_PTFE_pillar_f_dimension_z = 2.8 * mm;
+  TPC_PTFE_pillar_f_position_r = 70.0*mm-(TPC_PTFE_pillar_f_dimension_x/2);
+	//TPC_PTFE_pillar_g_dimension_x;
+  //TPC_PTFE_pillar_g_dimension_z;
+  //TPC_PTFE_pillar_g_position_r = 70.0*mm-(TPC_PTFE_pillar_g_dimension_x/2);
+	//TPC_PTFE_pillar_h_dimension_x;
+  //TPC_PTFE_pillar_h_dimension_z;
+  //TPC_PTFE_pillar_h_position_r = 70.0*mm-(TPC_PTFE_pillar_h_dimension_x/2);
 
   // Parameters LXe and GXe
   GXe_height = 1.*mm;
@@ -80,12 +108,25 @@ using std::stringstream;
 	TPC_Al_filler_solid_sub2 = new G4UnionSolid("TPC_Al_filler_solid_sub2", TPC_Al_filler_solid_sub2_2, TPC_Al_filler_solid_sub2_union1, rmz285, G4ThreeVector(cos(-285.*deg) * 56.5*mm / 2, sin(-285.*deg) * 56.5*mm / 2,0.));
 	TPC_Al_filler_solid_2 = new G4SubtractionSolid("TPC_Al_filler_solid_2", TPC_Al_filler_solid_1, TPC_Al_filler_solid_sub2, 0, G4ThreeVector(0.,0.,5.*mm / 2 - 135.*mm / 2));
 
-	TPC_Al_filler_solid = TPC_Al_filler_solid_2; //ToDo: add remaining subtractions
+	TPC_Al_filler_solid_sub3 = new G4Box("TPC_Al_filler_solid_sub3", 50.0*mm / 2, 10.0*mm / 2, 5.0*mm / 2);
+	TPC_Al_filler_solid_3 = new G4SubtractionSolid("TPC_Al_filler_solid_3", TPC_Al_filler_solid_2, TPC_Al_filler_solid_sub3, rmz225, G4ThreeVector(cos(-225.*deg) * 60.0*mm, sin(-225.*deg) * 60.0*mm, 5.*mm / 2 - 135.*mm / 2));
+	TPC_Al_filler_solid_sub4 = new G4Box("TPC_Al_filler_solid_sub4", 10.0*mm / 2, 30.0*mm / 2, 5.0*mm / 2);
+	TPC_Al_filler_solid_4 = new G4SubtractionSolid("TPC_Al_filler_solid_4", TPC_Al_filler_solid_3, TPC_Al_filler_solid_sub4, rmz225, G4ThreeVector(-40.21*mm, 40.21*mm, 5.*mm / 2 - 135.*mm / 2));
+	TPC_Al_filler_solid_sub5 = new G4Tubs("TPC_Al_filler_solid_sub5", 0.0*mm, 5.0*mm / 2, 5.0*mm / 2, 0.*deg, 360.*deg);
+	TPC_Al_filler_solid_sub5_1 = new G4SubtractionSolid("TPC_Al_filler_solid_sub5_1", TPC_Al_filler_solid_4, TPC_Al_filler_solid_sub5, 0, G4ThreeVector(-50.816*mm, 29.603*mm, 5.*mm / 2 - 135.*mm / 2));
+	TPC_Al_filler_solid_5 = new G4SubtractionSolid("TPC_Al_filler_solid_5", TPC_Al_filler_solid_sub5_1, TPC_Al_filler_solid_sub5, 0, G4ThreeVector(-29.603*mm, 50.816*mm, 5.*mm / 2 - 135.*mm / 2));
+
+	TPC_Al_filler_solid = TPC_Al_filler_solid_5;
+
+	// Field Shaping Electrodes (p5)
+	TPC_Cu_FSE_solid =  new G4Tubs("TPC_SS_PMTfixture_solid_orig", 100.0*mm / 2, 110.0*mm / 2, 10.0*mm / 2, 0.*deg, 360.*deg);
+
+	// PTFE pillar (p2) - numbering layers from low to high z-position (excluding repetitive solids)
+	TPC_PTFE_pillar_a_solid = new G4Box("TPC_PTFE_pillar_a_solid", TPC_PTFE_pillar_a_dimension_x / 2, TPC_PTFE_pillar_dimension_y / 2, TPC_PTFE_pillar_a_dimension_z / 2);
+	TPC_PTFE_pillar_b_solid = new G4Box("TPC_PTFE_pillar_b_solid", TPC_PTFE_pillar_b_dimension_x / 2, TPC_PTFE_pillar_dimension_y / 2, TPC_PTFE_pillar_b_dimension_z / 2);
 
 
 //**************************************************LOGICALVOLUMES*****************************************************
-
-	//test_Logical = new G4LogicalVolume(TPC_Al_filler_solid_2, LXe, "test_Logical");
 
   TPC_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "TPC_Logical", 0, 0, 0);
   LXe_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "LXe_Logical", 0, 0, 0);
@@ -93,21 +134,60 @@ using std::stringstream;
 
 	TPC_SS_PMTfixture_log = new G4LogicalVolume(TPC_SS_PMTfixture_solid, SS304LSteel, "TPC_SS_PMTfixture_log");
 	TPC_Al_filler_log = new G4LogicalVolume(TPC_Al_filler_solid, Aluminium, "TPC_Al_filler_log");
+	TPC_Cu_FSE_log = new G4LogicalVolume(TPC_Cu_FSE_solid, Copper, "TPC_Cu_FSE_log");
+	TPC_PTFE_pillar_a_log = new G4LogicalVolume(TPC_PTFE_pillar_a_solid, Teflon, "TPC_PTFE_pillar_a_log");
+	TPC_PTFE_pillar_b_log = new G4LogicalVolume(TPC_PTFE_pillar_b_solid, Teflon, "TPC_PTFE_pillar_b_log");
+	TPC_PTFE_pillar_c_log = new G4LogicalVolume(TPC_PTFE_pillar_c_solid, Teflon, "TPC_PTFE_pillar_c_log");
+	TPC_PTFE_pillar_d_log = new G4LogicalVolume(TPC_PTFE_pillar_d_solid, Teflon, "TPC_PTFE_pillar_d_log");
+	TPC_PTFE_pillar_e_log = new G4LogicalVolume(TPC_PTFE_pillar_e_solid, Teflon, "TPC_PTFE_pillar_e_log");
+	TPC_PTFE_pillar_f_log = new G4LogicalVolume(TPC_PTFE_pillar_f_solid, Teflon, "TPC_PTFE_pillar_f_log");
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
 
   // Filling TPC Volume with LXe
-  LXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., 0.), LXe_Logical,"LXe_TPC", TPC_Logical, false, 0);
+  LXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., TPC_offsetOrigin_z), LXe_Logical,"LXe_TPC", TPC_Logical, false, 0);
   
   // Replacing LXe with GXe
-  GXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., cryostat_innerHeight/2 - GXe_height/2), GXe_Logical,"GXe_TPC", LXe_Logical, false, 0);
+  GXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., cryostat_innerHeight/2 - GXe_height/2 + TPC_offsetOrigin_z), GXe_Logical,"GXe_TPC", LXe_Logical, false, 0);
 
   // Placing all TPC components fully emerged in LXe
-	//test_phys = new G4PVPlacement(nullptr,G4ThreeVector(0.,0.,0.), test_Logical,"test", LXe_Logical, false, 0);
-	TPC_SS_PMTfixture_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, 5.*mm / 2 - TPC_dimension_z / 2), TPC_SS_PMTfixture_log,"TPC_SS_PMTfixture", LXe_Logical, 0, 0); //ToDo: change z position
-	TPC_Al_filler_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 135.*mm / 2), TPC_Al_filler_log,"TPC_Al_filler", LXe_Logical, 0, 0); 
+	TPC_SS_PMTfixture_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, 5.*mm / 2 - TPC_dimension_z / 2 + TPC_offsetOrigin_z), TPC_SS_PMTfixture_log,"TPC_SS_PMTfixture", LXe_Logical, 0, 0);
+	TPC_Al_filler_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 135.*mm / 2 + TPC_offsetOrigin_z), TPC_Al_filler_log,"TPC_Al_filler", LXe_Logical, 0, 0); 
+	TPC_Cu_FSE_1_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-1) * 13 * mm + 10.0*mm / 2 + TPC_offsetOrigin_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_1", LXe_Logical, 0, 0); 
+	TPC_Cu_FSE_2_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-2) * 13 * mm + 10.0*mm / 2 + TPC_offsetOrigin_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_2", LXe_Logical, 0, 0); 
+	TPC_Cu_FSE_3_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-3) * 13 * mm + 10.0*mm / 2 + TPC_offsetOrigin_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_3", LXe_Logical, 0, 0); 
+	TPC_Cu_FSE_4_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-4) * 13 * mm + 10.0*mm / 2 + TPC_offsetOrigin_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_4", LXe_Logical, 0, 0); 
+	TPC_Cu_FSE_5_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-5) * 13 * mm + 10.0*mm / 2 + TPC_offsetOrigin_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_5", LXe_Logical, 0, 0); 
 	
+	// Placing Teflon pillars around active TPC
+  for (int a=0; a < TPC_PTFE_pillar_number; ++a)
+  { 
+    G4double rotate_angle = a*(360./TPC_PTFE_pillar_number);
+    G4RotationMatrix* pillarRotation = new G4RotationMatrix; 
+    pillarRotation->rotateZ(rotate_angle*deg);
+
+    G4double pillars_XStep = cos(-rotate_angle*deg)*TPC_PTFE_pillar_a_position_r; //variable for different pillar segments
+    G4double pillars_YStep = sin(-rotate_angle*deg)*TPC_PTFE_pillar_a_position_r; //variable for different pillar segments
+
+    name.str("");
+    name << "TPC_PTFE_pillar_layer1_phys_" << a; //variable for different pillar segments
+    TPC_PTFE_pillar_layer1_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + (0*mm) + TPC_offsetOrigin_z), TPC_PTFE_pillar_a_log, name.str(), LXe_Logical, false, 0); //variable for different pillar segments
+  }
+	for (int a=0; a < TPC_PTFE_pillar_number; ++a)
+  { 
+    G4double rotate_angle = a*(360./TPC_PTFE_pillar_number);
+    G4RotationMatrix* pillarRotation = new G4RotationMatrix; 
+    pillarRotation->rotateZ(rotate_angle*deg);
+
+    G4double pillars_XStep = cos(-rotate_angle*deg)*TPC_PTFE_pillar_b_position_r; //variable for different pillar segments
+    G4double pillars_YStep = sin(-rotate_angle*deg)*TPC_PTFE_pillar_b_position_r; //variable for different pillar segments
+
+    name.str("");
+    name << "TPC_PTFE_pillar_layer2_phys_" << a; //variable for different pillar segments
+    TPC_PTFE_pillar_layer2_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_b_dimension_z / 2 + (1*TPC_PTFE_pillar_a_dimension_z) + TPC_offsetOrigin_z), TPC_PTFE_pillar_b_log, name.str(), LXe_Logical, false, 0); //variable for different pillar segments
+  }
+
 
 //**********************************************VISUALIZATION**********************************************
 //ToDo: adjust visatts?
