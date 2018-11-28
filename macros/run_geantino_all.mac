@@ -31,11 +31,14 @@
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
 # /xebra/gun/confine test*
 # /xebra/gun/confine LXe*
-# /xebra/gun/confine TPC_SS*
-# /xebra/gun/confine TPC_Al*
-# /xebra/gun/confine TPC_Cu*
-/xebra/gun/confine TPC_PTFE*
-
+# /xebra/gun/confine GXe*
+# /xebra/gun/confine TPC_SS_PMTfixture*
+# /xebra/gun/confine TPC_Al_filler*
+# /xebra/gun/confine TPC_Cu_FSE*
+# /xebra/gun/confine TPC_PTFE_pillar_GXe*
+# /xebra/gun/confine TPC_SS_BottomRing*
+/xebra/gun/confine TPC_SS_TopRing*
+# /xebra/gun/confine TPC_SS_pillar*
 
 ##################
 #/xebra/gun/energytype Spectrum
