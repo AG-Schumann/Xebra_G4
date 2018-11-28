@@ -1071,7 +1071,7 @@ void XebraMaterials::DefineMaterials() {
 
     //---------------------------------- aluminium
     //----------------------------------
-    G4Material *Aluminium = new G4Material("Aluminium", 2.7 * g / cm3, 1, kStateSolid);
+    G4Material *Aluminium = new G4Material("Aluminium", 2.7 * g / cm3, 1, kStateSolid); //ToDo: check density, add Reflectivity etc.
     Aluminium->AddElement(Al, 1.0);
     
 }

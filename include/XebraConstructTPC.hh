@@ -43,9 +43,40 @@ private:
    G4double TPC_dimension_r;
    G4double TPC_offsetOrigin_z;
 
+   G4double TPC_PTFE_pillar_number;
+   G4double TPC_PTFE_pillar_dimension_y;
+   G4double TPC_PTFE_pillar_a_dimension_x;
+   G4double TPC_PTFE_pillar_a_dimension_z;
+   G4double TPC_PTFE_pillar_a_position_r;
+   G4double TPC_PTFE_pillar_b_dimension_x;
+   G4double TPC_PTFE_pillar_b_dimension_z;
+   G4double TPC_PTFE_pillar_b_position_r;
+   G4double TPC_PTFE_pillar_c_dimension_x;
+   G4double TPC_PTFE_pillar_c_dimension_z;
+   G4double TPC_PTFE_pillar_c_position_r;
+   G4double TPC_PTFE_pillar_d_dimension_x;
+   G4double TPC_PTFE_pillar_d_dimension_z;
+   G4double TPC_PTFE_pillar_d_position_r;
+   G4double TPC_PTFE_pillar_e_dimension_x;
+   G4double TPC_PTFE_pillar_e_dimension_z;
+   G4double TPC_PTFE_pillar_e_position_r;
+   G4double TPC_PTFE_pillar_f_dimension_x;
+   G4double TPC_PTFE_pillar_f_dimension_z;
+   G4double TPC_PTFE_pillar_f_position_r;
+   G4double TPC_PTFE_pillar_g_dimension_x;
+   G4double TPC_PTFE_pillar_g_dimension_z;
+   G4double TPC_PTFE_pillar_g_position_r;
+   G4double TPC_PTFE_pillar_h_dimension_x;
+   G4double TPC_PTFE_pillar_h_dimension_z;
+   G4double TPC_PTFE_pillar_h_position_r;
+   G4double TPC_PTFE_pillar_i_dimension_x;
+   G4double TPC_PTFE_pillar_i_dimension_z;
+   G4double TPC_PTFE_pillar_i_position_r;
+
    G4RotationMatrix* rmz45;
    G4RotationMatrix* rmz120;	
-   G4RotationMatrix* rmz165;	
+   G4RotationMatrix* rmz165;
+   G4RotationMatrix* rmz225;	
    G4RotationMatrix* rmz285;
  
    //Solids
@@ -67,7 +98,47 @@ private:
    G4VSolid* TPC_Al_filler_solid_sub2_2;
    G4VSolid* TPC_Al_filler_solid_sub2;   
    G4VSolid* TPC_Al_filler_solid_2;
+   G4Box* TPC_Al_filler_solid_sub3;
+   G4VSolid* TPC_Al_filler_solid_3;
+   G4Box* TPC_Al_filler_solid_sub4;
+   G4VSolid* TPC_Al_filler_solid_4;
+   G4Tubs* TPC_Al_filler_solid_sub5;
+   G4VSolid* TPC_Al_filler_solid_sub5_1;
+   G4VSolid* TPC_Al_filler_solid_5;
    G4VSolid* TPC_Al_filler_solid;
+
+   G4Tubs* TPC_Cu_FSE_solid;
+
+   G4Box* TPC_PTFE_pillar_a_solid;
+   G4Box* TPC_PTFE_pillar_b_solid;
+   G4Box* TPC_PTFE_pillar_c_solid;
+   G4Box* TPC_PTFE_pillar_d_solid;
+   G4Box* TPC_PTFE_pillar_e_solid;
+   G4Box* TPC_PTFE_pillar_f_solid;
+   G4Box* TPC_PTFE_pillar_g_solid;
+   G4Box* TPC_PTFE_pillar_h_solid;
+   G4Box* TPC_PTFE_pillar_i_solid;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_1;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_2;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_3;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_4;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_5;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_6;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_7;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_8;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_9;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_10;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_11;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_12;
+   G4VSolid* TPC_PTFE_pillar_LXe_solid_13;
+   G4VSolid* TPC_PTFE_pillar_GXe_solid;
+   G4VSolid* TPC_PTFE_pillar_GXe_solid_1;
+   G4VSolid* TPC_PTFE_pillar_GXe_solid_2;
+
+   G4Tubs* TPC_SS_BottomRing_solid;
+   G4Tubs* TPC_SS_pillar_solid;
+   G4Tubs* TPC_SS_TopRing_solid;
 
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
@@ -78,6 +149,12 @@ private:
 
    G4LogicalVolume* TPC_SS_PMTfixture_log;
    G4LogicalVolume* TPC_Al_filler_log;
+   G4LogicalVolume* TPC_Cu_FSE_log;
+   G4LogicalVolume* TPC_PTFE_pillar_LXe_log;
+   G4LogicalVolume* TPC_PTFE_pillar_GXe_log;
+   G4LogicalVolume* TPC_SS_BottomRing_log;
+   G4LogicalVolume* TPC_SS_pillar_log;
+   G4LogicalVolume* TPC_SS_TopRing_log;
 
    //PhysicalVolumes
    G4VPhysicalVolume *test_phys;
@@ -87,6 +164,16 @@ private:
 
    G4VPhysicalVolume* TPC_SS_PMTfixture_phys;
    G4VPhysicalVolume* TPC_Al_filler_phys;
+   G4VPhysicalVolume* TPC_Cu_FSE_1_phys;
+   G4VPhysicalVolume* TPC_Cu_FSE_2_phys;
+   G4VPhysicalVolume* TPC_Cu_FSE_3_phys;
+   G4VPhysicalVolume* TPC_Cu_FSE_4_phys;
+   G4VPhysicalVolume* TPC_Cu_FSE_5_phys;
+   G4VPhysicalVolume* TPC_PTFE_pillar_LXe_phys;
+   G4VPhysicalVolume* TPC_PTFE_pillar_GXe_phys;
+   G4VPhysicalVolume* TPC_SS_BottomRing_phys;
+   G4VPhysicalVolume* TPC_SS_pillar_phys;
+   G4VPhysicalVolume* TPC_SS_TopRing_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
