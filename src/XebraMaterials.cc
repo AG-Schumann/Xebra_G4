@@ -306,7 +306,7 @@ void XebraMaterials::DefineMaterials() {
     //-------------------------------- gaseous xenon
     //--------------------------------
     G4Material *GXe = new G4Material("GXe", 0.005887 * g / cm3, 1, kStateGas,
-                                     173.15 * kelvin, 1.5 * atmosphere);
+                                     173.15 * kelvin, 1.5 * atmosphere); //ToDo: check density
     GXe->AddElement(Xe, 1);
     
     G4double pdGXePhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV};

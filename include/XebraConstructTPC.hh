@@ -138,7 +138,44 @@ private:
 
    G4Tubs* TPC_SS_BottomRing_solid;
    G4Tubs* TPC_SS_pillar_solid;
-   G4Tubs* TPC_SS_TopRing_solid;
+
+   G4VSolid* TPC_SS_TopRing_solid;
+   G4Tubs* TPC_SS_TopRing_solid_orig;
+   G4Tubs* TPC_SS_TopRing_solid_sub1_a;
+   G4Tubs* TPC_SS_TopRing_solid_sub1_b;
+   G4Tubs* TPC_SS_TopRing_solid_sub1_c;
+   G4Tubs* TPC_SS_TopRing_solid_sub1_d;
+   G4Tubs* TPC_SS_TopRing_solid_sub2_a;
+   G4Tubs* TPC_SS_TopRing_solid_sub2_b;
+   G4Tubs* TPC_SS_TopRing_solid_sub2_c;
+   G4Tubs* TPC_SS_TopRing_solid_sub2_d;
+   G4Tubs* TPC_SS_TopRing_solid_sub3;
+   G4Tubs* TPC_SS_TopRing_solid_sub4;
+   G4Tubs* TPC_SS_TopRing_solid_sub5;
+   G4VSolid* TPC_SS_TopRing_solid_1;
+   G4VSolid* TPC_SS_TopRing_solid_2;
+   G4VSolid* TPC_SS_TopRing_solid_3;
+   G4VSolid* TPC_SS_TopRing_solid_4;
+   G4VSolid* TPC_SS_TopRing_solid_5;
+   G4VSolid* TPC_SS_TopRing_solid_6;
+   G4VSolid* TPC_SS_TopRing_solid_7;
+   G4VSolid* TPC_SS_TopRing_solid_8;
+   G4VSolid* TPC_SS_TopRing_solid_9;
+   G4VSolid* TPC_SS_TopRing_solid_10;
+   G4VSolid* TPC_SS_TopRing_solid_11;
+   G4VSolid* TPC_SS_TopRing_solid_12;
+   G4VSolid* TPC_SS_TopRing_solid_13;
+   G4VSolid* TPC_SS_TopRing_solid_14;
+   G4VSolid* TPC_SS_TopRing_solid_15;
+   G4VSolid* TPC_SS_TopRing_solid_16;
+   G4VSolid* TPC_SS_TopRing_solid_17;
+   G4VSolid* TPC_SS_TopRing_solid_18;
+   G4Tubs* TPC_PTFE_filler_solid;
+   G4Tubs* TPC_PTFE_BottomPMTHolder_solid_orig;
+   G4Tubs* TPC_PTFE_BottomPMTHolder_solid_union;
+   G4VSolid* TPC_PTFE_BottomPMTHolder_solid;
+   G4Tubs* TPC_PTFE_spacer1_solid;
+   G4Tubs* TPC_PTFE_spacer2_solid;
 
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
@@ -155,6 +192,10 @@ private:
    G4LogicalVolume* TPC_SS_BottomRing_log;
    G4LogicalVolume* TPC_SS_pillar_log;
    G4LogicalVolume* TPC_SS_TopRing_log;
+   G4LogicalVolume* TPC_PTFE_filler_log;
+   G4LogicalVolume* TPC_PTFE_BottomPMTHolder_log;
+   G4LogicalVolume* TPC_PTFE_spacer1_log;
+   G4LogicalVolume* TPC_PTFE_spacer2_log;
 
    //PhysicalVolumes
    G4VPhysicalVolume *test_phys;
@@ -174,6 +215,10 @@ private:
    G4VPhysicalVolume* TPC_SS_BottomRing_phys;
    G4VPhysicalVolume* TPC_SS_pillar_phys;
    G4VPhysicalVolume* TPC_SS_TopRing_phys;
+   G4VPhysicalVolume* TPC_PTFE_filler_phys;
+   G4VPhysicalVolume* TPC_PTFE_BottomPMTHolder_phys;
+   G4VPhysicalVolume* TPC_PTFE_spacer1_phys;
+   G4VPhysicalVolume* TPC_PTFE_spacer2_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;

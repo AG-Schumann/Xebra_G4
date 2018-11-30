@@ -161,7 +161,61 @@ using std::stringstream;
 	TPC_SS_pillar_solid = new G4Tubs("TPC_SS_pillar_solid", 0.0*mm, 11.0*mm / 2, 25.0*mm / 2, 0.*deg, 360.*deg);
 
 	// Top Ring (p8)
-	TPC_SS_TopRing_solid = new G4Tubs("TPC_SS_TopRing_solid", 45.0*mm, 70.0*mm, 5.0*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_TopRing_solid_orig = new G4Tubs("TPC_SS_TopRing_solid_orig", 45.0*mm, 70.0*mm, 5.0*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_TopRing_solid_sub1_a = new G4Tubs("TPC_SS_TopRing_solid_sub1_a", 62.929*mm, 70.0*mm, 5.2*mm / 2, 10.*deg, 40.*deg);
+	TPC_SS_TopRing_solid_sub1_b = new G4Tubs("TPC_SS_TopRing_solid_sub1_b", 62.929*mm, 70.0*mm, 5.2*mm / 2, 130.*deg, 40.*deg);
+	TPC_SS_TopRing_solid_sub1_c = new G4Tubs("TPC_SS_TopRing_solid_sub1_c", 62.929*mm, 70.0*mm, 5.2*mm / 2, 190.*deg, 40.*deg);
+	TPC_SS_TopRing_solid_sub1_d = new G4Tubs("TPC_SS_TopRing_solid_sub1_d", 62.929*mm, 70.0*mm, 5.2*mm / 2, 310.*deg, 40.*deg);
+	G4double TopRing_sub2_shift = (3./(63.*2.*CLHEP::pi)*360.)*deg;
+	TPC_SS_TopRing_solid_sub2_a = new G4Tubs("TPC_SS_TopRing_solid_sub2_a", 60.0*mm, 70.0*mm, 5.2*mm / 2, 10.*deg + TopRing_sub2_shift, 40.*deg - 2* TopRing_sub2_shift);
+	TPC_SS_TopRing_solid_sub2_b = new G4Tubs("TPC_SS_TopRing_solid_sub2_b", 60.0*mm, 70.0*mm, 5.2*mm / 2, 130.*deg + TopRing_sub2_shift, 40.*deg - 2* TopRing_sub2_shift);
+	TPC_SS_TopRing_solid_sub2_c = new G4Tubs("TPC_SS_TopRing_solid_sub2_c", 60.0*mm, 70.0*mm, 5.2*mm / 2, (180.+10.)*deg + TopRing_sub2_shift, 40.*deg - 2* TopRing_sub2_shift);
+	TPC_SS_TopRing_solid_sub2_d = new G4Tubs("TPC_SS_TopRing_solid_sub2_d", 60.0*mm, 70.0*mm, 5.2*mm / 2, (180.+130.)*deg + TopRing_sub2_shift, 40.*deg - 2* TopRing_sub2_shift);
+	TPC_SS_TopRing_solid_sub3 = new G4Tubs("TPC_SS_TopRing_solid_sub3", 0.0*mm, 3.0*mm, 5.2*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_TopRing_solid_sub4 = new G4Tubs("TPC_SS_TopRing_solid_sub4", 0.0*mm, 6.5*mm, 5.2*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_TopRing_solid_sub5 = new G4Tubs("TPC_SS_TopRing_solid_sub5", 0.0*mm, 2.5*mm, 5.2*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_TopRing_solid_1 = new G4SubtractionSolid("TPC_SS_TopRing_solid_1", TPC_SS_TopRing_solid_orig, TPC_SS_TopRing_solid_sub4, 0, G4ThreeVector(10.825*mm,-66.120*mm,0.));
+	TPC_SS_TopRing_solid_2 = new G4SubtractionSolid("TPC_SS_TopRing_solid_2", TPC_SS_TopRing_solid_1, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(10.*deg + TopRing_sub2_shift),(63.*mm)*sin(10.*deg + TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_3 = new G4SubtractionSolid("TPC_SS_TopRing_solid_3", TPC_SS_TopRing_solid_2, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector(-(63.*mm)*cos(10.*deg + TopRing_sub2_shift),(63.*mm)*sin(10.*deg + TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_4 = new G4SubtractionSolid("TPC_SS_TopRing_solid_4", TPC_SS_TopRing_solid_3, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(10.*deg + TopRing_sub2_shift),-(63.*mm)*sin(10.*deg + TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_5 = new G4SubtractionSolid("TPC_SS_TopRing_solid_5", TPC_SS_TopRing_solid_4, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector(-(63.*mm)*cos(10.*deg + TopRing_sub2_shift),-(63.*mm)*sin(10.*deg + TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_6 = new G4SubtractionSolid("TPC_SS_TopRing_solid_6", TPC_SS_TopRing_solid_5, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(50.*deg - TopRing_sub2_shift),(63.*mm)*sin(50.*deg - TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_7 = new G4SubtractionSolid("TPC_SS_TopRing_solid_7", TPC_SS_TopRing_solid_6, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector(-(63.*mm)*cos(50.*deg - TopRing_sub2_shift),(63.*mm)*sin(50.*deg - TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_8 = new G4SubtractionSolid("TPC_SS_TopRing_solid_8", TPC_SS_TopRing_solid_7, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(50.*deg - TopRing_sub2_shift),-(63.*mm)*sin(50.*deg - TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_9 = new G4SubtractionSolid("TPC_SS_TopRing_solid_9", TPC_SS_TopRing_solid_8, TPC_SS_TopRing_solid_sub3, 0, G4ThreeVector(-(63.*mm)*cos(50.*deg - TopRing_sub2_shift),-(63.*mm)*sin(50.*deg - TopRing_sub2_shift),0.));
+	TPC_SS_TopRing_solid_10 = new G4SubtractionSolid("TPC_SS_TopRing_solid_10", TPC_SS_TopRing_solid_9, TPC_SS_TopRing_solid_sub1_a, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_11 = new G4SubtractionSolid("TPC_SS_TopRing_solid_11", TPC_SS_TopRing_solid_10, TPC_SS_TopRing_solid_sub1_b, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_12 = new G4SubtractionSolid("TPC_SS_TopRing_solid_12", TPC_SS_TopRing_solid_11, TPC_SS_TopRing_solid_sub1_c, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_13 = new G4SubtractionSolid("TPC_SS_TopRing_solid_13", TPC_SS_TopRing_solid_12, TPC_SS_TopRing_solid_sub1_d, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_14 = new G4SubtractionSolid("TPC_SS_TopRing_solid_14", TPC_SS_TopRing_solid_13, TPC_SS_TopRing_solid_sub2_a, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_15 = new G4SubtractionSolid("TPC_SS_TopRing_solid_15", TPC_SS_TopRing_solid_14, TPC_SS_TopRing_solid_sub2_b, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_16 = new G4SubtractionSolid("TPC_SS_TopRing_solid_16", TPC_SS_TopRing_solid_15, TPC_SS_TopRing_solid_sub2_c, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_17 = new G4SubtractionSolid("TPC_SS_TopRing_solid_17", TPC_SS_TopRing_solid_16, TPC_SS_TopRing_solid_sub2_d, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_TopRing_solid_18 = TPC_SS_TopRing_solid_17;
+  for (int a=0; a < 12; ++a)
+  { 
+    G4double rotate_angle = a*(360./12);
+    G4double TopRing_holes_XStep = cos(rotate_angle*deg)*52.0*mm;
+    G4double TopRing_holes_YStep = sin(rotate_angle*deg)*52.0*mm;
+    name.str("");
+    name << "TPC_SS_TopRing_solid_18_" << a;
+    TPC_SS_TopRing_solid_18 = new G4SubtractionSolid(name.str(), TPC_SS_TopRing_solid_18, TPC_SS_TopRing_solid_sub5, 0, G4ThreeVector(TopRing_holes_XStep,TopRing_holes_YStep,0.));
+  }
+	TPC_SS_TopRing_solid = TPC_SS_TopRing_solid_18;
+
+	// PTFE-Filler (p10a)
+	TPC_PTFE_filler_solid = new G4Tubs("TPC_PTFE_filler_solid", 40.*mm, 45.*mm, 40.*mm / 2, 0.*deg, 360.*deg);	
+
+	// Bottom PMT Holder (p9)
+	TPC_PTFE_BottomPMTHolder_solid_orig = new G4Tubs("TPC_PTFE_BottomPMTHolder_solid_orig", 39.*mm, 60.*mm, 5.*mm / 2, 0.*deg, 360.*deg);	
+	TPC_PTFE_BottomPMTHolder_solid_union = new G4Tubs("TPC_PTFE_BottomPMTHolder_solid_union", 35.*mm, 40.*mm, 12.*mm / 2, 0.*deg, 360.*deg);
+	TPC_PTFE_BottomPMTHolder_solid = new G4UnionSolid("TPC_PTFE_BottomPMTHolder_solid", TPC_PTFE_BottomPMTHolder_solid_orig, TPC_PTFE_BottomPMTHolder_solid_union, 0, G4ThreeVector(0., 0., (5.0*mm+12.*mm)/2-2.*mm));	
+
+	// PTFE spacer 1 (p4) - "the upper one"
+	TPC_PTFE_spacer1_solid = new G4Tubs("TPC_PTFE_spacer1_solid", 35.*mm, 60.*mm, 2.*mm / 2, 0.*deg, 360.*deg);
+
+	// PTFE spacer 2 (p4) - "the lower one"
+	TPC_PTFE_spacer2_solid = new G4Tubs("TPC_PTFE_spacer2_solid", 35.*mm, 60.*mm, 5.*mm / 2, 0.*deg, 360.*deg);
 
 
 //**************************************************LOGICALVOLUMES*****************************************************
@@ -178,6 +232,10 @@ using std::stringstream;
 	TPC_SS_BottomRing_log = new G4LogicalVolume(TPC_SS_BottomRing_solid, SS304LSteel, "TPC_SS_BottomRing_log");
 	TPC_SS_pillar_log =  new G4LogicalVolume(TPC_SS_pillar_solid, SS304LSteel, "TPC_SS_pillar_log");
 	TPC_SS_TopRing_log = new G4LogicalVolume(TPC_SS_TopRing_solid, SS304LSteel, "TPC_SS_TopRing_log");
+	TPC_PTFE_filler_log = new G4LogicalVolume(TPC_PTFE_filler_solid, Teflon, "TPC_PTFE_filler_log");
+	TPC_PTFE_BottomPMTHolder_log = new G4LogicalVolume(TPC_PTFE_BottomPMTHolder_solid, Teflon, "TPC_PTFE_BottomPMTHolder_log");
+	TPC_PTFE_spacer1_log = new G4LogicalVolume(TPC_PTFE_spacer1_solid, Teflon, "TPC_PTFE_spacer1_log");
+	TPC_PTFE_spacer2_log = new G4LogicalVolume(TPC_PTFE_spacer2_solid, Teflon, "TPC_PTFE_spacer2_log");
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
@@ -197,6 +255,8 @@ using std::stringstream;
 	TPC_Cu_FSE_4_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-4) * 13 * mm + 10.0*mm / 2), TPC_Cu_FSE_log,"TPC_Cu_FSE_4", LXe_Logical, 0, 0); 
 	TPC_Cu_FSE_5_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-5) * 13 * mm + 10.0*mm / 2), TPC_Cu_FSE_log,"TPC_Cu_FSE_5", LXe_Logical, 0, 0); 
 	TPC_SS_BottomRing_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 135.*mm + 5.*mm / 2), TPC_SS_BottomRing_log,"TPC_SS_BottomRing", LXe_Logical, 0, 0); 
+	TPC_PTFE_filler_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm - 40.*mm / 2), TPC_PTFE_filler_log,"TPC_PTFE_filler", LXe_Logical, 0, 0);
+	TPC_PTFE_BottomPMTHolder_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm + 5.*mm / 2), TPC_PTFE_BottomPMTHolder_log,"TPC_PTFE_BottomPMTHolder", LXe_Logical, 0, 0);
 	
 		// Placing Teflon pillars fully emerged in LXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
@@ -215,6 +275,8 @@ using std::stringstream;
 
   // Placing all TPC components fully emerged in GXe
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);
+	TPC_PTFE_spacer1_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 73.5*mm - 2.0*mm / 2), TPC_PTFE_spacer1_log, "TPC_PTFE_spacer1", GXe_Logical, false, 0);
+	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
 
 		// Placing Teflon pillars fully emerged in GXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
