@@ -170,12 +170,58 @@ private:
    G4VSolid* TPC_SS_TopRing_solid_16;
    G4VSolid* TPC_SS_TopRing_solid_17;
    G4VSolid* TPC_SS_TopRing_solid_18;
+
    G4Tubs* TPC_PTFE_filler_solid;
+
    G4Tubs* TPC_PTFE_BottomPMTHolder_solid_orig;
    G4Tubs* TPC_PTFE_BottomPMTHolder_solid_union;
    G4VSolid* TPC_PTFE_BottomPMTHolder_solid;
+
    G4Tubs* TPC_PTFE_spacer1_solid;
    G4Tubs* TPC_PTFE_spacer2_solid;
+
+   G4Tubs* TPC_PTFE_reflector_LXe_solid;
+   G4Tubs* TPC_PTFE_reflector_GXe_solid;
+
+   G4Tubs* TPC_SS_gate_ring_solid_orig;
+   G4Tubs* TPC_SS_gate_ring_solid_sub1_a;
+   G4Tubs* TPC_SS_gate_ring_solid_sub1_b;
+   G4Tubs* TPC_SS_gate_ring_solid_sub1_c;
+   G4Tubs* TPC_SS_gate_ring_solid_sub1_d;
+   G4Tubs* TPC_SS_gate_ring_solid_sub1_e;
+   G4Tubs* TPC_SS_gate_ring_solid_sub1_f;
+   G4Tubs* TPC_SS_gate_ring_solid_sub2_a;
+   G4Tubs* TPC_SS_gate_ring_solid_sub2_b;
+   G4Tubs* TPC_SS_gate_ring_solid_sub2_c;
+   G4Tubs* TPC_SS_gate_ring_solid_sub2_d;
+   G4Tubs* TPC_SS_gate_ring_solid_sub2_e;
+   G4Tubs* TPC_SS_gate_ring_solid_sub2_f;
+   G4Tubs* TPC_SS_gate_ring_solid_sub3;
+   G4VSolid* TPC_SS_gate_ring_solid_1;
+   G4VSolid* TPC_SS_gate_ring_solid_2;
+   G4VSolid* TPC_SS_gate_ring_solid_3;
+   G4VSolid* TPC_SS_gate_ring_solid_4;
+   G4VSolid* TPC_SS_gate_ring_solid_5;
+   G4VSolid* TPC_SS_gate_ring_solid_6;
+   G4VSolid* TPC_SS_gate_ring_solid_7;
+   G4VSolid* TPC_SS_gate_ring_solid_8;
+   G4VSolid* TPC_SS_gate_ring_solid_9;
+   G4VSolid* TPC_SS_gate_ring_solid_10;
+   G4VSolid* TPC_SS_gate_ring_solid_11;
+   G4VSolid* TPC_SS_gate_ring_solid_12;
+   G4VSolid* TPC_SS_gate_ring_solid_13;
+   G4VSolid* TPC_SS_gate_ring_solid_14;
+   G4VSolid* TPC_SS_gate_ring_solid_15;
+   G4VSolid* TPC_SS_gate_ring_solid_16;
+   G4VSolid* TPC_SS_gate_ring_solid_17;
+   G4VSolid* TPC_SS_gate_ring_solid_18;
+   G4VSolid* TPC_SS_gate_ring_solid_19;
+   G4VSolid* TPC_SS_gate_ring_solid_20;
+   G4VSolid* TPC_SS_gate_ring_solid_21;
+   G4VSolid* TPC_SS_gate_ring_solid_22;
+   G4VSolid* TPC_SS_gate_ring_solid_23;
+   G4VSolid* TPC_SS_gate_ring_solid_24;
+   G4VSolid* TPC_SS_gate_ring_solid;
 
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
@@ -196,6 +242,9 @@ private:
    G4LogicalVolume* TPC_PTFE_BottomPMTHolder_log;
    G4LogicalVolume* TPC_PTFE_spacer1_log;
    G4LogicalVolume* TPC_PTFE_spacer2_log;
+   G4LogicalVolume* TPC_PTFE_reflector_LXe_log;
+   G4LogicalVolume* TPC_PTFE_reflector_GXe_log;
+   G4LogicalVolume* TPC_SS_gate_ring_log;
 
    //PhysicalVolumes
    G4VPhysicalVolume *test_phys;
@@ -219,6 +268,9 @@ private:
    G4VPhysicalVolume* TPC_PTFE_BottomPMTHolder_phys;
    G4VPhysicalVolume* TPC_PTFE_spacer1_phys;
    G4VPhysicalVolume* TPC_PTFE_spacer2_phys;
+   G4VPhysicalVolume* TPC_PTFE_reflector_LXe_phys;
+   G4VPhysicalVolume* TPC_PTFE_reflector_GXe_phys;
+   G4VPhysicalVolume* TPC_SS_gate_ring_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
