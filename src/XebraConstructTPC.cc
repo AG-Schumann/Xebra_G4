@@ -91,6 +91,7 @@ using std::stringstream;
 	// Xenon volumes
   TPC_cylinder = new G4Tubs("TPC_cylinder", 0.*cm, cryostat_innerRadius, cryostat_innerHeight/2, 0.*deg, 360.*deg);  
   GXe_cylinder = new G4Tubs("GXe_cylinder", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
+			// ToDo: add extra LXe filling
 
 	// PMT fixture (p11)
 	TPC_SS_PMTfixture_solid_orig = new G4Tubs("TPC_SS_PMTfixture_solid_orig", 0.0*mm, 2.0*mm / 2, 2.0*mm / 2, 0.*deg, 360.*deg);
@@ -217,6 +218,55 @@ using std::stringstream;
 	// PTFE spacer 2 (p4) - "the lower one"
 	TPC_PTFE_spacer2_solid = new G4Tubs("TPC_PTFE_spacer2_solid", 35.*mm, 60.*mm, 5.*mm / 2, 0.*deg, 360.*deg);
 
+	// Reflector (p6)
+	TPC_PTFE_reflector_LXe_solid = new G4Tubs("TPC_PTFE_reflector_LXe_solid", 35.*mm, 40.*mm, 68.*mm / 2, 0.*deg, 360.*deg);
+	TPC_PTFE_reflector_GXe_solid = new G4Tubs("TPC_PTFE_reflector_GXe_solid", 35.*mm, 40.*mm, (70.-68.)*mm / 2, 0.*deg, 360.*deg);
+
+	// Gate (p3)
+	TPC_SS_gate_ring_solid_orig =  new G4Tubs("TPC_SS_gate_ring_solid_orig", 50.*mm, 70.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_gate_ring_solid_sub1_a = new G4Tubs("TPC_SS_gate_ring_solid_sub1_a", 62.929*mm, 70.0*mm, 3.2*mm / 2, (360.-10.)*deg, (70.+10.)*deg);
+	TPC_SS_gate_ring_solid_sub1_b = new G4Tubs("TPC_SS_gate_ring_solid_sub1_b", 62.929*mm, 70.0*mm, 3.2*mm / 2, 75.*deg, (105.-75.)*deg);
+	TPC_SS_gate_ring_solid_sub1_c = new G4Tubs("TPC_SS_gate_ring_solid_sub1_c", 62.929*mm, 70.0*mm, 3.2*mm / 2, 110.*deg, ((360.-170.)-110.)*deg);
+	TPC_SS_gate_ring_solid_sub1_d = new G4Tubs("TPC_SS_gate_ring_solid_sub1_d", 62.929*mm, 70.0*mm, 3.2*mm / 2, (360.-165.)*deg, ((360.-135.)-(360.-165.))*deg);
+	TPC_SS_gate_ring_solid_sub1_e = new G4Tubs("TPC_SS_gate_ring_solid_sub1_e", 62.929*mm, 70.0*mm, 3.2*mm / 2, (360.-130.)*deg, ((360.-50.)-(360.-130.))*deg);
+	TPC_SS_gate_ring_solid_sub1_f = new G4Tubs("TPC_SS_gate_ring_solid_sub1_f", 62.929*mm, 70.0*mm, 3.2*mm / 2, (360.-45.)*deg, ((360.-15.)-(360.-45.))*deg);
+	G4double gate_ring_sub2_shift = (3./(63.*2.*CLHEP::pi)*360.)*deg;
+	TPC_SS_gate_ring_solid_sub2_a = new G4Tubs("TPC_SS_gate_ring_solid_sub2_a", 60.0*mm, 70.0*mm, 3.2*mm / 2, (360.-10.)*deg + gate_ring_sub2_shift, (70.+10.)*deg - 2*gate_ring_sub2_shift);
+	TPC_SS_gate_ring_solid_sub2_b = new G4Tubs("TPC_SS_gate_ring_solid_sub2_b", 60.0*mm, 70.0*mm, 3.2*mm / 2, 75.*deg + gate_ring_sub2_shift, (105.-75.)*deg - 2*gate_ring_sub2_shift);
+	TPC_SS_gate_ring_solid_sub2_c = new G4Tubs("TPC_SS_gate_ring_solid_sub2_c", 60.0*mm, 70.0*mm, 3.2*mm / 2, 110.*deg + gate_ring_sub2_shift, ((360.-170.)-110.)*deg - 2*gate_ring_sub2_shift);
+	TPC_SS_gate_ring_solid_sub2_d = new G4Tubs("TPC_SS_gate_ring_solid_sub2_d", 60.0*mm, 70.0*mm, 3.2*mm / 2, (360.-165.)*deg + gate_ring_sub2_shift, ((360.-135.)-(360.-165.))*deg - 2*gate_ring_sub2_shift);
+	TPC_SS_gate_ring_solid_sub2_e = new G4Tubs("TPC_SS_gate_ring_solid_sub2_e", 60.0*mm, 70.0*mm, 3.2*mm / 2, (360.-130.)*deg + gate_ring_sub2_shift, ((360.-50.)-(360.-130.))*deg - 2*gate_ring_sub2_shift);
+	TPC_SS_gate_ring_solid_sub2_f = new G4Tubs("TPC_SS_gate_ring_solid_sub2_f", 60.0*mm, 70.0*mm, 3.2*mm / 2, (360.-45.)*deg + gate_ring_sub2_shift, ((360.-15.)-(360.-45.))*deg - 2*gate_ring_sub2_shift);
+	TPC_SS_gate_ring_solid_sub3 = new G4Tubs("TPC_SS_gate_ring_solid_sub3", 0.0*mm, 3.0*mm, 3.2*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_gate_ring_solid_1 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_1", TPC_SS_gate_ring_solid_orig, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-10.)*deg + gate_ring_sub2_shift),(63.*mm)*sin((360.-10.)*deg + gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_2 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_2", TPC_SS_gate_ring_solid_1, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((70.)*deg - gate_ring_sub2_shift),(63.*mm)*sin((70.)*deg - gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_3 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_3", TPC_SS_gate_ring_solid_2, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(75.*deg + gate_ring_sub2_shift),(63.*mm)*sin(75.*deg + gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_4 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_4", TPC_SS_gate_ring_solid_3, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((105.)*deg - gate_ring_sub2_shift),(63.*mm)*sin((105.)*deg - gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_5 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_5", TPC_SS_gate_ring_solid_4, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(110.*deg + gate_ring_sub2_shift),(63.*mm)*sin(110.*deg + gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_6 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_6", TPC_SS_gate_ring_solid_5, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos(((360.-170.))*deg - gate_ring_sub2_shift),(63.*mm)*sin(((360.-170.))*deg - gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_7 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_7", TPC_SS_gate_ring_solid_6, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-165.)*deg + gate_ring_sub2_shift),(63.*mm)*sin((360.-165.)*deg + gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_8 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_8", TPC_SS_gate_ring_solid_7, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-135.)*deg - gate_ring_sub2_shift),(63.*mm)*sin((360.-135.)*deg - gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_9 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_9", TPC_SS_gate_ring_solid_8, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-130.)*deg + gate_ring_sub2_shift),(63.*mm)*sin((360.-130.)*deg + gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_10 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_10", TPC_SS_gate_ring_solid_9, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-50.)*deg - gate_ring_sub2_shift),(63.*mm)*sin((360.-50.)*deg - gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_11 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_11", TPC_SS_gate_ring_solid_10, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-45.)*deg + gate_ring_sub2_shift),(63.*mm)*sin((360.-45.)*deg + gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_12 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_12", TPC_SS_gate_ring_solid_11, TPC_SS_gate_ring_solid_sub3, 0, G4ThreeVector((63.*mm)*cos((360.-15.)*deg - gate_ring_sub2_shift),(63.*mm)*sin((360.-15.)*deg - gate_ring_sub2_shift),0.));
+	TPC_SS_gate_ring_solid_13 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_13", TPC_SS_gate_ring_solid_12, TPC_SS_gate_ring_solid_sub1_a, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_14 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_14", TPC_SS_gate_ring_solid_13, TPC_SS_gate_ring_solid_sub1_b, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_15 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_15", TPC_SS_gate_ring_solid_14, TPC_SS_gate_ring_solid_sub1_c, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_16 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_16", TPC_SS_gate_ring_solid_15, TPC_SS_gate_ring_solid_sub1_d, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_17 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_17", TPC_SS_gate_ring_solid_16, TPC_SS_gate_ring_solid_sub1_e, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_18 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_18", TPC_SS_gate_ring_solid_17, TPC_SS_gate_ring_solid_sub1_f, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_19 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_19", TPC_SS_gate_ring_solid_18, TPC_SS_gate_ring_solid_sub2_a, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_20 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_20", TPC_SS_gate_ring_solid_19, TPC_SS_gate_ring_solid_sub2_b, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_21 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_21", TPC_SS_gate_ring_solid_20, TPC_SS_gate_ring_solid_sub2_c, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_22 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_22", TPC_SS_gate_ring_solid_21, TPC_SS_gate_ring_solid_sub2_d, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_23 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_23", TPC_SS_gate_ring_solid_22, TPC_SS_gate_ring_solid_sub2_e, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid_24 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_24", TPC_SS_gate_ring_solid_23, TPC_SS_gate_ring_solid_sub2_f, 0, G4ThreeVector(0.,0.,0.));
+	TPC_SS_gate_ring_solid = TPC_SS_gate_ring_solid_24;
+
+
+
+
 
 //**************************************************LOGICALVOLUMES*****************************************************
 
@@ -230,12 +280,15 @@ using std::stringstream;
 	TPC_PTFE_pillar_LXe_log = new G4LogicalVolume(TPC_PTFE_pillar_LXe_solid, Teflon, "TPC_PTFE_pillar_LXe_log");
 	TPC_PTFE_pillar_GXe_log = new G4LogicalVolume(TPC_PTFE_pillar_GXe_solid, Teflon, "TPC_PTFE_pillar_GXe_log");
 	TPC_SS_BottomRing_log = new G4LogicalVolume(TPC_SS_BottomRing_solid, SS304LSteel, "TPC_SS_BottomRing_log");
-	TPC_SS_pillar_log =  new G4LogicalVolume(TPC_SS_pillar_solid, SS304LSteel, "TPC_SS_pillar_log");
+	TPC_SS_pillar_log = new G4LogicalVolume(TPC_SS_pillar_solid, SS304LSteel, "TPC_SS_pillar_log");
 	TPC_SS_TopRing_log = new G4LogicalVolume(TPC_SS_TopRing_solid, SS304LSteel, "TPC_SS_TopRing_log");
 	TPC_PTFE_filler_log = new G4LogicalVolume(TPC_PTFE_filler_solid, Teflon, "TPC_PTFE_filler_log");
 	TPC_PTFE_BottomPMTHolder_log = new G4LogicalVolume(TPC_PTFE_BottomPMTHolder_solid, Teflon, "TPC_PTFE_BottomPMTHolder_log");
 	TPC_PTFE_spacer1_log = new G4LogicalVolume(TPC_PTFE_spacer1_solid, Teflon, "TPC_PTFE_spacer1_log");
 	TPC_PTFE_spacer2_log = new G4LogicalVolume(TPC_PTFE_spacer2_solid, Teflon, "TPC_PTFE_spacer2_log");
+	TPC_PTFE_reflector_LXe_log = new G4LogicalVolume(TPC_PTFE_reflector_LXe_solid, Teflon, "TPC_PTFE_reflector_LXe_log");
+	TPC_PTFE_reflector_GXe_log = new G4LogicalVolume(TPC_PTFE_reflector_GXe_solid, Teflon, "TPC_PTFE_reflector_GXe_log");
+	TPC_SS_gate_ring_log = new G4LogicalVolume(TPC_SS_gate_ring_solid, SS304LSteel, "TPC_SS_gate_ring_log");
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
@@ -257,6 +310,7 @@ using std::stringstream;
 	TPC_SS_BottomRing_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 135.*mm + 5.*mm / 2), TPC_SS_BottomRing_log,"TPC_SS_BottomRing", LXe_Logical, 0, 0); 
 	TPC_PTFE_filler_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm - 40.*mm / 2), TPC_PTFE_filler_log,"TPC_PTFE_filler", LXe_Logical, 0, 0);
 	TPC_PTFE_BottomPMTHolder_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm + 5.*mm / 2), TPC_PTFE_BottomPMTHolder_log,"TPC_PTFE_BottomPMTHolder", LXe_Logical, 0, 0);
+	TPC_PTFE_reflector_LXe_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 155.5*mm + 68.*mm / 2), TPC_PTFE_reflector_LXe_log,"TPC_PTFE_reflector_LXe", LXe_Logical, 0, 0);
 	
 		// Placing Teflon pillars fully emerged in LXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
@@ -277,6 +331,8 @@ using std::stringstream;
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);
 	TPC_PTFE_spacer1_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 73.5*mm - 2.0*mm / 2), TPC_PTFE_spacer1_log, "TPC_PTFE_spacer1", GXe_Logical, false, 0);
 	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
+	TPC_PTFE_reflector_GXe_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + (70.-68.)*mm / 2), TPC_PTFE_reflector_GXe_log,"TPC_PTFE_reflector_GXe", GXe_Logical, 0, 0);
+	TPC_SS_gate_ring_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm / 2), TPC_SS_gate_ring_log,"TPC_SS_gate_ring", GXe_Logical, 0, 0);
 
 		// Placing Teflon pillars fully emerged in GXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
