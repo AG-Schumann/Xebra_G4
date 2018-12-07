@@ -223,6 +223,49 @@ private:
    G4VSolid* TPC_SS_gate_ring_solid_24;
    G4VSolid* TPC_SS_gate_ring_solid;
 
+
+   G4Tubs* TPC_PTFE_TopPMTHolder_solid_orig;
+   G4Box* TPC_PTFE_TopPMTHolder_solid_sub1_1;
+   G4Box* TPC_PTFE_TopPMTHolder_solid_sub1_2;
+   G4Tubs* TPC_PTFE_TopPMTHolder_solid_sub1_3;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub1_a;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub1_b;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub1_c;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub1_d;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub1;
+   G4Box* TPC_PTFE_TopPMTHolder_solid_sub2_1;
+   G4Box* TPC_PTFE_TopPMTHolder_solid_sub2_2;
+   G4Tubs* TPC_PTFE_TopPMTHolder_solid_sub2_3;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub2_a;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub2_b;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub2_c;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub2_d;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_sub2;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_1;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_2;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_3;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_4;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_5;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_6;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_7;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_8;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_9;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_10;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_11;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_12;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid_13;
+   G4VSolid* TPC_PTFE_TopPMTHolder_solid;
+
+   G4Box* TPC_R8520_solid_orig_1;
+   G4Box* TPC_R8520_solid_orig_2;
+   G4Tubs* TPC_R8520_solid_orig_3;
+   G4VSolid* TPC_R8520_solid_orig_a;
+   G4VSolid* TPC_R8520_solid_orig_b;
+   G4VSolid* TPC_R8520_solid_orig_c;
+   G4VSolid* TPC_R8520_solid_orig_d;
+   G4VSolid* TPC_R8520_solid_orig;
+
+
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
 
@@ -245,6 +288,7 @@ private:
    G4LogicalVolume* TPC_PTFE_reflector_LXe_log;
    G4LogicalVolume* TPC_PTFE_reflector_GXe_log;
    G4LogicalVolume* TPC_SS_gate_ring_log;
+   G4LogicalVolume* TPC_PTFE_TopPMTHolder_log;
 
    //PhysicalVolumes
    G4VPhysicalVolume *test_phys;
@@ -271,6 +315,7 @@ private:
    G4VPhysicalVolume* TPC_PTFE_reflector_LXe_phys;
    G4VPhysicalVolume* TPC_PTFE_reflector_GXe_phys;
    G4VPhysicalVolume* TPC_SS_gate_ring_phys;
+   G4VPhysicalVolume* TPC_PTFE_TopPMTHolder_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
