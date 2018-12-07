@@ -264,9 +264,53 @@ using std::stringstream;
 	TPC_SS_gate_ring_solid_24 = new G4SubtractionSolid("TPC_SS_gate_ring_solid_24", TPC_SS_gate_ring_solid_23, TPC_SS_gate_ring_solid_sub2_f, 0, G4ThreeVector(0.,0.,0.));
 	TPC_SS_gate_ring_solid = TPC_SS_gate_ring_solid_24;
 
+	// Top PMT Holder (p1)
+	TPC_PTFE_TopPMTHolder_solid_orig = new G4Tubs("TPC_PTFE_TopPMTHolder_solid_orig", 0.*mm, 60.*mm, 8.*mm / 2, 0.*deg, 360.*deg);
+	TPC_PTFE_TopPMTHolder_solid_sub1_1 = new G4Box("TPC_PTFE_TopPMTHolder_solid_sub1_1", 22.0*mm / 2, 26.0*mm / 2, 6.0*mm / 2);
+	TPC_PTFE_TopPMTHolder_solid_sub1_2 = new G4Box("TPC_PTFE_TopPMTHolder_solid_sub1_2", 26.0*mm / 2, 22.0*mm / 2, 6.0*mm / 2);
+	TPC_PTFE_TopPMTHolder_solid_sub1_3 = new G4Tubs("TPC_PTFE_TopPMTHolder_solid_sub1_3", 0.*mm, 2.*mm, 6.*mm / 2, 0.*deg, 360.*deg);
+	TPC_PTFE_TopPMTHolder_solid_sub1_a = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub1_a", TPC_PTFE_TopPMTHolder_solid_sub1_1, TPC_PTFE_TopPMTHolder_solid_sub1_2, 0, G4ThreeVector(0., 0., 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub1_b = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub1_b", TPC_PTFE_TopPMTHolder_solid_sub1_a, TPC_PTFE_TopPMTHolder_solid_sub1_3, 0, G4ThreeVector(11.*mm, 11.*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub1_c = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub1_c", TPC_PTFE_TopPMTHolder_solid_sub1_b, TPC_PTFE_TopPMTHolder_solid_sub1_3, 0, G4ThreeVector(-11.*mm, 11.*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub1_d = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub1_d", TPC_PTFE_TopPMTHolder_solid_sub1_c, TPC_PTFE_TopPMTHolder_solid_sub1_3, 0, G4ThreeVector(11.*mm, -11.*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub1 = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub1", TPC_PTFE_TopPMTHolder_solid_sub1_d, TPC_PTFE_TopPMTHolder_solid_sub1_3, 0, G4ThreeVector(-11.*mm, -11.*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub2_1 = new G4Box("TPC_PTFE_TopPMTHolder_solid_sub2_1", 17.0*mm / 2, 21.0*mm / 2, 2.0*mm / 2);
+	TPC_PTFE_TopPMTHolder_solid_sub2_2 = new G4Box("TPC_PTFE_TopPMTHolder_solid_sub2_2", 21.0*mm / 2, 17.0*mm / 2, 2.0*mm / 2);
+	TPC_PTFE_TopPMTHolder_solid_sub2_3 = new G4Tubs("TPC_PTFE_TopPMTHolder_solid_sub2_3", 0.*mm, 2.*mm, 2.*mm / 2, 0.*deg, 360.*deg);
+	TPC_PTFE_TopPMTHolder_solid_sub2_a = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub2_a", TPC_PTFE_TopPMTHolder_solid_sub2_1, TPC_PTFE_TopPMTHolder_solid_sub2_2, 0, G4ThreeVector(0., 0., 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub2_b = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub2_b", TPC_PTFE_TopPMTHolder_solid_sub2_a, TPC_PTFE_TopPMTHolder_solid_sub2_3, 0, G4ThreeVector(8.5*mm, 8.5*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub2_c = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub2_c", TPC_PTFE_TopPMTHolder_solid_sub2_b, TPC_PTFE_TopPMTHolder_solid_sub2_3, 0, G4ThreeVector(-8.5*mm, 8.5*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub2_d = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub2_d", TPC_PTFE_TopPMTHolder_solid_sub2_c, TPC_PTFE_TopPMTHolder_solid_sub2_3, 0, G4ThreeVector(8.5*mm, -8.5*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_sub2 = new G4UnionSolid("TPC_PTFE_TopPMTHolder_solid_sub2", TPC_PTFE_TopPMTHolder_solid_sub2_d, TPC_PTFE_TopPMTHolder_solid_sub2_3, 0, G4ThreeVector(-8.5*mm, -8.5*mm, 0.));
+	TPC_PTFE_TopPMTHolder_solid_1 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_1", TPC_PTFE_TopPMTHolder_solid_orig, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(-14.*mm, 28.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_2 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_2", TPC_PTFE_TopPMTHolder_solid_1, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(14.*mm, 28.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_3 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_3", TPC_PTFE_TopPMTHolder_solid_2, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(14.*mm, -28.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_4 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_4", TPC_PTFE_TopPMTHolder_solid_3, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(-14.*mm, -28.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_5 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_5", TPC_PTFE_TopPMTHolder_solid_4, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(-28.*mm, 0.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_6 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_6", TPC_PTFE_TopPMTHolder_solid_5, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(0.*mm, 0.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_7 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_7", TPC_PTFE_TopPMTHolder_solid_6, TPC_PTFE_TopPMTHolder_solid_sub1, 0, G4ThreeVector(28.*mm, 0.*mm, 2.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_8 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_8", TPC_PTFE_TopPMTHolder_solid_7, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(-14.*mm, 28.*mm, -6.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_9 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_9", TPC_PTFE_TopPMTHolder_solid_8, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(14.*mm, 28.*mm, -6.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_10 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_10", TPC_PTFE_TopPMTHolder_solid_9, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(14.*mm, -28.*mm, -6.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_11 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_11", TPC_PTFE_TopPMTHolder_solid_10, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(-14.*mm, -28.*mm, -6.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_12 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_12", TPC_PTFE_TopPMTHolder_solid_11, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(-28.*mm, 0.*mm, -6.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid_13 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_13", TPC_PTFE_TopPMTHolder_solid_12, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(0.*mm, 0.*mm, -6.*mm / 2));
+	TPC_PTFE_TopPMTHolder_solid = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid", TPC_PTFE_TopPMTHolder_solid_13, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(28.*mm, 0.*mm, -6.*mm / 2));
 
 
 
+
+/* -> ToDo: put in extra file
+	// R8520
+	TPC_R8520_solid_orig_1 = new G4Box("TPC_R8520_solid_orig_1", 21.7*mm / 2, 25.7*mm / 2, 25.0*mm / 2);
+	TPC_R8520_solid_orig_2 = new G4Box("TPC_R8520_solid_orig_2", 25.7*mm / 2, 21.7*mm / 2, 25.0*mm / 2);
+	TPC_R8520_solid_orig_3 = new G4Tubs("TPC_R8520_solid_orig_3", 0.*mm, 2.*mm, 25.*mm / 2, 0.*deg, 360.*deg);
+	TPC_R8520_solid_orig_a = new G4UnionSolid("TPC_R8520_solid_orig_a", TPC_R8520_solid_orig_1, TPC_R8520_solid_orig_2, 0, G4ThreeVector(0., 0., 0.));
+	TPC_R8520_solid_orig_b = new G4UnionSolid("TPC_R8520_solid_orig_b", TPC_R8520_solid_orig_a, TPC_R8520_solid_orig_3, 0, G4ThreeVector((21.7/2)*mm, (21.7/2)*mm, 0.));
+	TPC_R8520_solid_orig_c = new G4UnionSolid("TPC_R8520_solid_orig_c", TPC_R8520_solid_orig_b, TPC_R8520_solid_orig_3, 0, G4ThreeVector(-(21.7/2)*mm, (21.7/2)*mm, 0.));
+	TPC_R8520_solid_orig_d = new G4UnionSolid("TPC_R8520_solid_orig_d", TPC_R8520_solid_orig_c, TPC_R8520_solid_orig_3, 0, G4ThreeVector((21.7/2)*mm, -(21.7/2)*mm, 0.));
+	TPC_R8520_solid_orig = new G4UnionSolid("TPC_R8520_solid_orig", TPC_R8520_solid_orig_d, TPC_R8520_solid_orig_3, 0, G4ThreeVector(-(21.7/2)*mm, -(21.7/2)*mm, 0.));
+*/
 
 //**************************************************LOGICALVOLUMES*****************************************************
 
@@ -289,6 +333,7 @@ using std::stringstream;
 	TPC_PTFE_reflector_LXe_log = new G4LogicalVolume(TPC_PTFE_reflector_LXe_solid, Teflon, "TPC_PTFE_reflector_LXe_log");
 	TPC_PTFE_reflector_GXe_log = new G4LogicalVolume(TPC_PTFE_reflector_GXe_solid, Teflon, "TPC_PTFE_reflector_GXe_log");
 	TPC_SS_gate_ring_log = new G4LogicalVolume(TPC_SS_gate_ring_solid, SS304LSteel, "TPC_SS_gate_ring_log");
+	TPC_PTFE_TopPMTHolder_log = new G4LogicalVolume(TPC_PTFE_TopPMTHolder_solid, Teflon, "TPC_PTFE_TopPMTHolder_log");
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
@@ -333,6 +378,7 @@ using std::stringstream;
 	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
 	TPC_PTFE_reflector_GXe_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + (70.-68.)*mm / 2), TPC_PTFE_reflector_GXe_log,"TPC_PTFE_reflector_GXe", GXe_Logical, 0, 0);
 	TPC_SS_gate_ring_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm / 2), TPC_SS_gate_ring_log,"TPC_SS_gate_ring", GXe_Logical, 0, 0);
+	TPC_PTFE_TopPMTHolder_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2), TPC_PTFE_TopPMTHolder_log,"TPC_PTFE_TopPMTHolder", GXe_Logical, 0, 0);
 
 		// Placing Teflon pillars fully emerged in GXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
