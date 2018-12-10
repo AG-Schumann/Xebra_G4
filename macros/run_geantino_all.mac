@@ -44,7 +44,10 @@
 # /xebra/gun/confine TPC_PTFE_spacer*
 # /xebra/gun/confine TPC_PTFE_reflector*
 # /xebra/gun/confine TPC_SS_gate_ring*
-/xebra/gun/confine TPC_PTFE_TopPMTHolder*
+# /xebra/gun/confine TPC_PTFE_TopPMTHolder*
+# /xebra/gun/confine TPC_SS_cathode*
+# /xebra/gun/confine TPC_SS_anode*
+/xebra/gun/confine TPC_SS_TopMesh*
 
 ##################
 #/xebra/gun/energytype Spectrum

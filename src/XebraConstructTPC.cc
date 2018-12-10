@@ -222,7 +222,7 @@ using std::stringstream;
 	TPC_PTFE_reflector_LXe_solid = new G4Tubs("TPC_PTFE_reflector_LXe_solid", 35.*mm, 40.*mm, 68.*mm / 2, 0.*deg, 360.*deg);
 	TPC_PTFE_reflector_GXe_solid = new G4Tubs("TPC_PTFE_reflector_GXe_solid", 35.*mm, 40.*mm, (70.-68.)*mm / 2, 0.*deg, 360.*deg);
 
-	// Gate (p3)
+	// Gate (p3b)
 	TPC_SS_gate_ring_solid_orig =  new G4Tubs("TPC_SS_gate_ring_solid_orig", 50.*mm, 70.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
 	TPC_SS_gate_ring_solid_sub1_a = new G4Tubs("TPC_SS_gate_ring_solid_sub1_a", 62.929*mm, 70.0*mm, 3.2*mm / 2, (360.-10.)*deg, (70.+10.)*deg);
 	TPC_SS_gate_ring_solid_sub1_b = new G4Tubs("TPC_SS_gate_ring_solid_sub1_b", 62.929*mm, 70.0*mm, 3.2*mm / 2, 75.*deg, (105.-75.)*deg);
@@ -297,6 +297,15 @@ using std::stringstream;
 	TPC_PTFE_TopPMTHolder_solid_13 = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid_13", TPC_PTFE_TopPMTHolder_solid_12, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(0.*mm, 0.*mm, -6.*mm / 2));
 	TPC_PTFE_TopPMTHolder_solid = new G4SubtractionSolid("TPC_PTFE_TopPMTHolder_solid", TPC_PTFE_TopPMTHolder_solid_13, TPC_PTFE_TopPMTHolder_solid_sub2, 0, G4ThreeVector(28.*mm, 0.*mm, -6.*mm / 2));
 
+	// Cathode (p3)
+	TPC_SS_cathode_ring_solid = new G4Tubs("TPC_SS_cathode_ring_solid", 50.*mm, 60.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
+
+	// Anode (p3)
+	TPC_SS_anode_ring_solid = new G4Tubs("TPC_SS_anode_ring_solid", 50.*mm, 60.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
+
+	// Top Mesh (p3)
+	TPC_SS_TopMesh_ring_solid = new G4Tubs("TPC_SS_TopMesh_ring_solid", 50.*mm, 60.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
+
 
 
 
@@ -311,6 +320,8 @@ using std::stringstream;
 	TPC_R8520_solid_orig_d = new G4UnionSolid("TPC_R8520_solid_orig_d", TPC_R8520_solid_orig_c, TPC_R8520_solid_orig_3, 0, G4ThreeVector((21.7/2)*mm, -(21.7/2)*mm, 0.));
 	TPC_R8520_solid_orig = new G4UnionSolid("TPC_R8520_solid_orig", TPC_R8520_solid_orig_d, TPC_R8520_solid_orig_3, 0, G4ThreeVector(-(21.7/2)*mm, -(21.7/2)*mm, 0.));
 */
+
+// ToDo: Add missing TPC components.
 
 //**************************************************LOGICALVOLUMES*****************************************************
 
@@ -334,6 +345,9 @@ using std::stringstream;
 	TPC_PTFE_reflector_GXe_log = new G4LogicalVolume(TPC_PTFE_reflector_GXe_solid, Teflon, "TPC_PTFE_reflector_GXe_log");
 	TPC_SS_gate_ring_log = new G4LogicalVolume(TPC_SS_gate_ring_solid, SS304LSteel, "TPC_SS_gate_ring_log");
 	TPC_PTFE_TopPMTHolder_log = new G4LogicalVolume(TPC_PTFE_TopPMTHolder_solid, Teflon, "TPC_PTFE_TopPMTHolder_log");
+	TPC_SS_cathode_ring_log =  new G4LogicalVolume(TPC_SS_cathode_ring_solid, SS304LSteel, "TPC_SS_cathode_ring_log");
+	TPC_SS_anode_ring_log =  new G4LogicalVolume(TPC_SS_anode_ring_solid, SS304LSteel, "TPC_SS_anode_ring_log");
+	TPC_SS_TopMesh_ring_log =  new G4LogicalVolume(TPC_SS_TopMesh_ring_solid, SS304LSteel, "TPC_SS_TopMesh_ring_log");
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
@@ -356,6 +370,7 @@ using std::stringstream;
 	TPC_PTFE_filler_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm - 40.*mm / 2), TPC_PTFE_filler_log,"TPC_PTFE_filler", LXe_Logical, 0, 0);
 	TPC_PTFE_BottomPMTHolder_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm + 5.*mm / 2), TPC_PTFE_BottomPMTHolder_log,"TPC_PTFE_BottomPMTHolder", LXe_Logical, 0, 0);
 	TPC_PTFE_reflector_LXe_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 155.5*mm + 68.*mm / 2), TPC_PTFE_reflector_LXe_log,"TPC_PTFE_reflector_LXe", LXe_Logical, 0, 0);
+	TPC_SS_cathode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 152.0*mm + 3.*mm / 2), TPC_SS_cathode_ring_log,"TPC_SS_cathode_ring", LXe_Logical, 0, 0);
 	
 		// Placing Teflon pillars fully emerged in LXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
@@ -379,6 +394,8 @@ using std::stringstream;
 	TPC_PTFE_reflector_GXe_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + (70.-68.)*mm / 2), TPC_PTFE_reflector_GXe_log,"TPC_PTFE_reflector_GXe", GXe_Logical, 0, 0);
 	TPC_SS_gate_ring_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm / 2), TPC_SS_gate_ring_log,"TPC_SS_gate_ring", GXe_Logical, 0, 0);
 	TPC_PTFE_TopPMTHolder_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2), TPC_PTFE_TopPMTHolder_log,"TPC_PTFE_TopPMTHolder", GXe_Logical, 0, 0);
+	TPC_SS_anode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 75.5*mm - 3.0*mm / 2), TPC_SS_anode_ring_log,"TPC_SS_anode_ring", GXe_Logical, 0, 0);
+	TPC_SS_TopMesh_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm - 3.0*mm / 2), TPC_SS_TopMesh_ring_log,"TPC_SS_TopMesh_ring", GXe_Logical, 0, 0);
 
 		// Placing Teflon pillars fully emerged in GXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
