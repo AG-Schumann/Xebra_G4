@@ -223,7 +223,6 @@ private:
    G4VSolid* TPC_SS_gate_ring_solid_24;
    G4VSolid* TPC_SS_gate_ring_solid;
 
-
    G4Tubs* TPC_PTFE_TopPMTHolder_solid_orig;
    G4Box* TPC_PTFE_TopPMTHolder_solid_sub1_1;
    G4Box* TPC_PTFE_TopPMTHolder_solid_sub1_2;
@@ -265,6 +264,12 @@ private:
    G4VSolid* TPC_R8520_solid_orig_d;
    G4VSolid* TPC_R8520_solid_orig;
 
+   G4Tubs* TPC_SS_cathode_ring_solid;
+
+   G4Tubs* TPC_SS_anode_ring_solid;
+
+   G4Tubs* TPC_SS_TopMesh_ring_solid;
+
 
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
@@ -289,6 +294,9 @@ private:
    G4LogicalVolume* TPC_PTFE_reflector_GXe_log;
    G4LogicalVolume* TPC_SS_gate_ring_log;
    G4LogicalVolume* TPC_PTFE_TopPMTHolder_log;
+   G4LogicalVolume* TPC_SS_cathode_ring_log;
+   G4LogicalVolume* TPC_SS_anode_ring_log;
+   G4LogicalVolume* TPC_SS_TopMesh_ring_log;
 
    //PhysicalVolumes
    G4VPhysicalVolume *test_phys;
@@ -316,6 +324,9 @@ private:
    G4VPhysicalVolume* TPC_PTFE_reflector_GXe_phys;
    G4VPhysicalVolume* TPC_SS_gate_ring_phys;
    G4VPhysicalVolume* TPC_PTFE_TopPMTHolder_phys;
+   G4VPhysicalVolume* TPC_SS_cathode_ring_phys;
+   G4VPhysicalVolume* TPC_SS_anode_ring_phys;
+   G4VPhysicalVolume* TPC_SS_TopMesh_ring_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
