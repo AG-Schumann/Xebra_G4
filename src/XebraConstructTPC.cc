@@ -306,6 +306,24 @@ using std::stringstream;
 	// Top Mesh (p3)
 	TPC_SS_TopMesh_ring_solid = new G4Tubs("TPC_SS_TopMesh_ring_solid", 50.*mm, 60.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
 
+	// Weir for leveling (p13) -> ToDo: Define material PEEK
+		// LXe original filling part -> ToDo: finish, variable GXe filling
+	TPC_PEEK_weir_LXe_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe_solid_orig", 60.*mm, 73.*mm, 83.5*mm / 2, 130.*deg, (170.-130.)*deg);
+	TPC_PEEK_weir_LXe_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub1", 0.*mm, 5.*mm, 70.5*mm / 2, 0.*deg, 360.*deg);
+	TPC_PEEK_weir_LXe_solid_sub2 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub2", 61.5*mm, 71.5*mm, 70.5*mm / 2, 136.*deg, (164.-136.)*deg);
+	TPC_PEEK_weir_LXe_solid_1 = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid_1", TPC_PEEK_weir_LXe_solid_orig, TPC_PEEK_weir_LXe_solid_sub2, 0, G4ThreeVector(0.*mm, 0.*mm, (83.5-70.5)*mm / 2));
+	TPC_PEEK_weir_LXe_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid_2", TPC_PEEK_weir_LXe_solid_1, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), (83.5-70.5)*mm / 2));
+	TPC_PEEK_weir_LXe_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid", TPC_PEEK_weir_LXe_solid_2, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), (83.5-70.5)*mm / 2));
+
+
+
+		// LXe extra filling part -> ToDo: finish, variable GXe filling
+	TPC_PEEK_weir_LXe2_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe2_solid_orig", 60.*mm, 73.*mm, 5.5*mm / 2, 130.*deg, (170.-130.)*deg);
+	TPC_PEEK_weir_LXe2_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe2_solid_sub1", 0.*mm, 5.*mm, 5.5*mm / 2, 0.*deg, 360.*deg);
+	TPC_PEEK_weir_LXe2_solid_sub2 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub2", 61.5*mm, 71.5*mm, 5.5*mm / 2, 136.*deg, (164.-136.)*deg);
+	TPC_PEEK_weir_LXe2_solid_1 = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid_1", TPC_PEEK_weir_LXe2_solid_orig, TPC_PEEK_weir_LXe2_solid_sub2, 0, G4ThreeVector(0.*mm, 0.*mm, 0*mm));
+	TPC_PEEK_weir_LXe2_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid_2", TPC_PEEK_weir_LXe2_solid_1, TPC_PEEK_weir_LXe2_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0*mm));
+	TPC_PEEK_weir_LXe2_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid", TPC_PEEK_weir_LXe2_solid_2, TPC_PEEK_weir_LXe2_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0*mm));
 
 
 
