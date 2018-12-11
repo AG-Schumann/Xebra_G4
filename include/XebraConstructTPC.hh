@@ -270,6 +270,20 @@ private:
 
    G4Tubs* TPC_SS_TopMesh_ring_solid;
 
+   G4Tubs* TPC_PEEK_weir_LXe_solid_orig;
+   G4Tubs* TPC_PEEK_weir_LXe_solid_sub1;
+   G4Tubs* TPC_PEEK_weir_LXe_solid_sub2;
+   G4VSolid* TPC_PEEK_weir_LXe_solid_1;
+   G4VSolid* TPC_PEEK_weir_LXe_solid_2;
+   G4VSolid* TPC_PEEK_weir_LXe_solid;
+
+   G4Tubs* TPC_PEEK_weir_LXe2_solid_orig;
+   G4Tubs* TPC_PEEK_weir_LXe2_solid_sub1;
+   G4Tubs* TPC_PEEK_weir_LXe2_solid_sub2;
+   G4VSolid* TPC_PEEK_weir_LXe2_solid_1;
+   G4VSolid* TPC_PEEK_weir_LXe2_solid_2;
+   G4VSolid* TPC_PEEK_weir_LXe2_solid;
+
 
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
