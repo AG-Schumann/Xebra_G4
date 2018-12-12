@@ -35,7 +35,7 @@
 # /xebra/gun/confine TPC_SS_PMTfixture*
 # /xebra/gun/confine TPC_Al_filler*
 # /xebra/gun/confine TPC_Cu_FSE*
-# /xebra/gun/confine TPC_PTFE_pillar_GXe*
+/xebra/gun/confine TPC_PTFE_pillar*
 # /xebra/gun/confine TPC_SS_BottomRing*
 # /xebra/gun/confine TPC_SS_TopRing*
 # /xebra/gun/confine TPC_SS_pillar*
@@ -47,7 +47,9 @@
 # /xebra/gun/confine TPC_PTFE_TopPMTHolder*
 # /xebra/gun/confine TPC_SS_cathode*
 # /xebra/gun/confine TPC_SS_anode*
-/xebra/gun/confine TPC_SS_TopMesh*
+# /xebra/gun/confine TPC_SS_TopMesh*
+# /xebra/gun/confine TPC_PEEK_weir*
+# /xebra/gun/confine TPC_Torlon_rod*
 
 ##################
 #/xebra/gun/energytype Spectrum

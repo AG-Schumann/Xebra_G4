@@ -659,6 +659,8 @@
  /opt/geant/v10.3.3/include/Geant4/G4Box.icc \
  /opt/geant/v10.3.3/include/Geant4/G4Tubs.hh \
  /opt/geant/v10.3.3/include/Geant4/G4Tubs.icc \
+ /opt/geant/v10.3.3/include/Geant4/G4Orb.hh \
+ /opt/geant/v10.3.3/include/Geant4/G4Orb.icc \
  /opt/geant/v10.3.3/include/Geant4/G4LogicalVolume.hh \
  /opt/geant/v10.3.3/include/Geant4/G4VPhysicalVolume.hh \
  /opt/geant/v10.3.3/include/Geant4/G4VisAttributes.hh \

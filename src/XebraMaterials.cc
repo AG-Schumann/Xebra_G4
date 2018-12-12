@@ -1073,5 +1073,12 @@ void XebraMaterials::DefineMaterials() {
     //----------------------------------
     G4Material *Aluminium = new G4Material("Aluminium", 2.7 * g / cm3, 1, kStateSolid); //ToDo: check density, add Reflectivity etc.
     Aluminium->AddElement(Al, 1.0);
+
+    //---------------------------------- PEEK (polyether ether ketone, C_19 H_12 O_3)
+    //----------------------------------
+    G4Material *PEEK = new G4Material("PEEK", 1.32 * g / cm3, ncomponents=3, kStateSolid); //ToDo: check density, add Reflectivity etc.
+    PEEK->AddElement(C, natoms=19);
+    PEEK->AddElement(H, natoms=12);
+    PEEK->AddElement(O, natoms=3);
     
 }

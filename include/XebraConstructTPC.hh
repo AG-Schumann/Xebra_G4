@@ -30,9 +30,9 @@ private:
    G4Material *Teflon;
    G4Material *SS304LSteel;
    G4Material *Copper;
-   G4Material *PMT_material;
-
    G4Material *Aluminium;
+   G4Material *PEEK;
+   G4Material *Torlon;
 
    //Parameters
    G4double cryostat_innerRadius;
@@ -74,10 +74,14 @@ private:
    G4double TPC_PTFE_pillar_i_position_r;
 
    G4RotationMatrix* rmz45;
+   G4RotationMatrix* rmz60;
    G4RotationMatrix* rmz120;	
    G4RotationMatrix* rmz165;
+   G4RotationMatrix* rmz180;
    G4RotationMatrix* rmz225;	
    G4RotationMatrix* rmz285;
+   G4RotationMatrix* rmz300;
+   G4RotationMatrix* rmy90;
  
    //Solids
    G4Tubs *TPC_cylinder;
@@ -270,6 +274,10 @@ private:
 
    G4Tubs* TPC_SS_TopMesh_ring_solid;
 
+   G4Orb* TPC_Torlon_rod_solid_orig;
+   G4Tubs* TPC_Torlon_rod_solid_1;
+   G4VSolid* TPC_Torlon_rod_solid;
+
    G4Tubs* TPC_PEEK_weir_LXe_solid_orig;
    G4Tubs* TPC_PEEK_weir_LXe_solid_sub1;
    G4Tubs* TPC_PEEK_weir_LXe_solid_sub2;
@@ -311,6 +319,9 @@ private:
    G4LogicalVolume* TPC_SS_cathode_ring_log;
    G4LogicalVolume* TPC_SS_anode_ring_log;
    G4LogicalVolume* TPC_SS_TopMesh_ring_log;
+   G4LogicalVolume* TPC_Torlon_rod_log;
+   G4LogicalVolume* TPC_PEEK_weir_LXe_log;
+   G4LogicalVolume* TPC_PEEK_weir_LXe2_log;
 
    //PhysicalVolumes
    G4VPhysicalVolume *test_phys;
@@ -341,6 +352,14 @@ private:
    G4VPhysicalVolume* TPC_SS_cathode_ring_phys;
    G4VPhysicalVolume* TPC_SS_anode_ring_phys;
    G4VPhysicalVolume* TPC_SS_TopMesh_ring_phys;
+   G4VPhysicalVolume* TPC_Torlon_rod_1_phys;
+   G4VPhysicalVolume* TPC_Torlon_rod_2_phys;
+   G4VPhysicalVolume* TPC_Torlon_rod_3_phys;
+   G4VPhysicalVolume* TPC_Torlon_rod_4_phys;
+   G4VPhysicalVolume* TPC_Torlon_rod_5_phys;
+   G4VPhysicalVolume* TPC_Torlon_rod_6_phys;
+   G4VPhysicalVolume* TPC_PEEK_weir_LXe_phys;
+   G4VPhysicalVolume* TPC_PEEK_weir_LXe2_phys;
 
    //Visualization
    G4VisAttributes *TeflonVisAtt;
