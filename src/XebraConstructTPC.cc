@@ -27,20 +27,29 @@ using std::stringstream;
   Teflon = G4Material::GetMaterial("Teflon");
   SS304LSteel = G4Material::GetMaterial("SS304LSteel");
   Copper = G4Material::GetMaterial("Copper");
-  PMT_material  = G4Material::GetMaterial("PMT_material");
 	Aluminium  = G4Material::GetMaterial("Aluminium");
+	PEEK  = G4Material::GetMaterial("PEEK");
+	Torlon  = G4Material::GetMaterial("Torlon");
 
 	// General useful functions
 	rmz45 = new G4RotationMatrix();
 	rmz45->rotateZ(45.*deg);	
+	rmz60 = new G4RotationMatrix();
+	rmz60->rotateZ(60.*deg);	
 	rmz120 = new G4RotationMatrix();
 	rmz120->rotateZ(120.*deg);	
 	rmz165 = new G4RotationMatrix();
 	rmz165->rotateZ(165.*deg);
+	rmz180 = new G4RotationMatrix();
+	rmz180->rotateZ(180.*deg);
 	rmz225 = new G4RotationMatrix();
 	rmz225->rotateZ(225.*deg);	
 	rmz285 = new G4RotationMatrix();
 	rmz285->rotateZ(285.*deg);
+	rmz300 = new G4RotationMatrix();
+	rmz300->rotateZ(300.*deg);
+	rmy90 = new G4RotationMatrix();
+	rmy90->rotateY(90.*deg);
  
   // Parameters Cryostat, TPC and Teflon
 	TPC_dimension_z = 310.0 * mm;
@@ -306,6 +315,14 @@ using std::stringstream;
 	// Top Mesh (p3)
 	TPC_SS_TopMesh_ring_solid = new G4Tubs("TPC_SS_TopMesh_ring_solid", 50.*mm, 60.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
 
+	// Rod (p7)
+	TPC_Torlon_rod_solid_orig = new G4Orb("TPC_Torlon_rod_solid_orig", 1.1*mm);
+	TPC_Torlon_rod_solid_1 = new G4Tubs("TPC_Torlon_rod_solid_1", 0.*mm, 1.1*mm, (50.-40.)*mm / 2, 0.*deg, 360.*deg);
+	TPC_Torlon_rod_solid = new G4UnionSolid("TPC_Torlon_rod_solid", TPC_Torlon_rod_solid_orig, TPC_Torlon_rod_solid_1, rmy90, G4ThreeVector(0., 0., 0.));
+
+
+
+
 	// Weir for leveling (p13) -> ToDo: Define material PEEK
 		// LXe original filling part -> ToDo: finish, variable GXe filling
 	TPC_PEEK_weir_LXe_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe_solid_orig", 60.*mm, 73.*mm, 83.5*mm / 2, 130.*deg, (170.-130.)*deg);
@@ -315,8 +332,6 @@ using std::stringstream;
 	TPC_PEEK_weir_LXe_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid_2", TPC_PEEK_weir_LXe_solid_1, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), (83.5-70.5)*mm / 2));
 	TPC_PEEK_weir_LXe_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid", TPC_PEEK_weir_LXe_solid_2, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), (83.5-70.5)*mm / 2));
 
-
-
 		// LXe extra filling part -> ToDo: finish, variable GXe filling
 	TPC_PEEK_weir_LXe2_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe2_solid_orig", 60.*mm, 73.*mm, 5.5*mm / 2, 130.*deg, (170.-130.)*deg);
 	TPC_PEEK_weir_LXe2_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe2_solid_sub1", 0.*mm, 5.*mm, 5.5*mm / 2, 0.*deg, 360.*deg);
@@ -324,6 +339,7 @@ using std::stringstream;
 	TPC_PEEK_weir_LXe2_solid_1 = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid_1", TPC_PEEK_weir_LXe2_solid_orig, TPC_PEEK_weir_LXe2_solid_sub2, 0, G4ThreeVector(0.*mm, 0.*mm, 0*mm));
 	TPC_PEEK_weir_LXe2_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid_2", TPC_PEEK_weir_LXe2_solid_1, TPC_PEEK_weir_LXe2_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0*mm));
 	TPC_PEEK_weir_LXe2_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid", TPC_PEEK_weir_LXe2_solid_2, TPC_PEEK_weir_LXe2_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0*mm));
+
 
 
 
@@ -366,6 +382,9 @@ using std::stringstream;
 	TPC_SS_cathode_ring_log =  new G4LogicalVolume(TPC_SS_cathode_ring_solid, SS304LSteel, "TPC_SS_cathode_ring_log");
 	TPC_SS_anode_ring_log =  new G4LogicalVolume(TPC_SS_anode_ring_solid, SS304LSteel, "TPC_SS_anode_ring_log");
 	TPC_SS_TopMesh_ring_log =  new G4LogicalVolume(TPC_SS_TopMesh_ring_solid, SS304LSteel, "TPC_SS_TopMesh_ring_log");
+	TPC_Torlon_rod_log = new G4LogicalVolume(TPC_Torlon_rod_solid, Torlon, "TPC_Torlon_rod_log");
+	TPC_PEEK_weir_LXe_log = new G4LogicalVolume(TPC_PEEK_weir_LXe_solid, PEEK, "TPC_PEEK_weir_LXe_log");
+	TPC_PEEK_weir_LXe2_log = new G4LogicalVolume(TPC_PEEK_weir_LXe2_solid, PEEK, "TPC_PEEK_weir_LXe2_log");
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
@@ -389,6 +408,13 @@ using std::stringstream;
 	TPC_PTFE_BottomPMTHolder_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm + 5.*mm / 2), TPC_PTFE_BottomPMTHolder_log,"TPC_PTFE_BottomPMTHolder", LXe_Logical, 0, 0);
 	TPC_PTFE_reflector_LXe_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 155.5*mm + 68.*mm / 2), TPC_PTFE_reflector_LXe_log,"TPC_PTFE_reflector_LXe", LXe_Logical, 0, 0);
 	TPC_SS_cathode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 152.0*mm + 3.*mm / 2), TPC_SS_cathode_ring_log,"TPC_SS_cathode_ring", LXe_Logical, 0, 0);
+	TPC_PEEK_weir_LXe_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.0*mm + 83.5*mm / 2), TPC_PEEK_weir_LXe_log,"TPC_PEEK_weir_LXe", LXe_Logical, 0, 0);
+	TPC_Torlon_rod_1_phys =  new G4PVPlacement(rmz300,G4ThreeVector((50.+40.)*mm / 2 * cos(60.*deg), (50.+40.)*mm / 2 * sin(60.*deg), -TPC_dimension_z / 2 + 170.0*mm), TPC_Torlon_rod_log,"TPC_Torlon_rod_1", LXe_Logical, 0, 0);
+	TPC_Torlon_rod_2_phys =  new G4PVPlacement(rmz300,G4ThreeVector((50.+40.)*mm / 2 * cos(60.*deg), (50.+40.)*mm / 2 * sin(60.*deg), -TPC_dimension_z / 2 + 222.0*mm), TPC_Torlon_rod_log,"TPC_Torlon_rod_2", LXe_Logical, 0, 0);
+	TPC_Torlon_rod_3_phys =  new G4PVPlacement(rmz180,G4ThreeVector((50.+40.)*mm / 2 * cos(180.*deg), (50.+40.)*mm / 2 * sin(180.*deg), -TPC_dimension_z / 2 + 170.0*mm), TPC_Torlon_rod_log,"TPC_Torlon_rod_3", LXe_Logical, 0, 0);
+	TPC_Torlon_rod_4_phys =  new G4PVPlacement(rmz180,G4ThreeVector((50.+40.)*mm / 2 * cos(180.*deg), (50.+40.)*mm / 2 * sin(180.*deg), -TPC_dimension_z / 2 + 222.0*mm), TPC_Torlon_rod_log,"TPC_Torlon_rod_4", LXe_Logical, 0, 0);
+	TPC_Torlon_rod_5_phys =  new G4PVPlacement(rmz60,G4ThreeVector((50.+40.)*mm / 2 * cos(300.*deg), (50.+40.)*mm / 2 * sin(300.*deg), -TPC_dimension_z / 2 + 170.0*mm), TPC_Torlon_rod_log,"TPC_Torlon_rod_5", LXe_Logical, 0, 0);
+	TPC_Torlon_rod_6_phys =  new G4PVPlacement(rmz60,G4ThreeVector((50.+40.)*mm / 2 * cos(300.*deg), (50.+40.)*mm / 2 * sin(300.*deg), -TPC_dimension_z / 2 + 222.0*mm), TPC_Torlon_rod_log,"TPC_Torlon_rod_6", LXe_Logical, 0, 0);
 	
 		// Placing Teflon pillars fully emerged in LXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
@@ -405,7 +431,7 @@ using std::stringstream;
     TPC_PTFE_pillar_LXe_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
   }
 
-  // Placing all TPC components fully emerged in GXe
+  // Placing all TPC components fully emerged in original GXe volume (neglecting extra filling)
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);
 	TPC_PTFE_spacer1_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 73.5*mm - 2.0*mm / 2), TPC_PTFE_spacer1_log, "TPC_PTFE_spacer1", GXe_Logical, false, 0);
 	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
@@ -414,6 +440,7 @@ using std::stringstream;
 	TPC_PTFE_TopPMTHolder_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2), TPC_PTFE_TopPMTHolder_log,"TPC_PTFE_TopPMTHolder", GXe_Logical, 0, 0);
 	TPC_SS_anode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 75.5*mm - 3.0*mm / 2), TPC_SS_anode_ring_log,"TPC_SS_anode_ring", GXe_Logical, 0, 0);
 	TPC_SS_TopMesh_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm - 3.0*mm / 2), TPC_SS_TopMesh_ring_log,"TPC_SS_TopMesh_ring", GXe_Logical, 0, 0);
+	TPC_PEEK_weir_LXe2_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -GXe_height / 2 + 5.5*mm / 2), TPC_PEEK_weir_LXe2_log,"TPC_PEEK_weir_LXe2", GXe_Logical, 0, 0);
 
 		// Placing Teflon pillars fully emerged in GXe around active TPC
   for (int a=0; a < TPC_PTFE_pillar_number; ++a)
