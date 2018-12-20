@@ -1,6 +1,9 @@
 PhysicalVolume LogicalVolume MotherLogicalVolume
 LXe_TPC LXe_Logical TPC_Logical
 GXe_TPC GXe_Logical LXe_Logical
+LXe_weir_1 LXe_weir_1_log LXe_Logical
+GXe_weir_1 GXe_weir_1_log LXe_Logical
+GXe_weir_2 GXe_weir_2_log GXe_Logical
 TPC_SS_PMTfixture TPC_SS_PMTfixture_log LXe_Logical
 TPC_Al_filler TPC_Al_filler_log LXe_Logical
 TPC_Cu_FSE_1 TPC_Cu_FSE_log LXe_Logical
