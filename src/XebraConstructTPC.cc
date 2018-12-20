@@ -100,6 +100,54 @@ using std::stringstream;
 	// Xenon volumes
   TPC_cylinder = new G4Tubs("TPC_cylinder", 0.*cm, cryostat_innerRadius, cryostat_innerHeight/2, 0.*deg, 360.*deg);  
   GXe_cylinder = new G4Tubs("GXe_cylinder", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
+		
+		// fillings in weir
+		filling_ratio_weir = 0.5; // ratio by how much the weir is filled with LXe, default = 0.5, range = (0,1)
+
+			// LXe weir in TPC_cylinder volume without GXe_cylinder volume
+			height_LXe_TPC_cylinder = std::min(filling_ratio_weir * (70.5*mm + 5.5*mm), 70.5*mm); //ToDo: use if statements to avoid solids with extension 0
+
+			if (height_LXe_TPC_cylinder > 0.)	
+			{
+				LXe_weir_1_solid_union_1 = new G4Tubs("LXe_weir_1_solid_union_1", 61.5*mm, 71.5*mm, height_LXe_TPC_cylinder / 2, 136.*deg, (164.-136.)*deg);
+				LXe_weir_1_solid_union_2 = new G4Tubs("LXe_weir_1_solid_union_2", 0.*mm, 5.*mm, height_LXe_TPC_cylinder / 2, 0.*deg, 360.*deg);
+				LXe_weir_1_solid_1 = new G4UnionSolid("LXe_weir_1_solid_1", LXe_weir_1_solid_union_1, LXe_weir_1_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0.*mm));
+				LXe_weir_1_solid = new G4UnionSolid("LXe_weir_1_solid", LXe_weir_1_solid_1, LXe_weir_1_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0.*mm));
+			}
+				
+			// GXe weir in TPC_cylinder volume without GXe_cylinder volume
+			height_GXe_TPC_cylinder = 70.5*mm - height_LXe_TPC_cylinder;
+
+			if (height_GXe_TPC_cylinder > 0.)	
+			{
+				GXe_weir_1_solid_union_1 = new G4Tubs("GXe_weir_1_solid_union_1", 61.5*mm, 71.5*mm, height_GXe_TPC_cylinder / 2, 136.*deg, (164.-136.)*deg);
+				GXe_weir_1_solid_union_2 = new G4Tubs("GXe_weir_1_solid_union_2", 0.*mm, 5.*mm, height_GXe_TPC_cylinder / 2, 0.*deg, 360.*deg);
+				GXe_weir_1_solid_1 = new G4UnionSolid("GXe_weir_1_solid_1", GXe_weir_1_solid_union_1, GXe_weir_1_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0.*mm));
+				GXe_weir_1_solid = new G4UnionSolid("GXe_weir_1_solid", GXe_weir_1_solid_1, GXe_weir_1_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0.*mm));
+			}
+
+			// LXe weir in GXe_cylinder volume
+			height_LXe_GXe_cylinder = std::max(filling_ratio_weir * (70.5*mm + 5.5*mm) - 70.5*mm, 0.*mm);
+
+			if (height_LXe_GXe_cylinder > 0.)	
+			{
+				LXe_weir_2_solid_union_1 = new G4Tubs("LXe_weir_2_solid_union_1", 61.5*mm, 71.5*mm, height_LXe_GXe_cylinder / 2, 136.*deg, (164.-136.)*deg);
+				LXe_weir_2_solid_union_2 = new G4Tubs("LXe_weir_2_solid_union_2", 0.*mm, 5.*mm, height_LXe_GXe_cylinder / 2, 0.*deg, 360.*deg);
+				LXe_weir_2_solid_1 = new G4UnionSolid("LXe_weir_2_solid_1", LXe_weir_2_solid_union_1, LXe_weir_2_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0.*mm));
+				LXe_weir_2_solid = new G4UnionSolid("LXe_weir_2_solid", LXe_weir_2_solid_1, LXe_weir_2_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0.*mm));
+			}
+
+			// GXe weir in GXe_cylinder volume
+			height_GXe_GXe_cylinder = 5.5*mm - height_LXe_GXe_cylinder;
+
+			if (height_GXe_GXe_cylinder > 0.)	
+			{
+				GXe_weir_2_solid_union_1 = new G4Tubs("GXe_weir_2_solid_union_1", 61.5*mm, 71.5*mm, height_GXe_GXe_cylinder / 2, 136.*deg, (164.-136.)*deg);
+				GXe_weir_2_solid_union_2 = new G4Tubs("GXe_weir_2_solid_union_2", 0.*mm, 5.*mm, height_GXe_GXe_cylinder / 2, 0.*deg, 360.*deg);
+				GXe_weir_2_solid_1 = new G4UnionSolid("GXe_weir_2_solid_1", GXe_weir_2_solid_union_1, GXe_weir_2_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0.*mm));
+				GXe_weir_2_solid = new G4UnionSolid("GXe_weir_2_solid", GXe_weir_2_solid_1, GXe_weir_2_solid_union_2, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0.*mm));
+			}
+	
 			// ToDo: add extra LXe filling
 
 	// PMT fixture (p11)
@@ -320,11 +368,8 @@ using std::stringstream;
 	TPC_Torlon_rod_solid_1 = new G4Tubs("TPC_Torlon_rod_solid_1", 0.*mm, 1.1*mm, (50.-40.)*mm / 2, 0.*deg, 360.*deg);
 	TPC_Torlon_rod_solid = new G4UnionSolid("TPC_Torlon_rod_solid", TPC_Torlon_rod_solid_orig, TPC_Torlon_rod_solid_1, rmy90, G4ThreeVector(0., 0., 0.));
 
-
-
-
-	// Weir for leveling (p13) -> ToDo: Define material PEEK
-		// LXe original filling part -> ToDo: finish, variable GXe filling
+	// Weir for leveling (p13)
+		// LXe original filling part -> ToDo: variable GXe filling
 	TPC_PEEK_weir_LXe_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe_solid_orig", 60.*mm, 73.*mm, 83.5*mm / 2, 130.*deg, (170.-130.)*deg);
 	TPC_PEEK_weir_LXe_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub1", 0.*mm, 5.*mm, 70.5*mm / 2, 0.*deg, 360.*deg);
 	TPC_PEEK_weir_LXe_solid_sub2 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub2", 61.5*mm, 71.5*mm, 70.5*mm / 2, 136.*deg, (164.-136.)*deg);
@@ -332,7 +377,7 @@ using std::stringstream;
 	TPC_PEEK_weir_LXe_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid_2", TPC_PEEK_weir_LXe_solid_1, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), (83.5-70.5)*mm / 2));
 	TPC_PEEK_weir_LXe_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid", TPC_PEEK_weir_LXe_solid_2, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), (83.5-70.5)*mm / 2));
 
-		// LXe extra filling part -> ToDo: finish, variable GXe filling
+		// LXe extra filling part -> ToDo: variable GXe filling
 	TPC_PEEK_weir_LXe2_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe2_solid_orig", 60.*mm, 73.*mm, 5.5*mm / 2, 130.*deg, (170.-130.)*deg);
 	TPC_PEEK_weir_LXe2_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe2_solid_sub1", 0.*mm, 5.*mm, 5.5*mm / 2, 0.*deg, 360.*deg);
 	TPC_PEEK_weir_LXe2_solid_sub2 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub2", 61.5*mm, 71.5*mm, 5.5*mm / 2, 136.*deg, (164.-136.)*deg);
@@ -362,6 +407,22 @@ using std::stringstream;
   TPC_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "TPC_Logical", 0, 0, 0);
   LXe_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "LXe_Logical", 0, 0, 0);
   GXe_Logical = new G4LogicalVolume(GXe_cylinder, GXe, "GXe_Logical", 0, 0, 0);
+	if (height_LXe_TPC_cylinder > 0.)	
+		{
+		LXe_weir_1_log = new G4LogicalVolume(LXe_weir_1_solid, LXe, "LXe_weir_1_log");
+		}
+	if (height_GXe_TPC_cylinder > 0.)	
+		{
+		GXe_weir_1_log = new G4LogicalVolume(GXe_weir_1_solid, GXe, "GXe_weir_1_log");
+		}
+	if (height_LXe_GXe_cylinder > 0.)	
+		{
+		LXe_weir_2_log = new G4LogicalVolume(LXe_weir_2_solid, LXe, "GXe_weir_1_log");
+		}
+	if (height_GXe_GXe_cylinder > 0.)	
+		{
+		GXe_weir_2_log = new G4LogicalVolume(GXe_weir_2_solid, GXe, "GXe_weir_2_log");
+		}
 
 	TPC_SS_PMTfixture_log = new G4LogicalVolume(TPC_SS_PMTfixture_solid, SS304LSteel, "TPC_SS_PMTfixture_log");
 	TPC_Al_filler_log = new G4LogicalVolume(TPC_Al_filler_solid, Aluminium, "TPC_Al_filler_log");
@@ -394,6 +455,24 @@ using std::stringstream;
   
   // Replacing LXe with GXe
   GXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., cryostat_innerHeight/2 - GXe_height/2), GXe_Logical,"GXe_TPC", LXe_Logical, false, 0);
+
+	// Filling weir with LXe and GXe
+	if (height_LXe_TPC_cylinder > 0.)	 // cryostat_innerHeight/2 - GXe_height
+		{
+		LXe_weir_1_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, cryostat_innerHeight/2 - GXe_height - height_GXe_TPC_cylinder - height_LXe_TPC_cylinder/2), LXe_weir_1_log,"LXe_weir_1", LXe_Logical, 0, 0);
+		}
+	if (height_GXe_TPC_cylinder > 0.)	
+		{
+		GXe_weir_1_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, cryostat_innerHeight/2 - GXe_height - height_GXe_TPC_cylinder/2), GXe_weir_1_log,"GXe_weir_1", LXe_Logical, 0, 0);
+		}
+	if (height_LXe_GXe_cylinder > 0.)	
+		{
+		LXe_weir_2_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height/2 + height_LXe_GXe_cylinder/2), LXe_weir_2_log,"LXe_weir_2", GXe_Logical, 0, 0);
+		}
+	if (height_GXe_GXe_cylinder > 0.)	
+		{
+		GXe_weir_2_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height/2 + height_LXe_GXe_cylinder + height_GXe_GXe_cylinder/2), GXe_weir_2_log,"GXe_weir_2", GXe_Logical, 0, 0);
+		}
 
   // Placing all TPC components fully emerged in LXe
 	TPC_SS_PMTfixture_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, 5.*mm / 2 - TPC_dimension_z / 2), TPC_SS_PMTfixture_log,"TPC_SS_PMTfixture", LXe_Logical, 0, 0);

@@ -86,6 +86,27 @@ private:
    //Solids
    G4Tubs *TPC_cylinder;
    G4Tubs *GXe_cylinder; 
+   G4double filling_ratio_weir;
+   G4double height_LXe_TPC_cylinder;
+   G4double height_GXe_TPC_cylinder;
+   G4double height_LXe_GXe_cylinder;
+   G4double height_GXe_GXe_cylinder;
+   G4Tubs* LXe_weir_1_solid_union_1;
+   G4Tubs* LXe_weir_1_solid_union_2;
+   G4Tubs* GXe_weir_1_solid_union_1;
+   G4Tubs* GXe_weir_1_solid_union_2;
+   G4Tubs* LXe_weir_2_solid_union_1;
+   G4Tubs* LXe_weir_2_solid_union_2;
+   G4Tubs* GXe_weir_2_solid_union_1;
+   G4Tubs* GXe_weir_2_solid_union_2;
+   G4VSolid* LXe_weir_1_solid_1;
+   G4VSolid* LXe_weir_1_solid;
+   G4VSolid* GXe_weir_1_solid_1;
+   G4VSolid* GXe_weir_1_solid;
+   G4VSolid* LXe_weir_2_solid_1;
+   G4VSolid* LXe_weir_2_solid;
+   G4VSolid* GXe_weir_2_solid_1;
+   G4VSolid* GXe_weir_2_solid;
 
    G4Tubs* TPC_SS_PMTfixture_solid_orig;
    G4Box* TPC_SS_PMTfixture_solid_union1;	
@@ -299,6 +320,10 @@ private:
    G4LogicalVolume *TPC_Logical;
    G4LogicalVolume *LXe_Logical;
    G4LogicalVolume *GXe_Logical;
+   G4LogicalVolume* LXe_weir_1_log;
+   G4LogicalVolume* GXe_weir_1_log;
+   G4LogicalVolume* LXe_weir_2_log;
+   G4LogicalVolume* GXe_weir_2_log;
 
    G4LogicalVolume* TPC_SS_PMTfixture_log;
    G4LogicalVolume* TPC_Al_filler_log;
@@ -328,6 +353,10 @@ private:
 
    G4VPhysicalVolume *LXe_Physical;
    G4VPhysicalVolume *GXe_Physical; 
+   G4VPhysicalVolume* LXe_weir_1_phys;
+   G4VPhysicalVolume* GXe_weir_1_phys;
+   G4VPhysicalVolume* LXe_weir_2_phys;
+   G4VPhysicalVolume* GXe_weir_2_phys;
 
    G4VPhysicalVolume* TPC_SS_PMTfixture_phys;
    G4VPhysicalVolume* TPC_Al_filler_phys;
