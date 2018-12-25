@@ -22,16 +22,16 @@
 /xebra/gun/radius 0.1 m
 /xebra/gun/halfz  0.25 m
 
-# confine to PMT ficture height:
-#/xebra/gun/center 0. 0. -15.25 cm
+# confine more:
+#/xebra/gun/center 0. 0. 70. mm
 #/xebra/gun/radius 0.1 m
-#/xebra/gun/halfz  0.0025 m
+#/xebra/gun/halfz  10. mm
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
 # /xebra/gun/confine test*
 # /xebra/gun/confine LXe*
-/xebra/gun/confine GXe*
+# /xebra/gun/confine GXe*
 # /xebra/gun/confine TPC_SS_PMTfixture*
 # /xebra/gun/confine TPC_Al_filler*
 # /xebra/gun/confine TPC_Cu_FSE*
@@ -52,6 +52,7 @@
 # /xebra/gun/confine TPC_Torlon_rod*
 # /xebra/gun/confine LXe_weir*
 # /xebra/gun/confine GXe_weir*
+/xebra/gun/confine LXe_extra_filling*
 
 ##################
 #/xebra/gun/energytype Spectrum
