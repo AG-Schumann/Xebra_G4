@@ -38,10 +38,11 @@ private:
    G4double cryostat_innerRadius;
    G4double cryostat_innerHeight;
    G4double GXe_height;
+   G4double LXe_extra_filling_height;
 
    G4double TPC_dimension_z;
    G4double TPC_dimension_r;
-   G4double TPC_offsetOrigin_z;
+   G4double TPC_offset_z;
 
    G4double TPC_PTFE_pillar_number;
    G4double TPC_PTFE_pillar_dimension_y;
@@ -313,6 +314,22 @@ private:
    G4VSolid* TPC_PEEK_weir_LXe2_solid_2;
    G4VSolid* TPC_PEEK_weir_LXe2_solid;
 
+   G4Tubs* LXe_extra_filling_solid_orig;
+   G4VSolid* LXe_extra_filling_solid_1a;
+   G4VSolid* LXe_extra_filling_solid_1;
+   G4VSolid* LXe_extra_filling_solid_2;
+   G4VSolid* LXe_extra_filling_solid_3;
+   G4VSolid* LXe_extra_filling_solid_4;
+   G4VSolid* LXe_extra_filling_solid_5;
+   G4VSolid* LXe_extra_filling_solid_6;
+   G4VSolid* LXe_extra_filling_solid_7;
+   G4VSolid* LXe_extra_filling_solid_8;
+   G4VSolid* LXe_extra_filling_solid_9;
+   G4VSolid* LXe_extra_filling_solid_10;
+   G4VSolid* LXe_extra_filling_solid_11;
+   G4VSolid* LXe_extra_filling_solid_12;
+   G4VSolid* LXe_extra_filling_solid;
+
 
    //LogicalVolumes
    G4LogicalVolume *test_Logical;
@@ -324,6 +341,7 @@ private:
    G4LogicalVolume* GXe_weir_1_log;
    G4LogicalVolume* LXe_weir_2_log;
    G4LogicalVolume* GXe_weir_2_log;
+   G4LogicalVolume* LXe_extra_filling_log;
 
    G4LogicalVolume* TPC_SS_PMTfixture_log;
    G4LogicalVolume* TPC_Al_filler_log;
@@ -357,6 +375,7 @@ private:
    G4VPhysicalVolume* GXe_weir_1_phys;
    G4VPhysicalVolume* LXe_weir_2_phys;
    G4VPhysicalVolume* GXe_weir_2_phys;
+   G4VPhysicalVolume* LXe_extra_filling_phys;
 
    G4VPhysicalVolume* TPC_SS_PMTfixture_phys;
    G4VPhysicalVolume* TPC_Al_filler_phys;
