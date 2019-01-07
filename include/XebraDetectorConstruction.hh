@@ -78,6 +78,7 @@ private:
 
 	// PHYSICAL VOLUMES
         //a-temp// G4VPhysicalVolume *CryostatPhysicalVolume;
+				G4double TPC_offset_origin; 
         G4VPhysicalVolume *TPCPhysicalVolume;
 
 

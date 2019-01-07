@@ -45,8 +45,9 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
     //a-temp//                                           MotherLogicalVolume, false, 0);
    
     //a-temp//MotherLogicalVolume = cryostat->GetMotherVolume();
-    
-    TPCPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(),
+
+		TPC_offset_origin = -29.5 * mm; //shift origin of coordinate system from center entire setup to gate
+    TPCPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0.,0.,TPC_offset_origin),
                                           TPCLogicalVolume,"TPCVolume",
                                           MotherLogicalVolume, false, 0);
 
