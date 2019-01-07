@@ -11,7 +11,13 @@
 #include <G4SDManager.hh> 
 #include <G4SystemOfUnits.hh>
 
-XebraPMTsR11410::XebraPMTsR11410( XebraDetectorConstruction * ){
+XebraPMTsR11410::XebraPMTsR11410(XebraConstructTPC*){;}
+
+XebraPMTsR11410::~XebraPMTsR11410()
+{;}
+
+G4LogicalVolume* XebraPMTsR11410::Construct()
+{
   //pMaterials = pDetectorConstrution->GetMaterialInstance();
 
   dPMTOuterRadius      = 38.*mm;
@@ -34,13 +40,7 @@ XebraPMTsR11410::XebraPMTsR11410( XebraDetectorConstruction * ){
 
   dPMTCeramicRadius = dPMTBaseRadius-5.*mm;
   dPMTCeramicThickness = 4.*mm;
-}
 
-XebraPMTsR11410::~XebraPMTsR11410()
-{;}
-
-G4LogicalVolume* XebraPMTsR11410::Construct()
-{
   G4Material *Quartz = G4Material::GetMaterial("Quartz");
   G4Material *Kovar = G4Material::GetMaterial("Kovar");
   G4Material *Vacuum = G4Material::GetMaterial("Vacuum");
