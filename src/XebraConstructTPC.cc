@@ -570,7 +570,7 @@ using std::stringstream;
 	//Placing PMT R11410
 	rmy180 = new G4RotationMatrix();
 	rmy180->rotateY(180.*deg);
-	PMTR11410PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMTR11410Volume", LXe_Logical, false, 0); //ToDo important: understand and check properties
+	PMT0PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMT0_Body", LXe_Logical, false, 0); //ToDo important: understand and check properties
 
 	// Placing all TPC components fully emerged in original GXe volume (neglecting extra filling)
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2 + TPC_offset_z), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);

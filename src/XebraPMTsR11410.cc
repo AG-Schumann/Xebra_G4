@@ -101,7 +101,7 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   m_pPMTLogicalVolume = new G4LogicalVolume(pPmtSubtractionSolid, Kovar, "PMTLogicalVolume", 0, 0, 0);
 
 //   m_pPMTPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), m_pPMTLogicalVolume, "PMT", m_pLXeLogicalVolume, false, 0);
-//ToDo important: uncomment?
+//ToDo important: already included via implementation in ConstructTPC?
 
   //------------------------ Inner Vacuum -----------------------
   const G4double dPMTCutZ0 = 0.*cm;// 0.5*GetGeometryParameter("PMTHeight")-dPMTWindowThickness;
@@ -138,7 +138,7 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
 
   m_pPMTInnerVacuumPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, dPMTInnerVacuumOffsetZ), 
 						      m_pPMTInnerVacuumLogicalVolume,
-						      "PMTInnerVacuum", m_pPMTLogicalVolume, false, 0);
+						      "PMT0_Inner_Vacuum", m_pPMTLogicalVolume, false, 0);
 
   //------------------------ Quartz window -----------------------
   const G4double dPMTWindowOffsetZ = 0.5*(dPMTWindowThickness-dPMTHeight);
@@ -146,14 +146,14 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   G4Tubs *pPMTWindow = new G4Tubs("pPMTWindow", 0.*mm, dPMTWindowRadius, dPMTWindowThickness*0.5, 0.*deg, 360.*deg);
   m_pPMTWindowLogicalVolume = new G4LogicalVolume(pPMTWindow, Quartz, "PMTWindowLogicalVolume", 0, 0, 0);
   m_pPMTWindowPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, dPMTWindowOffsetZ), m_pPMTWindowLogicalVolume, 
-						 "PMTWindow", m_pPMTLogicalVolume, false, 0);
+						 "PMT0_Window", m_pPMTLogicalVolume, false, 0);
 
   //------------------------ Photocathode ------------------------
 
   G4Tubs *pPMTPhotocathode = new G4Tubs("pPMTPhotocathode", 0.*mm, dPMTPhotocathodeRadius, dPMTPhotocathodeThickness*0.5, 0.*deg, 360.*deg);
   m_pPMTPhotocathodeLogicalVolume = new G4LogicalVolume(pPMTPhotocathode, PhotoCathodeAluminium, "PMTPhotocathodeLogicalVolume", 0, 0, 0);
   m_pPMTPhotocathodePhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, dPMTCutZ0+dPMTPhotocathodeThickness*0.5), m_pPMTPhotocathodeLogicalVolume, 
-						       "PMTPhotocathode", m_pPMTInnerVacuumLogicalVolume, false, 0);
+						       "PMT0_Photocathode", m_pPMTInnerVacuumLogicalVolume, false, 0);
 
 
   //------------------------ PMTs Ceramic Stem ------------------------
@@ -163,12 +163,12 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   G4Tubs *pPMTCeramic = new G4Tubs("pPMTCeramic", 0.*mm, dPMTCeramicRadius, dPMTCeramicThickness*0.5, 0.*deg, 360.*deg);
   m_PMTCeramicLogicalVolume = new G4LogicalVolume(pPMTCeramic, Ceramic, "CeramicLogicalVolume", 0, 0, 0);
   m_PMTCeramicPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, dCeramicOffsetZ), m_PMTCeramicLogicalVolume,
-						 "CeramicStem", m_pPMTLogicalVolume, false, 0);
+						 "PMT0_Ceramic_Stem", m_pPMTLogicalVolume, false, 0);
 
 
   //------------------------------- PMT sensitivity -------------------------------
   // Cyril
-  G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
+  G4SDManager *pSDManager = G4SDManager::GetSDMpointer(); //ToDo: make proper sensitive detector, check with sensor array and sensitvie det. files
   XebraPmtSensitiveDetector* pPmtSD;
 
   if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
