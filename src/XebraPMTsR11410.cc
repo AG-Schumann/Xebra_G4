@@ -11,6 +11,8 @@
 #include <G4SDManager.hh> 
 #include <G4SystemOfUnits.hh>
 
+//ToDo: rename so that no ambiguities with other PMTs
+
 XebraPMTsR11410::XebraPMTsR11410(XebraConstructTPC*){;}
 
 XebraPMTsR11410::~XebraPMTsR11410()
@@ -99,6 +101,7 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   m_pPMTLogicalVolume = new G4LogicalVolume(pPmtSubtractionSolid, Kovar, "PMTLogicalVolume", 0, 0, 0);
 
 //   m_pPMTPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), m_pPMTLogicalVolume, "PMT", m_pLXeLogicalVolume, false, 0);
+//ToDo important: uncomment?
 
   //------------------------ Inner Vacuum -----------------------
   const G4double dPMTCutZ0 = 0.*cm;// 0.5*GetGeometryParameter("PMTHeight")-dPMTWindowThickness;

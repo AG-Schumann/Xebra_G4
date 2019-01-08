@@ -532,7 +532,7 @@ using std::stringstream;
 	LXe_extra_filling_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height/2 + LXe_extra_filling_height/2), LXe_extra_filling_log,"LXe_extra_filling", GXe_Logical, 0, 0);
 
 	// Placing all TPC components fully emerged in LXe
-	//TPC_SS_PMTfixture_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, 5.*mm / 2 - TPC_dimension_z / 2 + TPC_offset_z), TPC_SS_PMTfixture_log,"TPC_SS_PMTfixture", LXe_Logical, 0, 0); //ToDo important: uncomment!!!
+	TPC_SS_PMTfixture_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, 5.*mm / 2 - TPC_dimension_z / 2 + TPC_offset_z), TPC_SS_PMTfixture_log,"TPC_SS_PMTfixture", LXe_Logical, 0, 0);
 	TPC_Al_filler_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 135.*mm / 2 + TPC_offset_z), TPC_Al_filler_log,"TPC_Al_filler", LXe_Logical, 0, 0); 
 	TPC_Cu_FSE_1_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-1) * 13 * mm + 10.0*mm / 2 + TPC_offset_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_1", LXe_Logical, 0, 0); 
 	TPC_Cu_FSE_2_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 210.5 * mm + (1-2) * 13 * mm + 10.0*mm / 2 + TPC_offset_z), TPC_Cu_FSE_log,"TPC_Cu_FSE_2", LXe_Logical, 0, 0); 
@@ -570,7 +570,7 @@ using std::stringstream;
 	//Placing PMT R11410
 	rmy180 = new G4RotationMatrix();
 	rmy180->rotateY(180.*deg);
-	PMTR11410PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-114.*mm/2-80.5*mm), PMTR11410LogicalVolume,"PMTR11410Volume", LXe_Logical, false, 0); //ToDo: correct position
+	PMTR11410PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMTR11410Volume", LXe_Logical, false, 0); //ToDo important: understand and check properties
 
 	// Placing all TPC components fully emerged in original GXe volume (neglecting extra filling)
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2 + TPC_offset_z), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);
