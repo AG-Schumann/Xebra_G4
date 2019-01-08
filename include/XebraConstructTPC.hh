@@ -412,7 +412,7 @@ private:
 	G4VPhysicalVolume* TPC_PEEK_weir_LXe2_phys;
 
 	G4RotationMatrix* rmy180;
-	G4VPhysicalVolume *PMTR11410PhysicalVolume;
+	G4VPhysicalVolume *PMT0PhysicalVolume;
 
 	//Visualization
 	G4VisAttributes *TeflonVisAtt;

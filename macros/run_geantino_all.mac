@@ -53,10 +53,12 @@
 # /xebra/gun/confine TPC_SS_TopMesh*
 # /xebra/gun/confine TPC_PEEK_weir*
 # /xebra/gun/confine TPC_Torlon_rod*
-# /xebra/gun/confine CeramicStem*
-# /xebra/gun/confine PMTPhotocathode*
-# /xebra/gun/confine PMTWindow*
-/xebra/gun/confine PMT*
+# /xebra/gun/confine PMT0_Ceramic_Stem*
+# /xebra/gun/confine PMT0_Photocathode*
+# /xebra/gun/confine PMT0_Window*
+# /xebra/gun/confine PMT0_Inner_Vacuum*
+/xebra/gun/confine PMT0_Body
+# /xebra/gun/confine PMT0*
 
 ##################
 #/xebra/gun/energytype Spectrum
