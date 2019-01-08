@@ -393,4 +393,17 @@
  /usr/local/geant4/include/Geant4/G4VNotifier.hh \
  /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
  include/XebraConstructSensors.hh include/XebraConstructTPC.hh \
- include/XebraPmtSensitiveDetector.hh include/XebraPmtHit.hh
+ include/XebraPmtSensitiveDetector.hh include/XebraPmtHit.hh \
+ include/XebraPMTsR11410.hh \
+ /usr/local/geant4/include/Geant4/G4Polyhedra.hh \
+ /usr/local/geant4/include/Geant4/G4VCSGfaceted.hh \
+ /usr/local/geant4/include/Geant4/G4PolyhedraSide.hh \
+ /usr/local/geant4/include/Geant4/G4VCSGface.hh \
+ /usr/local/geant4/include/Geant4/G4PolyhedraHistorical.hh \
+ /usr/local/geant4/include/Geant4/G4Polyhedra.icc \
+ /usr/local/geant4/include/Geant4/G4Polycone.hh \
+ /usr/local/geant4/include/Geant4/G4PolyconeSide.hh \
+ /usr/local/geant4/include/Geant4/G4PolyconeHistorical.hh \
+ /usr/local/geant4/include/Geant4/G4Polycone.icc \
+ /usr/local/geant4/include/Geant4/G4Ellipsoid.hh \
+ /usr/local/geant4/include/Geant4/G4Ellipsoid.icc

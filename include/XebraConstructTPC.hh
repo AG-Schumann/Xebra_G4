@@ -366,6 +366,8 @@ private:
 	G4LogicalVolume* TPC_PEEK_weir_LXe_log;
 	G4LogicalVolume* TPC_PEEK_weir_LXe2_log;
 
+	G4LogicalVolume *PMTR11410LogicalVolume;
+
 	//PhysicalVolumes
 	G4VPhysicalVolume *test_phys;
 
@@ -408,6 +410,9 @@ private:
 	G4VPhysicalVolume* TPC_Torlon_rod_6_phys;
 	G4VPhysicalVolume* TPC_PEEK_weir_LXe_phys;
 	G4VPhysicalVolume* TPC_PEEK_weir_LXe2_phys;
+
+	G4RotationMatrix* rmy180;
+	G4VPhysicalVolume *PMTR11410PhysicalVolume;
 
 	//Visualization
 	G4VisAttributes *TeflonVisAtt;

@@ -11,7 +11,15 @@
 #include <G4SDManager.hh> 
 #include <G4SystemOfUnits.hh>
 
-XebraPMTsR11410::XebraPMTsR11410( XebraDetectorConstruction * ){
+//ToDo: rename so that no ambiguities with other PMTs
+
+XebraPMTsR11410::XebraPMTsR11410(XebraConstructTPC*){;}
+
+XebraPMTsR11410::~XebraPMTsR11410()
+{;}
+
+G4LogicalVolume* XebraPMTsR11410::Construct()
+{
   //pMaterials = pDetectorConstrution->GetMaterialInstance();
 
   dPMTOuterRadius      = 38.*mm;
@@ -34,13 +42,7 @@ XebraPMTsR11410::XebraPMTsR11410( XebraDetectorConstruction * ){
 
   dPMTCeramicRadius = dPMTBaseRadius-5.*mm;
   dPMTCeramicThickness = 4.*mm;
-}
 
-XebraPMTsR11410::~XebraPMTsR11410()
-{;}
-
-G4LogicalVolume* XebraPMTsR11410::Construct()
-{
   G4Material *Quartz = G4Material::GetMaterial("Quartz");
   G4Material *Kovar = G4Material::GetMaterial("Kovar");
   G4Material *Vacuum = G4Material::GetMaterial("Vacuum");
@@ -99,6 +101,7 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   m_pPMTLogicalVolume = new G4LogicalVolume(pPmtSubtractionSolid, Kovar, "PMTLogicalVolume", 0, 0, 0);
 
 //   m_pPMTPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), m_pPMTLogicalVolume, "PMT", m_pLXeLogicalVolume, false, 0);
+//ToDo important: uncomment?
 
   //------------------------ Inner Vacuum -----------------------
   const G4double dPMTCutZ0 = 0.*cm;// 0.5*GetGeometryParameter("PMTHeight")-dPMTWindowThickness;

@@ -2,7 +2,7 @@
 #define XEBRAPMTsR11410_H
 
 //XEBRA header files
-#include "XebraDetectorConstruction.hh"
+#include "XebraConstructTPC.hh"
 
 //Additional Header Files
 #include <globals.hh>
@@ -26,7 +26,7 @@
 class XebraPMTsR11410
 {
 public:
-  XebraPMTsR11410(XebraDetectorConstruction*);
+  XebraPMTsR11410(XebraConstructTPC*);//XebraDetectorConstruction *
   ~XebraPMTsR11410();
 
   G4LogicalVolume* Construct();

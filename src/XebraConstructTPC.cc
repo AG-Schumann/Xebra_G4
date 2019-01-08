@@ -2,6 +2,7 @@
 
 //Detector Components
 #include "XebraConstructSensors.hh"
+#include "XebraPMTsR11410.hh"
 
 XebraConstructTPC::XebraConstructTPC(XebraDetectorConstruction *){
 
@@ -496,6 +497,10 @@ using std::stringstream;
 	TPC_PEEK_weir_LXe_log = new G4LogicalVolume(TPC_PEEK_weir_LXe_solid, PEEK, "TPC_PEEK_weir_LXe_log");
 	TPC_PEEK_weir_LXe2_log = new G4LogicalVolume(TPC_PEEK_weir_LXe2_solid, PEEK, "TPC_PEEK_weir_LXe2_log");
 
+  // Create Logical XebraPMTsR11410 Volume from corresponding class
+	XebraPMTsR11410 *r11410 = new XebraPMTsR11410(this);
+	PMTR11410LogicalVolume = r11410->Construct();
+
   
 //***********************************************PHYSICALVOLUME*******************************************************
 
@@ -547,7 +552,7 @@ using std::stringstream;
 	TPC_Torlon_rod_5_phys =  new G4PVPlacement(rmz60,G4ThreeVector((50.+40.)*mm / 2 * cos(300.*deg), (50.+40.)*mm / 2 * sin(300.*deg), -TPC_dimension_z / 2 + 170.0*mm + TPC_offset_z), TPC_Torlon_rod_log,"TPC_Torlon_rod_5", LXe_Logical, 0, 0);
 	TPC_Torlon_rod_6_phys =  new G4PVPlacement(rmz60,G4ThreeVector((50.+40.)*mm / 2 * cos(300.*deg), (50.+40.)*mm / 2 * sin(300.*deg), -TPC_dimension_z / 2 + 222.0*mm + TPC_offset_z), TPC_Torlon_rod_log,"TPC_Torlon_rod_6", LXe_Logical, 0, 0);
 	
-		// Placing Teflon pillars fully emerged in LXe around active TPC
+	// Placing Teflon pillars fully emerged in LXe around active TPC
 	for (int a=0; a < TPC_PTFE_pillar_number; ++a)
 	{ 
 		G4double rotate_angle = a*(360./TPC_PTFE_pillar_number);
@@ -561,6 +566,11 @@ using std::stringstream;
 		name << "TPC_PTFE_pillar_LXe_" << a;
 		TPC_PTFE_pillar_LXe_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
 	}
+
+	//Placing PMT R11410
+	rmy180 = new G4RotationMatrix();
+	rmy180->rotateY(180.*deg);
+	PMTR11410PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMTR11410Volume", LXe_Logical, false, 0); //ToDo important: understand and check properties
 
 	// Placing all TPC components fully emerged in original GXe volume (neglecting extra filling)
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2 + TPC_offset_z), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);

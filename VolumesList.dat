@@ -1,4 +1,8 @@
 PhysicalVolume LogicalVolume MotherLogicalVolume
+PMTInnerVacuum PMTInnerVacuumLogicalVolume PMTLogicalVolume
+PMTWindow PMTWindowLogicalVolume PMTLogicalVolume
+PMTPhotocathode PMTPhotocathodeLogicalVolume PMTInnerVacuumLogicalVolume
+CeramicStem CeramicLogicalVolume PMTLogicalVolume
 LXe_TPC LXe_Logical TPC_Logical
 GXe_TPC GXe_Logical LXe_Logical
 LXe_weir_1 LXe_weir_1_log LXe_Logical
@@ -30,6 +34,7 @@ TPC_PTFE_pillar_LXe_2 TPC_PTFE_pillar_LXe_log LXe_Logical
 TPC_PTFE_pillar_LXe_3 TPC_PTFE_pillar_LXe_log LXe_Logical
 TPC_PTFE_pillar_LXe_4 TPC_PTFE_pillar_LXe_log LXe_Logical
 TPC_PTFE_pillar_LXe_5 TPC_PTFE_pillar_LXe_log LXe_Logical
+PMTR11410Volume PMTLogicalVolume LXe_Logical
 TPC_SS_TopRing TPC_SS_TopRing_log GXe_Logical
 TPC_PTFE_spacer1 TPC_PTFE_spacer1_log GXe_Logical
 TPC_PTFE_spacer2 TPC_PTFE_spacer2_log GXe_Logical
