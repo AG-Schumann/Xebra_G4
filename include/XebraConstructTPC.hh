@@ -281,15 +281,6 @@ private:
 	G4VSolid* TPC_PTFE_TopPMTHolder_solid_13;
 	G4VSolid* TPC_PTFE_TopPMTHolder_solid;
 
-	G4Box* TPC_R8520_solid_orig_1;
-	G4Box* TPC_R8520_solid_orig_2;
-	G4Tubs* TPC_R8520_solid_orig_3;
-	G4VSolid* TPC_R8520_solid_orig_a;
-	G4VSolid* TPC_R8520_solid_orig_b;
-	G4VSolid* TPC_R8520_solid_orig_c;
-	G4VSolid* TPC_R8520_solid_orig_d;
-	G4VSolid* TPC_R8520_solid_orig;
-
 	G4Tubs* TPC_SS_cathode_ring_solid;
 
 	G4Tubs* TPC_SS_anode_ring_solid;
@@ -367,6 +358,7 @@ private:
 	G4LogicalVolume* TPC_PEEK_weir_LXe2_log;
 
 	G4LogicalVolume *PMTR11410LogicalVolume;
+	G4LogicalVolume *PMTR8520LogicalVolume;
 
 	//PhysicalVolumes
 	G4VPhysicalVolume *test_phys;
@@ -413,6 +405,7 @@ private:
 
 	G4RotationMatrix* rmy180;
 	G4VPhysicalVolume *PMT0PhysicalVolume;
+	G4VPhysicalVolume *PMT1PhysicalVolume;
 
 	//Visualization
 	G4VisAttributes *TeflonVisAtt;

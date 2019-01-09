@@ -3,6 +3,7 @@
 //Detector Components
 #include "XebraConstructSensors.hh"
 #include "XebraPMTsR11410.hh"
+#include "XebraPMTsR8520.hh"
 
 XebraConstructTPC::XebraConstructTPC(XebraDetectorConstruction *){
 
@@ -436,19 +437,6 @@ using std::stringstream;
 	}
 	LXe_extra_filling_solid = LXe_extra_filling_solid_12;
 
-
-/* -> ToDo: put in extra file
-	// R8520
-	TPC_R8520_solid_orig_1 = new G4Box("TPC_R8520_solid_orig_1", 21.7*mm / 2, 25.7*mm / 2, 25.0*mm / 2);
-	TPC_R8520_solid_orig_2 = new G4Box("TPC_R8520_solid_orig_2", 25.7*mm / 2, 21.7*mm / 2, 25.0*mm / 2);
-	TPC_R8520_solid_orig_3 = new G4Tubs("TPC_R8520_solid_orig_3", 0.*mm, 2.*mm, 25.*mm / 2, 0.*deg, 360.*deg);
-	TPC_R8520_solid_orig_a = new G4UnionSolid("TPC_R8520_solid_orig_a", TPC_R8520_solid_orig_1, TPC_R8520_solid_orig_2, 0, G4ThreeVector(0., 0., 0.));
-	TPC_R8520_solid_orig_b = new G4UnionSolid("TPC_R8520_solid_orig_b", TPC_R8520_solid_orig_a, TPC_R8520_solid_orig_3, 0, G4ThreeVector((21.7/2)*mm, (21.7/2)*mm, 0.));
-	TPC_R8520_solid_orig_c = new G4UnionSolid("TPC_R8520_solid_orig_c", TPC_R8520_solid_orig_b, TPC_R8520_solid_orig_3, 0, G4ThreeVector(-(21.7/2)*mm, (21.7/2)*mm, 0.));
-	TPC_R8520_solid_orig_d = new G4UnionSolid("TPC_R8520_solid_orig_d", TPC_R8520_solid_orig_c, TPC_R8520_solid_orig_3, 0, G4ThreeVector((21.7/2)*mm, -(21.7/2)*mm, 0.));
-	TPC_R8520_solid_orig = new G4UnionSolid("TPC_R8520_solid_orig", TPC_R8520_solid_orig_d, TPC_R8520_solid_orig_3, 0, G4ThreeVector(-(21.7/2)*mm, -(21.7/2)*mm, 0.));
-*/
-
 // ToDo: Add missing TPC components.
 
 //**************************************************LOGICALVOLUMES*****************************************************
@@ -500,6 +488,10 @@ using std::stringstream;
   // Create Logical XebraPMTsR11410 Volume from corresponding class
 	XebraPMTsR11410 *r11410 = new XebraPMTsR11410(this);
 	PMTR11410LogicalVolume = r11410->Construct();
+
+  // Create Logical XebraPMTsR8520 Volume from corresponding class
+	XebraPMTsR8520 *r8520 = new XebraPMTsR8520(this);
+	PMTR8520LogicalVolume = r8520->Construct();
 
   
 //***********************************************PHYSICALVOLUME*******************************************************
@@ -610,6 +602,9 @@ using std::stringstream;
 		name << "TPC_SS_pillar_" << a;
 		TPC_SS_pillar_phys = new G4PVPlacement(0, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm + 25.0*mm / 2 + TPC_offset_z), TPC_SS_pillar_log, name.str(), GXe_Logical, false, 0);
 	}
+
+	//Placing PMT R8520
+	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,18.0*mm + (28.25-1.2)*mm/2 + 29.5*mm), PMTR8520LogicalVolume,"PMT1_Body", GXe_Logical, false, 0); //ToDo important: correct vertical position
 
 
 //**********************************************VISUALIZATION**********************************************
