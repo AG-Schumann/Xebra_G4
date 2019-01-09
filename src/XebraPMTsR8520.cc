@@ -41,7 +41,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
   //------------------------- PMT body ---------------------
 	
-	// general outer dimensions PMT without subtracted Al ring and window
+	// general outer dimensions PMT
 	R8520_body_solid_orig_1 = new G4Box("R8520_body_solid_orig_1", R8520_body_width / 2 - R8520_body_cornerradius, R8520_body_width / 2, R8520_body_height / 2);
 	R8520_body_solid_orig_2 = new G4Box("R8520_body_solid_orig_2", R8520_body_width / 2, R8520_body_width / 2 - R8520_body_cornerradius, R8520_body_height / 2);
 	R8520_body_solid_orig_3 = new G4Tubs("R8520_body_solid_orig_3", 0.*mm, R8520_body_cornerradius, R8520_body_height / 2, 0.*deg, 360.*deg);
@@ -51,28 +51,22 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 	R8520_body_solid_orig_d = new G4UnionSolid("R8520_body_solid_orig_d", R8520_body_solid_orig_c, R8520_body_solid_orig_3, 0, G4ThreeVector((R8520_body_width / 2 - R8520_body_cornerradius), -(R8520_body_width / 2 - R8520_body_cornerradius), 0.));
 	R8520_body_solid_orig = new G4UnionSolid("R8520_body_solid_orig", R8520_body_solid_orig_d, R8520_body_solid_orig_3, 0, G4ThreeVector(-(R8520_body_width / 2 - R8520_body_cornerradius), -(R8520_body_width / 2 - R8520_body_cornerradius), 0.));
 
-	// subtract Al ring and window
-	R8520_body_solid_cut1_1 = new G4Box("R8520_body_solid_cut1_1", R8520_body_width / 2 - R8520_body_cornerradius, R8520_body_width / 2, (R8520_window_height + R8520_ring_height) / 2);
-	R8520_body_solid_cut1_2 = new G4Box("R8520_body_solid_cut1_2", R8520_body_width / 2, R8520_body_width / 2 - R8520_body_cornerradius, (R8520_window_height + R8520_ring_height) / 2);
-	R8520_body_solid_cut1_3 = new G4Tubs("R8520_body_solid_cut1_3", 0.*mm, R8520_body_cornerradius, (R8520_window_height + R8520_ring_height) / 2, 0.*deg, 360.*deg);
-	R8520_body_solid_cut1_a = new G4UnionSolid("R8520_body_solid_cut1_a", R8520_body_solid_cut1_1, R8520_body_solid_cut1_2, 0, G4ThreeVector(0., 0., 0.));
-	R8520_body_solid_cut1_b = new G4UnionSolid("R8520_body_solid_cut1_b", R8520_body_solid_cut1_a, R8520_body_solid_cut1_3, 0, G4ThreeVector((R8520_body_width / 2 - R8520_body_cornerradius), (R8520_body_width / 2 - R8520_body_cornerradius), 0.));
-	R8520_body_solid_cut1_c = new G4UnionSolid("R8520_body_solid_cut1_c", R8520_body_solid_cut1_b, R8520_body_solid_cut1_3, 0, G4ThreeVector(-(R8520_body_width / 2 - R8520_body_cornerradius), (R8520_body_width / 2 - R8520_body_cornerradius), 0.));
-	R8520_body_solid_cut1_d = new G4UnionSolid("R8520_body_solid_cut1_d", R8520_body_solid_cut1_c, R8520_body_solid_cut1_3, 0, G4ThreeVector((R8520_body_width / 2 - R8520_body_cornerradius), -(R8520_body_width / 2 - R8520_body_cornerradius), 0.));
-	R8520_body_solid_cut1 = new G4UnionSolid("R8520_body_solid_cut1", R8520_body_solid_cut1_d, R8520_body_solid_cut1_3, 0, G4ThreeVector(-(R8520_body_width / 2 - R8520_body_cornerradius), -(R8520_body_width / 2 - R8520_body_cornerradius), 0.));
-	R8520_body_solid_sub1 = new G4SubtractionSolid("R8520_body_solid_sub1", R8520_body_solid_orig, R8520_body_solid_cut1, 0, G4ThreeVector(0.,0.,(R8520_body_height-(R8520_window_height + R8520_ring_height))/2));
+	// subtract edge outside of window
+	R8520_body_solid_cut1 = new G4Box("R8520_body_solid_cut1", R8520_body_width / 2, R8520_body_width / 2, R8520_window_height / 2);
+	R8520_body_solid_sub1 = new G4SubtractionSolid("R8520_body_solid_sub1", R8520_body_solid_orig, R8520_body_solid_cut1, 0, G4ThreeVector(0.,0.,(R8520_body_height - R8520_window_height)/2));
 
-	R8520_body_solid = R8520_body_solid_sub1;
+	R8520_body_solid_cut2_1 = new G4Box("R8520_body_solid_cut2_1", R8520_window_width / 2 - R8520_body_cornerradius, R8520_window_width / 2, R8520_window_height / 2);
+	R8520_body_solid_cut2_2 = new G4Box("R8520_body_solid_cut2_2", R8520_window_width / 2, R8520_window_width / 2 - R8520_body_cornerradius, R8520_window_height / 2);
+	R8520_body_solid_cut2_3 = new G4Tubs("R8520_body_solid_cut2_3", 0.*mm, R8520_body_cornerradius, R8520_window_height / 2, 0.*deg, 360.*deg);
+	R8520_body_solid_cut2_a = new G4UnionSolid("R8520_body_solid_cut2_a", R8520_body_solid_cut2_1, R8520_body_solid_cut2_2, 0, G4ThreeVector(0., 0., 0.));
+	R8520_body_solid_cut2_b = new G4UnionSolid("R8520_body_solid_cut2_b", R8520_body_solid_cut2_a, R8520_body_solid_cut2_3, 0, G4ThreeVector((R8520_window_width / 2 - R8520_body_cornerradius), (R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_cut2_c = new G4UnionSolid("R8520_body_solid_cut2_c", R8520_body_solid_cut2_b, R8520_body_solid_cut2_3, 0, G4ThreeVector(-(R8520_window_width / 2 - R8520_body_cornerradius), (R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_cut2_d = new G4UnionSolid("R8520_body_solid_cut2_d", R8520_body_solid_cut2_c, R8520_body_solid_cut2_3, 0, G4ThreeVector((R8520_window_width / 2 - R8520_body_cornerradius), -(R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_cut2 = new G4UnionSolid("R8520_body_solid_cut2", R8520_body_solid_cut2_d, R8520_body_solid_cut2_3, 0, G4ThreeVector(-(R8520_window_width / 2 - R8520_body_cornerradius), -(R8520_window_width / 2 - R8520_body_cornerradius), 0.));
 
-		// ToDo: remove inner vacuum
+	R8520_body_solid = new G4UnionSolid("R8520_body_solid", R8520_body_solid_sub1, R8520_body_solid_cut2, 0, G4ThreeVector(0., 0., (R8520_body_height - R8520_window_height)/2));
 
 	R8520_log = new G4LogicalVolume(R8520_body_solid, Kovar, "R8520_log", 0, 0, 0); //ToDo: check material!
-
-  //------------------------ Aluminium Ring -----------------------
-
-
-  //------------------------ Inner Vacuum -----------------------
-
 
   //------------------------ Synthetic Silica Window -----------------------
 	R8520_window_solid_1 = new G4Box("R8520_window_solid_1", R8520_window_width / 2 - R8520_body_cornerradius, R8520_window_width / 2, R8520_window_height / 2);
@@ -86,8 +80,13 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 	R8520_window_log = new G4LogicalVolume(R8520_window_solid, Quartz, "R8520_window_log", 0, 0, 0); //ToDo: check material!
 
-	R8520_window_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), R8520_window_log, "PMT1_Window", R8520_log, false, 0); 
-//(R8520_body_height - R8520_window_height)/2  //ToDo: correct position
+	R8520_window_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (R8520_body_height - R8520_window_height)/2), R8520_window_log, "PMT1_Window", R8520_log, false, 0);
+
+  //------------------------ Aluminium Ring -----------------------
+
+
+  //------------------------ Inner Vacuum -----------------------
+
 
   //------------------------ Photocathode ------------------------
 

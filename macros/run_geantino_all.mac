@@ -59,8 +59,8 @@
 # /xebra/gun/confine PMT0_Inner_Vacuum*
 # /xebra/gun/confine PMT0_Body
 # /xebra/gun/confine PMT0*
-# /xebra/gun/confine PMT1_Body
-/xebra/gun/confine PMT1_Window*
+/xebra/gun/confine PMT1_Body
+# /xebra/gun/confine PMT1_Window*
 
 ##################
 #/xebra/gun/energytype Spectrum
