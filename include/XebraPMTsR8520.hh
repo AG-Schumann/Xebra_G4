@@ -45,15 +45,17 @@ private:
 	G4VSolid* R8520_body_solid_orig_d;
 	G4VSolid* R8520_body_solid_orig;
 
-	G4Box* R8520_body_solid_cut1_1;
-	G4Box* R8520_body_solid_cut1_2;
-	G4Tubs* R8520_body_solid_cut1_3;
-	G4VSolid* R8520_body_solid_cut1_a;
-	G4VSolid* R8520_body_solid_cut1_b;
-	G4VSolid* R8520_body_solid_cut1_c;
-	G4VSolid* R8520_body_solid_cut1_d;
 	G4VSolid* R8520_body_solid_cut1;
 	G4VSolid* R8520_body_solid_sub1;
+
+	G4Box* R8520_body_solid_cut2_1;
+	G4Box* R8520_body_solid_cut2_2;
+	G4Tubs* R8520_body_solid_cut2_3;
+	G4VSolid* R8520_body_solid_cut2_a;
+	G4VSolid* R8520_body_solid_cut2_b;
+	G4VSolid* R8520_body_solid_cut2_c;
+	G4VSolid* R8520_body_solid_cut2_d;
+	G4VSolid* R8520_body_solid_cut2;
 
 	G4VSolid* R8520_body_solid;
 
