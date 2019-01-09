@@ -406,4 +406,5 @@
  /usr/local/geant4/include/Geant4/G4PolyconeHistorical.hh \
  /usr/local/geant4/include/Geant4/G4Polycone.icc \
  /usr/local/geant4/include/Geant4/G4Ellipsoid.hh \
- /usr/local/geant4/include/Geant4/G4Ellipsoid.icc
+ /usr/local/geant4/include/Geant4/G4Ellipsoid.icc \
+ include/XebraPMTsR8520.hh

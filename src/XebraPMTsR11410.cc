@@ -11,8 +11,6 @@
 #include <G4SDManager.hh> 
 #include <G4SystemOfUnits.hh>
 
-//ToDo: rename so that no ambiguities with other PMTs
-
 XebraPMTsR11410::XebraPMTsR11410(XebraConstructTPC*){;}
 
 XebraPMTsR11410::~XebraPMTsR11410()
@@ -101,7 +99,6 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   m_pPMTLogicalVolume = new G4LogicalVolume(pPmtSubtractionSolid, Kovar, "PMTLogicalVolume", 0, 0, 0);
 
 //   m_pPMTPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), m_pPMTLogicalVolume, "PMT", m_pLXeLogicalVolume, false, 0);
-//ToDo important: already included via implementation in ConstructTPC?
 
   //------------------------ Inner Vacuum -----------------------
   const G4double dPMTCutZ0 = 0.*cm;// 0.5*GetGeometryParameter("PMTHeight")-dPMTWindowThickness;
@@ -169,13 +166,13 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
   //------------------------------- PMT sensitivity -------------------------------
   // Cyril
   G4SDManager *pSDManager = G4SDManager::GetSDMpointer(); //ToDo: make proper sensitive detector, check with sensor array and sensitvie det. files
-  XebraPmtSensitiveDetector* pPmtSD;
+  XebraPmtSensitiveDetector* pPmt0SD;
 
   if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
      {
-       pPmtSD = new XebraPmtSensitiveDetector("Xebra/PmtSD");
-       pSDManager->AddNewDetector(pPmtSD);
-       m_pPMTPhotocathodeLogicalVolume->SetSensitiveDetector(pPmtSD);
+       pPmt0SD = new XebraPmtSensitiveDetector("Xebra/PmtSD");
+       pSDManager->AddNewDetector(pPmt0SD);
+       m_pPMTPhotocathodeLogicalVolume->SetSensitiveDetector(pPmt0SD);
      }
   
   //---------------------------------- attributes ---------------------------------
