@@ -108,16 +108,20 @@ private:
 
 	G4VSolid* R8520_vacuum_solid;
 
+	G4Box* R8520_photocathode_solid;
+
 	// Logical Volumes:
   G4LogicalVolume* R8520_log;
   G4LogicalVolume* R8520_window_log;
   G4LogicalVolume* R8520_ring_log;
   G4LogicalVolume* R8520_vacuum_log;
+  G4LogicalVolume* R8520_photocathode_log;
 
   // Physical Volumes:
   G4VPhysicalVolume* R8520_window_phys;
   G4VPhysicalVolume* R8520_ring_phys;
   G4VPhysicalVolume* R8520_vacuum_phys;
+  G4VPhysicalVolume* R8520_photocathode_phys;
 
 };
 

@@ -604,7 +604,7 @@ using std::stringstream;
 	}
 
 	//Placing PMT R8520
-	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,18.0*mm + (28.25-1.2)*mm/2 + 29.5*mm), PMTR8520LogicalVolume,"PMT1_Body", GXe_Logical, false, 0); //ToDo important: correct vertical position
+	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT_R8520_Body", GXe_Logical, false, 0); //ToDo important: correct vertical position
 
 
 //**********************************************VISUALIZATION**********************************************
