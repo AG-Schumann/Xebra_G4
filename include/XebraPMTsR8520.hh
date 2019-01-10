@@ -88,14 +88,36 @@ private:
 
 	G4VSolid* R8520_ring_solid;
 
+	G4Box* R8520_vacuum_solid_orig_1;
+	G4Box* R8520_vacuum_solid_orig_2;
+	G4Tubs* R8520_vacuum_solid_orig_3;
+	G4VSolid* R8520_vacuum_solid_orig_a;
+	G4VSolid* R8520_vacuum_solid_orig_b;
+	G4VSolid* R8520_vacuum_solid_orig_c;
+	G4VSolid* R8520_vacuum_solid_orig_d;
+	G4VSolid* R8520_vacuum_solid_orig;
+
+	G4Box* R8520_vacuum_solid_union_1;
+	G4Box* R8520_vacuum_solid_union_2;
+	G4Tubs* R8520_vacuum_solid_union_3;
+	G4VSolid* R8520_vacuum_solid_union_a;
+	G4VSolid* R8520_vacuum_solid_union_b;
+	G4VSolid* R8520_vacuum_solid_union_c;
+	G4VSolid* R8520_vacuum_solid_union_d;
+	G4VSolid* R8520_vacuum_solid_union;
+
+	G4VSolid* R8520_vacuum_solid;
+
 	// Logical Volumes:
   G4LogicalVolume* R8520_log;
   G4LogicalVolume* R8520_window_log;
   G4LogicalVolume* R8520_ring_log;
+  G4LogicalVolume* R8520_vacuum_log;
 
   // Physical Volumes:
   G4VPhysicalVolume* R8520_window_phys;
   G4VPhysicalVolume* R8520_ring_phys;
+  G4VPhysicalVolume* R8520_vacuum_phys;
 
 };
 
