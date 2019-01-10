@@ -33,13 +33,14 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
   const G4double R8520_ring_hole_width = R8520_photocathode_width;
 	const G4double R8520_ring_height = R8520_body_thickness;
   const G4double R8520_body_height = R8520_height; // without subtracted Al ring and window
+  const G4double R8520_vacuum_solid_orig_height = (R8520_body_height-R8520_body_thickness-R8520_ring_height-R8520_window_height);
 
   //------------------------- Materials ---------------------
   G4Material *Quartz = G4Material::GetMaterial("Quartz");
   G4Material *Kovar = G4Material::GetMaterial("Kovar");
   G4Material *Vacuum = G4Material::GetMaterial("Vacuum");
-  G4Material *PhotoCathodeAluminium = G4Material::GetMaterial("PhotoCathodeAluminium");
-  G4Material *Ceramic = G4Material::GetMaterial("Ceramic");
+  //G4Material *PhotoCathodeAluminium = G4Material::GetMaterial("PhotoCathodeAluminium");
+  //G4Material *Ceramic = G4Material::GetMaterial("Ceramic");
   G4Material *Aluminium = G4Material::GetMaterial("Aluminium");
 
   //------------------------- PMT body ---------------------
@@ -114,6 +115,30 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 
   //------------------------ Inner Vacuum -----------------------
+	R8520_vacuum_solid_orig_1 = new G4Box("R8520_vacuum_solid_orig_1", (R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius, (R8520_body_width-R8520_body_thickness) / 2, R8520_vacuum_solid_orig_height / 2);
+	R8520_vacuum_solid_orig_2 = new G4Box("R8520_vacuum_solid_orig_2", (R8520_body_width-R8520_body_thickness) / 2, (R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius, R8520_vacuum_solid_orig_height / 2);
+	R8520_vacuum_solid_orig_3 = new G4Tubs("R8520_vacuum_solid_orig_3", 0.*mm, R8520_body_cornerradius, R8520_vacuum_solid_orig_height / 2, 0.*deg, 360.*deg);
+	R8520_vacuum_solid_orig_a = new G4UnionSolid("R8520_vacuum_solid_orig_a", R8520_vacuum_solid_orig_1, R8520_vacuum_solid_orig_2, 0, G4ThreeVector(0., 0., 0.));
+	R8520_vacuum_solid_orig_b = new G4UnionSolid("R8520_vacuum_solid_orig_b", R8520_vacuum_solid_orig_a, R8520_vacuum_solid_orig_3, 0, G4ThreeVector(((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), ((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), 0.));
+	R8520_vacuum_solid_orig_c = new G4UnionSolid("R8520_vacuum_solid_orig_c", R8520_vacuum_solid_orig_b, R8520_vacuum_solid_orig_3, 0, G4ThreeVector(-((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), ((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), 0.));
+	R8520_vacuum_solid_orig_d = new G4UnionSolid("R8520_vacuum_solid_orig_d", R8520_vacuum_solid_orig_c, R8520_vacuum_solid_orig_3, 0, G4ThreeVector(((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), -((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), 0.));
+	R8520_vacuum_solid_orig = new G4UnionSolid("R8520_vacuum_solid_orig", R8520_vacuum_solid_orig_d, R8520_vacuum_solid_orig_3, 0, G4ThreeVector(-((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), -((R8520_body_width-R8520_body_thickness) / 2 - R8520_body_cornerradius), 0.));
+
+	// add space in Al ring hole
+	R8520_vacuum_solid_union_1 = new G4Box("R8520_vacuum_solid_union_1", R8520_ring_hole_width / 2 - R8520_body_cornerradius, R8520_ring_hole_width / 2, R8520_ring_height / 2);
+	R8520_vacuum_solid_union_2 = new G4Box("R8520_vacuum_solid_union_2", R8520_ring_hole_width / 2, R8520_ring_hole_width / 2 - R8520_body_cornerradius, R8520_ring_height / 2);
+	R8520_vacuum_solid_union_3 = new G4Tubs("R8520_vacuum_solid_union_3", 0.*mm, R8520_body_cornerradius, R8520_ring_height / 2, 0.*deg, 360.*deg);
+	R8520_vacuum_solid_union_a = new G4UnionSolid("R8520_vacuum_solid_union_a", R8520_vacuum_solid_union_1, R8520_vacuum_solid_union_2, 0, G4ThreeVector(0., 0., 0.));
+	R8520_vacuum_solid_union_b = new G4UnionSolid("R8520_vacuum_solid_union_b", R8520_vacuum_solid_union_a, R8520_vacuum_solid_union_3, 0, G4ThreeVector((R8520_ring_hole_width / 2 - R8520_body_cornerradius), (R8520_ring_hole_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_vacuum_solid_union_c = new G4UnionSolid("R8520_vacuum_solid_union_c", R8520_vacuum_solid_union_b, R8520_vacuum_solid_union_3, 0, G4ThreeVector(-(R8520_ring_hole_width / 2 - R8520_body_cornerradius), (R8520_ring_hole_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_vacuum_solid_union_d = new G4UnionSolid("R8520_vacuum_solid_union_d", R8520_vacuum_solid_union_c, R8520_vacuum_solid_union_3, 0, G4ThreeVector((R8520_ring_hole_width / 2 - R8520_body_cornerradius), -(R8520_ring_hole_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_vacuum_solid_union = new G4UnionSolid("R8520_vacuum_solid_union", R8520_vacuum_solid_union_d, R8520_vacuum_solid_union_3, 0, G4ThreeVector(-(R8520_ring_hole_width / 2 - R8520_body_cornerradius), -(R8520_ring_hole_width / 2 - R8520_body_cornerradius), 0.));
+
+	R8520_vacuum_solid = new G4UnionSolid("R8520_vacuum_solid", R8520_vacuum_solid_orig, R8520_vacuum_solid_union, 0, G4ThreeVector(0., 0., (R8520_vacuum_solid_orig_height/2 + R8520_ring_height / 2))); //ToDo: investigate origin body parts under window
+
+	R8520_vacuum_log = new G4LogicalVolume(R8520_vacuum_solid, Vacuum, "R8520_vacuum_log", 0, 0, 0);
+
+	R8520_vacuum_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (-R8520_body_height/2 + R8520_vacuum_solid_orig_height/2 + R8520_body_thickness)), R8520_vacuum_log, "PMT1_Inner_Vacuum", R8520_log, false, 0);
 
 
   //------------------------ Photocathode ------------------------

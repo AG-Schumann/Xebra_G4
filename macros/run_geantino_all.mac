@@ -23,9 +23,9 @@
 #/xebra/gun/halfz  0.25 m
 
 # confine more:
-# /xebra/gun/center 0. 0. 133. mm
-# /xebra/gun/radius 20. mm
-# /xebra/gun/halfz  10. mm
+/xebra/gun/center 0. 0. 145. mm
+/xebra/gun/radius 20. mm
+/xebra/gun/halfz  20. mm
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
@@ -59,10 +59,11 @@
 # /xebra/gun/confine PMT0_Inner_Vacuum*
 # /xebra/gun/confine PMT0_Body
 # /xebra/gun/confine PMT0*
-/xebra/gun/confine PMT1*
+# /xebra/gun/confine PMT1*
 # /xebra/gun/confine PMT1_Body
-# /xebra/gun/confine PMT1_Window
+/xebra/gun/confine PMT1_Window
 # /xebra/gun/confine PMT1_Ring
+# /xebra/gun/confine PMT1_Inner_Vacuum
 
 ##################
 #/xebra/gun/energytype Spectrum
