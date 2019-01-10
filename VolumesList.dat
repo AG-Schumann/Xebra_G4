@@ -4,6 +4,7 @@ PMT0_Window PMTWindowLogicalVolume PMTLogicalVolume
 PMT0_Photocathode PMTPhotocathodeLogicalVolume PMTInnerVacuumLogicalVolume
 PMT0_Ceramic_Stem CeramicLogicalVolume PMTLogicalVolume
 PMT1_Window R8520_window_log R8520_log
+PMT1_Ring R8520_ring_log R8520_log
 LXe_TPC LXe_Logical TPC_Logical
 GXe_TPC GXe_Logical LXe_Logical
 LXe_weir_1 LXe_weir_1_log LXe_Logical
