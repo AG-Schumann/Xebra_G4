@@ -68,12 +68,34 @@ private:
 	G4VSolid* R8520_window_solid_d;
 	G4VSolid* R8520_window_solid;
 
+	G4Box* R8520_ring_solid_orig_1;
+	G4Box* R8520_ring_solid_orig_2;
+	G4Tubs* R8520_ring_solid_orig_3;
+	G4VSolid* R8520_ring_solid_orig_a;
+	G4VSolid* R8520_ring_solid_orig_b;
+	G4VSolid* R8520_ring_solid_orig_c;
+	G4VSolid* R8520_ring_solid_orig_d;
+	G4VSolid* R8520_ring_solid_orig;
+
+	G4Box* R8520_ring_solid_hole_1;
+	G4Box* R8520_ring_solid_hole_2;
+	G4Tubs* R8520_ring_solid_hole_3;
+	G4VSolid* R8520_ring_solid_hole_a;
+	G4VSolid* R8520_ring_solid_hole_b;
+	G4VSolid* R8520_ring_solid_hole_c;
+	G4VSolid* R8520_ring_solid_hole_d;
+	G4VSolid* R8520_ring_solid_hole;
+
+	G4VSolid* R8520_ring_solid;
+
 	// Logical Volumes:
   G4LogicalVolume* R8520_log;
   G4LogicalVolume* R8520_window_log;
+  G4LogicalVolume* R8520_ring_log;
 
   // Physical Volumes:
   G4VPhysicalVolume* R8520_window_phys;
+  G4VPhysicalVolume* R8520_ring_phys;
 
 };
 
