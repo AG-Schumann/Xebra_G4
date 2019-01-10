@@ -34,12 +34,13 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 	const G4double R8520_ring_height = R8520_body_thickness;
   const G4double R8520_body_height = R8520_height; // without subtracted Al ring and window
   const G4double R8520_vacuum_solid_orig_height = (R8520_body_height-R8520_body_thickness-R8520_ring_height-R8520_window_height);
+	const G4double R8520_photocathode_thickness = 0.1 * mm; // ToDo: check
 
   //------------------------- Materials ---------------------
   G4Material *Quartz = G4Material::GetMaterial("Quartz");
-  G4Material *Kovar = G4Material::GetMaterial("Kovar");
+  G4Material *SS304LSteel = G4Material::GetMaterial("SS304LSteel");
   G4Material *Vacuum = G4Material::GetMaterial("Vacuum");
-  //G4Material *PhotoCathodeAluminium = G4Material::GetMaterial("PhotoCathodeAluminium");
+  G4Material *PhotoCathodeAluminium = G4Material::GetMaterial("PhotoCathodeAluminium");
   //G4Material *Ceramic = G4Material::GetMaterial("Ceramic");
   G4Material *Aluminium = G4Material::GetMaterial("Aluminium");
 
@@ -70,7 +71,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 	R8520_body_solid = new G4UnionSolid("R8520_body_solid", R8520_body_solid_sub1, R8520_body_solid_cut2, 0, G4ThreeVector(0., 0., (R8520_body_height - R8520_window_height)/2));
 
-	R8520_log = new G4LogicalVolume(R8520_body_solid, Kovar, "R8520_log", 0, 0, 0); //ToDo: check material!
+	R8520_log = new G4LogicalVolume(R8520_body_solid, SS304LSteel, "R8520_log", 0, 0, 0); //ToDo: check material!
 
   //------------------------ Synthetic Silica Window -----------------------
 	R8520_window_solid_1 = new G4Box("R8520_window_solid_1", R8520_window_width / 2 - R8520_body_cornerradius, R8520_window_width / 2, R8520_window_height / 2);
@@ -84,7 +85,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 	R8520_window_log = new G4LogicalVolume(R8520_window_solid, Quartz, "R8520_window_log", 0, 0, 0); //ToDo: check material!
 
-	R8520_window_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (R8520_body_height - R8520_window_height)/2), R8520_window_log, "PMT1_Window", R8520_log, false, 0);
+	R8520_window_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (R8520_body_height - R8520_window_height)/2), R8520_window_log, "PMT_R8520_Window", R8520_log, false, 0);
 
   //------------------------ Aluminium Ring -----------------------
 	// general outer dimensions Al ring
@@ -111,7 +112,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 	R8520_ring_log = new G4LogicalVolume(R8520_ring_solid, Aluminium, "R8520_ring_log", 0, 0, 0);
 
-	R8520_ring_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (R8520_body_height/2 - R8520_window_height - R8520_ring_height / 2)), R8520_ring_log, "PMT1_Ring", R8520_log, false, 0);
+	R8520_ring_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (R8520_body_height/2 - R8520_window_height - R8520_ring_height / 2)), R8520_ring_log, "PMT_R8520_Ring", R8520_log, false, 0);
 
 
   //------------------------ Inner Vacuum -----------------------
@@ -134,57 +135,58 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 	R8520_vacuum_solid_union_d = new G4UnionSolid("R8520_vacuum_solid_union_d", R8520_vacuum_solid_union_c, R8520_vacuum_solid_union_3, 0, G4ThreeVector((R8520_ring_hole_width / 2 - R8520_body_cornerradius), -(R8520_ring_hole_width / 2 - R8520_body_cornerradius), 0.));
 	R8520_vacuum_solid_union = new G4UnionSolid("R8520_vacuum_solid_union", R8520_vacuum_solid_union_d, R8520_vacuum_solid_union_3, 0, G4ThreeVector(-(R8520_ring_hole_width / 2 - R8520_body_cornerradius), -(R8520_ring_hole_width / 2 - R8520_body_cornerradius), 0.));
 
-	R8520_vacuum_solid = new G4UnionSolid("R8520_vacuum_solid", R8520_vacuum_solid_orig, R8520_vacuum_solid_union, 0, G4ThreeVector(0., 0., (R8520_vacuum_solid_orig_height/2 + R8520_ring_height / 2))); //ToDo: investigate origin body parts under window
+	R8520_vacuum_solid = new G4UnionSolid("R8520_vacuum_solid", R8520_vacuum_solid_orig, R8520_vacuum_solid_union, 0, G4ThreeVector(0., 0., (R8520_vacuum_solid_orig_height/2 + R8520_ring_height / 2)));
 
 	R8520_vacuum_log = new G4LogicalVolume(R8520_vacuum_solid, Vacuum, "R8520_vacuum_log", 0, 0, 0);
 
-	R8520_vacuum_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (-R8520_body_height/2 + R8520_vacuum_solid_orig_height/2 + R8520_body_thickness)), R8520_vacuum_log, "PMT1_Inner_Vacuum", R8520_log, false, 0);
+	R8520_vacuum_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (-R8520_body_height/2 + R8520_vacuum_solid_orig_height/2 + R8520_body_thickness)), R8520_vacuum_log, "PMT_R8520_Inner_Vacuum", R8520_log, false, 0);
 
 
   //------------------------ Photocathode ------------------------
+	R8520_photocathode_solid = new G4Box("R8520_photocathode_solid", R8520_photocathode_width / 2, R8520_photocathode_width / 2, R8520_photocathode_thickness / 2);
+
+	R8520_photocathode_log = new G4LogicalVolume(R8520_photocathode_solid, PhotoCathodeAluminium, "R8520_photocathode_log", 0, 0, 0);
+
+	R8520_photocathode_phys = new G4PVPlacement(0, G4ThreeVector(0, 0, (R8520_vacuum_solid_orig_height/2 - R8520_photocathode_thickness / 2)), R8520_photocathode_log, "PMT_R8520_Photocathode", R8520_vacuum_log, false, 0);  // ToDo: Check position
 
 
-  //------------------------ Base Stem ------------------------
+  //------------------------ Base Stem ------------------------ // Circlex ? // ToDo: maybe add
 
 
   //------------------------------- PMT sensitivity -------------------------------
-  /*
   G4SDManager *pSDManager = G4SDManager::GetSDMpointer(); //ToDo: make proper sensitive detector, check with sensor array and sensitvie det. files
-  XebraPmtSensitiveDetector* pPmt1SD;
+  XebraPmtSensitiveDetector* pPMT_R8520_SD;
 
   if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
      {
-       pPmt1SD = new XebraPmtSensitiveDetector("Xebra/PmtSD");
-       pSDManager->AddNewDetector(pPmt1SD);
-       PMT_Photocathode_log->SetSensitiveDetector(pPmt1SD);
+       pPMT_R8520_SD = new XebraPmtSensitiveDetector("Xebra/PMT_R8520_SD");
+       pSDManager->AddNewDetector(pPMT_R8520_SD);
+       R8520_photocathode_log->SetSensitiveDetector(pPMT_R8520_SD);
      }
-	*/
   
   //---------------------------------- attributes ---------------------------------
   
-  //   m_pPMTInnerVacuumLogicalVolume->SetVisAttributes(G4VisAttributes::Invisible);
+  //   R8520_vacuum_log->SetVisAttributes(G4VisAttributes::Invisible);
 
-  /*
 	G4Colour hPMTWindowColor(1., 0.757, 0.024);
   G4VisAttributes *pPMTWindowVisAtt = new G4VisAttributes(hPMTWindowColor);
   pPMTWindowVisAtt->SetVisibility(true);
-  m_pPMTWindowLogicalVolume->SetVisAttributes(pPMTWindowVisAtt);
+  R8520_window_log->SetVisAttributes(pPMTWindowVisAtt);
 
   G4Colour hPMTPhotocathodeColor(1., 0.082, 0.011);
   G4VisAttributes *pPMTPhotocathodeVisAtt = new G4VisAttributes(hPMTPhotocathodeColor);
   pPMTPhotocathodeVisAtt->SetVisibility(true);
-  m_pPMTPhotocathodeLogicalVolume->SetVisAttributes(pPMTPhotocathodeVisAtt);
+  R8520_photocathode_log->SetVisAttributes(pPMTPhotocathodeVisAtt);
 
   G4Colour hPMTColor(1., 0.486, 0.027);
   G4VisAttributes *pPMTVisAtt = new G4VisAttributes(hPMTColor);
   pPMTVisAtt->SetVisibility(true);
-  m_pPMTLogicalVolume->SetVisAttributes(pPMTVisAtt);
+  R8520_log->SetVisAttributes(pPMTVisAtt);
 
   G4Colour hVacuumColor(1., 1., 1.);
   G4VisAttributes *pVacuumVisAtt = new G4VisAttributes(hVacuumColor);
   pVacuumVisAtt->SetVisibility(true);
-  m_pPMTInnerVacuumLogicalVolume->SetVisAttributes(pVacuumVisAtt);
-	*/
+  R8520_vacuum_log->SetVisAttributes(pVacuumVisAtt);
 
 
   return R8520_log;
