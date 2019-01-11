@@ -60,5 +60,11 @@ TPC_SS_pillar_2 TPC_SS_pillar_log GXe_Logical
 TPC_SS_pillar_3 TPC_SS_pillar_log GXe_Logical
 TPC_SS_pillar_4 TPC_SS_pillar_log GXe_Logical
 TPC_SS_pillar_5 TPC_SS_pillar_log GXe_Logical
-PMT_R8520_Body R8520_log GXe_Logical
+PMT1_Body R8520_log GXe_Logical
+PMT2_Body R8520_log GXe_Logical
+PMT3_Body R8520_log GXe_Logical
+PMT4_Body R8520_log GXe_Logical
+PMT5_Body R8520_log GXe_Logical
+PMT6_Body R8520_log GXe_Logical
+PMT7_Body R8520_log GXe_Logical
 TPCVolume TPC_Logical LabVolume
