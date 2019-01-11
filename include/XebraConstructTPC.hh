@@ -406,6 +406,12 @@ private:
 	G4RotationMatrix* rmy180;
 	G4VPhysicalVolume *PMT0PhysicalVolume;
 	G4VPhysicalVolume *PMT1PhysicalVolume;
+	G4VPhysicalVolume *PMT2PhysicalVolume;
+	G4VPhysicalVolume *PMT3PhysicalVolume;
+	G4VPhysicalVolume *PMT4PhysicalVolume;
+	G4VPhysicalVolume *PMT5PhysicalVolume;
+	G4VPhysicalVolume *PMT6PhysicalVolume;
+	G4VPhysicalVolume *PMT7PhysicalVolume;
 
 	//Visualization
 	G4VisAttributes *TeflonVisAtt;

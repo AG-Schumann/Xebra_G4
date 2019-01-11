@@ -154,7 +154,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 
   //------------------------------- PMT sensitivity -------------------------------
-  G4SDManager *pSDManager = G4SDManager::GetSDMpointer(); //ToDo: make proper sensitive detector, check with sensor array and sensitvie det. files
+  G4SDManager *pSDManager = G4SDManager::GetSDMpointer(); //ToDo: make proper sensitive detector, check with sensor array and sensitvie det. files, check placement multiple PMTs, sensitivity,...
   XebraPmtSensitiveDetector* pPMT_R8520_SD;
 
   if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
@@ -162,7 +162,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
        pPMT_R8520_SD = new XebraPmtSensitiveDetector("Xebra/PMT_R8520_SD");
        pSDManager->AddNewDetector(pPMT_R8520_SD);
        R8520_photocathode_log->SetSensitiveDetector(pPMT_R8520_SD);
-     }
+     } //ToDo: make all PMTs one sensitive detector
   
   //---------------------------------- attributes ---------------------------------
   
