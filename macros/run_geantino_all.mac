@@ -18,14 +18,14 @@
 /xebra/gun/type   Volume  
 /xebra/gun/shape  Cylinder
 # include entire TPC
-#/xebra/gun/center 0. 0. 0. cm
-#/xebra/gun/radius 0.1 m
-#/xebra/gun/halfz  0.25 m
+/xebra/gun/center 0. 0. 0. cm
+/xebra/gun/radius 0.1 m
+/xebra/gun/halfz  0.25 m
 
 # confine more:
-/xebra/gun/center 0. 0. 25. mm
-/xebra/gun/radius 50. mm
-/xebra/gun/halfz  20. mm
+#/xebra/gun/center 0. 0. 25. mm
+#/xebra/gun/radius 50. mm
+#/xebra/gun/halfz  20. mm
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
@@ -64,8 +64,9 @@
 # /xebra/gun/confine PMT_R8520_Window
 # /xebra/gun/confine PMT_R8520_Ring
 # /xebra/gun/confine PMT_R8520_Inner_Vacuum
-/xebra/gun/confine PMT_R8520_Photocathode
+# /xebra/gun/confine PMT_R8520_Photocathode
 # /xebra/gun/confine PMT7_Body
+/xebra/gun/confine PMT*
 
 ##################
 #/xebra/gun/energytype Spectrum
