@@ -371,7 +371,7 @@ using std::stringstream;
 	TPC_Torlon_rod_solid = new G4UnionSolid("TPC_Torlon_rod_solid", TPC_Torlon_rod_solid_orig, TPC_Torlon_rod_solid_1, rmy90, G4ThreeVector(0., 0., 0.));
 
 	// Weir for leveling (p13)
-		// LXe original filling part -> ToDo: variable GXe filling
+		// LXe original filling part
 	TPC_PEEK_weir_LXe_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe_solid_orig", 60.*mm, 73.*mm, 83.5*mm / 2, 130.*deg, (170.-130.)*deg);
 	TPC_PEEK_weir_LXe_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub1", 0.*mm, 5.*mm, 70.5*mm / 2, 0.*deg, 360.*deg);
 	TPC_PEEK_weir_LXe_solid_sub2 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub2", 61.5*mm, 71.5*mm, 70.5*mm / 2, 136.*deg, (164.-136.)*deg);
@@ -379,7 +379,7 @@ using std::stringstream;
 	TPC_PEEK_weir_LXe_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid_2", TPC_PEEK_weir_LXe_solid_1, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), (83.5-70.5)*mm / 2));
 	TPC_PEEK_weir_LXe_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe_solid", TPC_PEEK_weir_LXe_solid_2, TPC_PEEK_weir_LXe_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), (83.5-70.5)*mm / 2));
 
-		// LXe extra filling part -> ToDo: variable GXe filling
+		// LXe extra filling part
 	TPC_PEEK_weir_LXe2_solid_orig = new G4Tubs("TPC_PEEK_weir_LXe2_solid_orig", 60.*mm, 73.*mm, 5.5*mm / 2, 130.*deg, (170.-130.)*deg);
 	TPC_PEEK_weir_LXe2_solid_sub1 = new G4Tubs("TPC_PEEK_weir_LXe2_solid_sub1", 0.*mm, 5.*mm, 5.5*mm / 2, 0.*deg, 360.*deg);
 	TPC_PEEK_weir_LXe2_solid_sub2 = new G4Tubs("TPC_PEEK_weir_LXe_solid_sub2", 61.5*mm, 71.5*mm, 5.5*mm / 2, 136.*deg, (164.-136.)*deg);
@@ -562,7 +562,7 @@ using std::stringstream;
 	//Placing PMT R11410
 	rmy180 = new G4RotationMatrix();
 	rmy180->rotateY(180.*deg);
-	PMT0PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMT0_Body", LXe_Logical, false, 0); //ToDo important: understand and check properties
+	PMT0PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMT0_Body", LXe_Logical, false, 0);
 
 	// Placing all TPC components fully emerged in original GXe volume (neglecting extra filling)
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2 + TPC_offset_z), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);
@@ -614,7 +614,6 @@ using std::stringstream;
 
 
 //**********************************************VISUALIZATION**********************************************
-//ToDo: adjust visatts?
 
 	// Visualization Settings : TeflonColor
 	G4Colour TeflonColor(1.,1.,1.);
