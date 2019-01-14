@@ -33,6 +33,8 @@ private:
 	G4Material *Aluminium;
 	G4Material *PEEK;
 	G4Material *Torlon;
+	G4Material *GridMeshSS316LSteelLXe;
+	G4Material *GridMeshSS316LSteelGXe;
 
 	//Parameters
 	G4double cryostat_innerRadius;
@@ -319,7 +321,13 @@ private:
 	G4VSolid* LXe_extra_filling_solid_10;
 	G4VSolid* LXe_extra_filling_solid_11;
 	G4VSolid* LXe_extra_filling_solid_12;
+	G4VSolid* LXe_extra_filling_solid_13;
+	G4VSolid* LXe_extra_filling_solid_14;
+	G4VSolid* LXe_extra_filling_solid_15;
 	G4VSolid* LXe_extra_filling_solid;
+
+	G4Tubs* TPC_SS_electrode_mesh_small_solid;
+	G4Tubs* TPC_SS_electrode_mesh_large_solid;
 
 
 	//LogicalVolumes
@@ -356,6 +364,10 @@ private:
 	G4LogicalVolume* TPC_Torlon_rod_log;
 	G4LogicalVolume* TPC_PEEK_weir_LXe_log;
 	G4LogicalVolume* TPC_PEEK_weir_LXe2_log;
+	G4LogicalVolume* TPC_SS_electrode_mesh_LXe_small_log;
+	G4LogicalVolume* TPC_SS_electrode_mesh_LXe_large_log;
+	G4LogicalVolume* TPC_SS_electrode_mesh_GXe_small_log;
+	G4LogicalVolume* TPC_SS_electrode_mesh_GXe_large_log;
 
 	G4LogicalVolume *PMTR11410LogicalVolume;
 	G4LogicalVolume *PMTR8520LogicalVolume;
@@ -390,10 +402,14 @@ private:
 	G4VPhysicalVolume* TPC_PTFE_reflector_LXe_phys;
 	G4VPhysicalVolume* TPC_PTFE_reflector_GXe_phys;
 	G4VPhysicalVolume* TPC_SS_gate_ring_phys;
+	G4VPhysicalVolume* TPC_SS_gate_mesh_phys;
 	G4VPhysicalVolume* TPC_PTFE_TopPMTHolder_phys;
 	G4VPhysicalVolume* TPC_SS_cathode_ring_phys;
+	G4VPhysicalVolume* TPC_SS_cathode_mesh_phys;
 	G4VPhysicalVolume* TPC_SS_anode_ring_phys;
+	G4VPhysicalVolume* TPC_SS_anode_mesh_phys;
 	G4VPhysicalVolume* TPC_SS_TopMesh_ring_phys;
+	G4VPhysicalVolume* TPC_SS_TopMesh_mesh_phys;
 	G4VPhysicalVolume* TPC_Torlon_rod_1_phys;
 	G4VPhysicalVolume* TPC_Torlon_rod_2_phys;
 	G4VPhysicalVolume* TPC_Torlon_rod_3_phys;
