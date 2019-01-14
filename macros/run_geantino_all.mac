@@ -23,9 +23,9 @@
 /xebra/gun/halfz  0.25 m
 
 # confine more:
-#/xebra/gun/center 0. 0. 25. mm
-#/xebra/gun/radius 50. mm
-#/xebra/gun/halfz  20. mm
+#/xebra/gun/center 0. 0. 10. mm
+#/xebra/gun/radius 80. mm
+#/xebra/gun/halfz  15. mm
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
@@ -47,10 +47,14 @@
 # /xebra/gun/confine TPC_PTFE_spacer*
 # /xebra/gun/confine TPC_PTFE_reflector*
 # /xebra/gun/confine TPC_SS_gate_ring*
+# /xebra/gun/confine TPC_SS_gate_mesh
 # /xebra/gun/confine TPC_PTFE_TopPMTHolder*
 # /xebra/gun/confine TPC_SS_cathode*
+# /xebra/gun/confine TPC_SS_cathode_mesh
 # /xebra/gun/confine TPC_SS_anode*
+# /xebra/gun/confine TPC_SS_anode_mesh
 # /xebra/gun/confine TPC_SS_TopMesh*
+# /xebra/gun/confine TPC_SS_TopMesh_mesh
 # /xebra/gun/confine TPC_PEEK_weir*
 # /xebra/gun/confine TPC_Torlon_rod*
 # /xebra/gun/confine PMT0_Ceramic_Stem*
@@ -65,8 +69,8 @@
 # /xebra/gun/confine PMT_R8520_Ring
 # /xebra/gun/confine PMT_R8520_Inner_Vacuum
 # /xebra/gun/confine PMT_R8520_Photocathode
-/xebra/gun/confine PMT7_Body
-# /xebra/gun/confine PMT*
+# /xebra/gun/confine PMT7_Body
+/xebra/gun/confine PMT*
 
 ##################
 #/xebra/gun/energytype Spectrum
