@@ -1080,5 +1080,49 @@ void XebraMaterials::DefineMaterials() {
     PEEK->AddElement(C, natoms=19);
     PEEK->AddElement(H, natoms=12);
     PEEK->AddElement(O, natoms=3);
+
+    //---------------------------------- grid mesh steel
+    //----------------------------------
+
+		//----------------------------- grid mesh steel in LXe------------------------------
+		G4Material *GridMeshSS316LSteelLXe = new G4Material("GridMeshSS316LSteelLXe", 8.00*g/cm3, 6, kStateSolid);
+		GridMeshSS316LSteelLXe->AddElement(Fe, 0.682);
+		GridMeshSS316LSteelLXe->AddElement(Cr, 0.172);
+		GridMeshSS316LSteelLXe->AddElement(Ni, 0.109);
+		GridMeshSS316LSteelLXe->AddElement(Mn, 0.016);
+		GridMeshSS316LSteelLXe->AddElement(C, 0.0002);
+		GridMeshSS316LSteelLXe->AddElement(Mo, 0.021);
+
+		G4double pdGridMeshPhotonMomentumLXe[] = {6.91*eV, 6.98*eV, 7.05*eV};
+		
+		G4double *pdGridMeshRefractiveIndexLXe = pdLXeRefractiveIndex;
+		G4double dAbsortionLengthLXe = 1.39*mm; // exp(-GridMeshThickness/AbsortionLength) = transparency  lambda=-thickness/ln(transparency) transparency=1-(AreadGrid/AreaVoid)=0.898
+		G4double pdGridMeshAbsortionLengthLXe[] = {dAbsortionLengthLXe, dAbsortionLengthLXe, dAbsortionLengthLXe};
+
+	 	G4MaterialPropertiesTable *pGridMeshLXePropertiesTable = new G4MaterialPropertiesTable();
+
+	 	pGridMeshLXePropertiesTable->AddProperty("RINDEX", pdGridMeshPhotonMomentumLXe, pdGridMeshRefractiveIndexLXe, iNbEntries);
+		pGridMeshLXePropertiesTable->AddProperty("ABSLENGTH", pdGridMeshPhotonMomentumLXe, pdGridMeshAbsortionLengthLXe, iNbEntries);
+		GridMeshSS316LSteelLXe->SetMaterialPropertiesTable(pGridMeshLXePropertiesTable);
+
+		//----------------------------- grid mesh steel in GXe------------------------------
+		G4Material *GridMeshSS316LSteelGXe = new G4Material("GridMeshSS316LSteelGXe", 8.00*g/cm3, 6, kStateSolid);
+		GridMeshSS316LSteelGXe->AddElement(Fe, 0.682);
+		GridMeshSS316LSteelGXe->AddElement(Cr, 0.172);
+		GridMeshSS316LSteelGXe->AddElement(Ni, 0.109);
+		GridMeshSS316LSteelGXe->AddElement(Mn, 0.016);
+		GridMeshSS316LSteelGXe->AddElement(C, 0.0002);
+		GridMeshSS316LSteelGXe->AddElement(Mo, 0.021);
+
+		G4double pdGridMeshPhotonMomentumGXe[] = {6.91*eV, 6.98*eV, 7.05*eV};
+		G4double *pdGridMeshRefractiveIndexGXe = pdGXeRefractiveIndex;
+		G4double dAbsortionLengthGXe = 1.39*mm; // exp(-GridMeshThickness/AbsortionLength) = transparency  lambda=-thickness/ln(transparency) transparency=1-(AreadGrid/AreaVoid)=0.898
+		G4double pdGridMeshAbsortionLengthGXe[] = {dAbsortionLengthGXe, dAbsortionLengthGXe, dAbsortionLengthGXe};
+
+	 	G4MaterialPropertiesTable *pGridMeshGXePropertiesTable = new G4MaterialPropertiesTable();
+
+	 	pGridMeshGXePropertiesTable->AddProperty("RINDEX", pdGridMeshPhotonMomentumGXe, pdGridMeshRefractiveIndexGXe, iNbEntries);
+		pGridMeshGXePropertiesTable->AddProperty("ABSLENGTH", pdGridMeshPhotonMomentumGXe, pdGridMeshAbsortionLengthGXe, iNbEntries);
+		GridMeshSS316LSteelGXe->SetMaterialPropertiesTable(pGridMeshGXePropertiesTable);
     
 }
