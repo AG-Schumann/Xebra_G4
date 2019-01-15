@@ -5,6 +5,10 @@
 #include "XebraPMTsR11410.hh"
 #include "XebraPMTsR8520.hh"
 
+//Optical surface properties
+#include <G4OpticalSurface.hh>
+#include <G4LogicalBorderSurface.hh>
+
 XebraConstructTPC::XebraConstructTPC(XebraDetectorConstruction *){
 
 	//these values will be used for the cryostat (given by Julia); ToDo: cylinder dimensions correct?
@@ -34,6 +38,7 @@ using std::stringstream;
 	Torlon  = G4Material::GetMaterial("Torlon");
 	GridMeshSS316LSteelLXe  = G4Material::GetMaterial("GridMeshSS316LSteelLXe");
 	GridMeshSS316LSteelGXe  = G4Material::GetMaterial("GridMeshSS316LSteelGXe");
+  G4Material *GXeTeflon = G4Material::GetMaterial("GXeTeflon");
 
 	// General useful functions
 	rmz45 = new G4RotationMatrix();
@@ -92,7 +97,7 @@ using std::stringstream;
 
 	// Parameters LXe and GXe
 	GXe_height = 86.5*mm + (cryostat_innerHeight - TPC_dimension_z) / 2 - TPC_offset_z; // currently at lower edge of gate ring
-	LXe_extra_filling_height = 5.5 * mm;
+	LXe_extra_filling_height = 5.5 * mm; //5.5 * mm
 
 	// Parameters Electrodes, Field Shaping Rings (FSR) and sensors
 
@@ -484,18 +489,18 @@ using std::stringstream;
 	TPC_Al_filler_log = new G4LogicalVolume(TPC_Al_filler_solid, Aluminium, "TPC_Al_filler_log");
 	TPC_Cu_FSE_log = new G4LogicalVolume(TPC_Cu_FSE_solid, Copper, "TPC_Cu_FSE_log");
 	TPC_PTFE_pillar_LXe_log = new G4LogicalVolume(TPC_PTFE_pillar_LXe_solid, Teflon, "TPC_PTFE_pillar_LXe_log");
-	TPC_PTFE_pillar_GXe_log = new G4LogicalVolume(TPC_PTFE_pillar_GXe_solid, Teflon, "TPC_PTFE_pillar_GXe_log");
+	TPC_PTFE_pillar_GXe_log = new G4LogicalVolume(TPC_PTFE_pillar_GXe_solid, GXeTeflon, "TPC_PTFE_pillar_GXe_log");
 	TPC_SS_BottomRing_log = new G4LogicalVolume(TPC_SS_BottomRing_solid, SS304LSteel, "TPC_SS_BottomRing_log");
 	TPC_SS_pillar_log = new G4LogicalVolume(TPC_SS_pillar_solid, SS304LSteel, "TPC_SS_pillar_log");
 	TPC_SS_TopRing_log = new G4LogicalVolume(TPC_SS_TopRing_solid, SS304LSteel, "TPC_SS_TopRing_log");
 	TPC_PTFE_filler_log = new G4LogicalVolume(TPC_PTFE_filler_solid, Teflon, "TPC_PTFE_filler_log");
 	TPC_PTFE_BottomPMTHolder_log = new G4LogicalVolume(TPC_PTFE_BottomPMTHolder_solid, Teflon, "TPC_PTFE_BottomPMTHolder_log");
-	TPC_PTFE_spacer1_log = new G4LogicalVolume(TPC_PTFE_spacer1_solid, Teflon, "TPC_PTFE_spacer1_log");
-	TPC_PTFE_spacer2_log = new G4LogicalVolume(TPC_PTFE_spacer2_solid, Teflon, "TPC_PTFE_spacer2_log");
+	TPC_PTFE_spacer1_log = new G4LogicalVolume(TPC_PTFE_spacer1_solid, GXeTeflon, "TPC_PTFE_spacer1_log");
+	TPC_PTFE_spacer2_log = new G4LogicalVolume(TPC_PTFE_spacer2_solid, GXeTeflon, "TPC_PTFE_spacer2_log");
 	TPC_PTFE_reflector_LXe_log = new G4LogicalVolume(TPC_PTFE_reflector_LXe_solid, Teflon, "TPC_PTFE_reflector_LXe_log");
 	TPC_PTFE_reflector_GXe_log = new G4LogicalVolume(TPC_PTFE_reflector_GXe_solid, Teflon, "TPC_PTFE_reflector_GXe_log");
 	TPC_SS_gate_ring_log = new G4LogicalVolume(TPC_SS_gate_ring_solid, SS304LSteel, "TPC_SS_gate_ring_log");
-	TPC_PTFE_TopPMTHolder_log = new G4LogicalVolume(TPC_PTFE_TopPMTHolder_solid, Teflon, "TPC_PTFE_TopPMTHolder_log");
+	TPC_PTFE_TopPMTHolder_log = new G4LogicalVolume(TPC_PTFE_TopPMTHolder_solid, GXeTeflon, "TPC_PTFE_TopPMTHolder_log");
 	TPC_SS_cathode_ring_log =  new G4LogicalVolume(TPC_SS_cathode_ring_solid, SS304LSteel, "TPC_SS_cathode_ring_log");
 	TPC_SS_anode_ring_log =  new G4LogicalVolume(TPC_SS_anode_ring_solid, SS304LSteel, "TPC_SS_anode_ring_log");
 	TPC_SS_TopMesh_ring_log =  new G4LogicalVolume(TPC_SS_TopMesh_ring_solid, SS304LSteel, "TPC_SS_TopMesh_ring_log");
@@ -667,10 +672,79 @@ using std::stringstream;
 	PMT7PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT7_Body", GXe_Logical, false, 0);
 
 //**********************************************OPTICAL SURFACES**********************************************
+// see https://indico.cern.ch/event/679723/contributions/2792554/attachments/1559217/2453758/BookForApplicationDevelopers.pdf, p. 219
 
+  G4double dSigmaAlpha = 0.1;
+	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface",
+		unified, ground, dielectric_metal, dSigmaAlpha);		
+	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", 
+		unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+		
+	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
+	pGXeTeflonOpticalSurface->SetMaterialPropertiesTable(GXeTeflon->GetMaterialPropertiesTable());
 
+// Teflon surfaces in LXe / GXe
 
+	// PTFE Filler
+	new G4LogicalBorderSurface("LXe_PTFEFiller_LogicalBorderSurface",
+		LXe_Physical, TPC_PTFE_filler_phys, pTeflonOpticalSurface);
 
+	// PTFE Bottom PMT Holder
+	new G4LogicalBorderSurface("LXe_BottomPMTHolder_LogicalBorderSurface",
+		LXe_Physical, TPC_PTFE_BottomPMTHolder_phys, pTeflonOpticalSurface);
+
+	// PTFE Reflector
+	new G4LogicalBorderSurface("LXe_PTFEReflectorLXe_LogicalBorderSurface",
+		LXe_Physical, TPC_PTFE_reflector_LXe_phys, pTeflonOpticalSurface);
+
+	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface",
+		LXe_extra_filling_phys, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
+
+	// Top PMT Holder
+	if (LXe_extra_filling_height > 16.*mm)	
+	{
+	new G4LogicalBorderSurface("LXe_TopPMTHolder_LogicalBorderSurface",
+		LXe_extra_filling_phys, TPC_PTFE_TopPMTHolder_phys, pTeflonOpticalSurface);
+	}
+	if (LXe_extra_filling_height < 24.*mm)
+	{
+	new G4LogicalBorderSurface("GXe_TopPMTHolder_LogicalBorderSurface",
+		GXe_Physical, TPC_PTFE_TopPMTHolder_phys, pGXeTeflonOpticalSurface);
+	}
+
+	// PTFE spacer 1 - "the upper one"
+	if (LXe_extra_filling_height > 11.*mm)	
+	{
+	new G4LogicalBorderSurface("LXe_Spacer1_LogicalBorderSurface",
+		LXe_extra_filling_phys, TPC_PTFE_spacer1_phys, pTeflonOpticalSurface);
+	}
+	if (LXe_extra_filling_height < 13.*mm)	
+	{
+	new G4LogicalBorderSurface("GXe_Spacer1_LogicalBorderSurface",
+		GXe_Physical, TPC_PTFE_spacer1_phys, pGXeTeflonOpticalSurface);
+	}
+
+	// PTFE spacer 2 - "the lower one"
+	if (LXe_extra_filling_height > 3.*mm)	
+	{
+	new G4LogicalBorderSurface("LXe_Spacer2_LogicalBorderSurface",
+		LXe_extra_filling_phys, TPC_PTFE_spacer2_phys, pTeflonOpticalSurface);
+	}
+	if (LXe_extra_filling_height < 8.*mm)	
+	{
+	new G4LogicalBorderSurface("GXe_Spacer2_LogicalBorderSurface",
+		GXe_Physical, TPC_PTFE_spacer2_phys, pGXeTeflonOpticalSurface);
+	}
+
+	// PTFE pillars	
+	/*
+	new G4LogicalBorderSurface("LXe_PTFEpillarLXe_LogicalBorderSurface",
+		LXe_Physical, TPC_PTFE_pillar_LXe_phys, pTeflonOpticalSurface);
+	new G4LogicalBorderSurface("GXe_PTFEpillarGXe_LogicalBorderSurface",
+		GXe_Physical, TPC_PTFE_pillar_GXe_phys, pGXeTeflonOpticalSurface);
+	new G4LogicalBorderSurface("LXe_PTFEpillarGXe_LogicalBorderSurface",
+		LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_phys, pTeflonOpticalSurface);
+	*/
 
 
 //**********************************************SENSITIVE DETECTORS**********************************************
