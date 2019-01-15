@@ -250,7 +250,7 @@ void XebraMaterials::DefineMaterials() {
                                      168.15 * kelvin, 1.5 * atmosphere);
     LXe->AddElement(Xe, 1);
     
-    G4double pdLXePhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
+    G4double pdLXePhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV}; //178nm
     G4double pdLXeScintillation[iNbEntries] = {0.1, 1.0, 0.1};
     G4double pdLXeRefractiveIndex[iNbEntries] = {1.63, 1.61, 1.58};
     // G4double pdLXeRefractiveIndex[iNbEntries]  = {1.56,    1.56,    1.56};
@@ -277,7 +277,7 @@ void XebraMaterials::DefineMaterials() {
     pLXePropertiesTable->AddConstProperty("RESOLUTIONSCALE", 0);
     pLXePropertiesTable->AddConstProperty("FASTTIMECONSTANT", 3. * ns);
     pLXePropertiesTable->AddConstProperty("SLOWTIMECONSTANT", 27. * ns);
-    pLXePropertiesTable->AddConstProperty("YIELDRATIO", 1.0);
+    pLXePropertiesTable->AddConstProperty("YIELDRATIO", 1.0);//ratio btw fast time constant and slow time constant
     
 #ifdef USENEST
     // NEST
@@ -421,41 +421,53 @@ void XebraMaterials::DefineMaterials() {
     // 6 June 2012)
     // imported from Xe100 code
     
-    G4Material *Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4, kStateSolid);
+    G4Material *Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4, kStateSolid); //PMT base material
     Cirlex->AddElement(C, 22);
     Cirlex->AddElement(H, 10);
     Cirlex->AddElement(N, 2);
     Cirlex->AddElement(O, 5);
     
-    //   G4double pdCirlexPhotonMomentum[]  = {6.91*eV, 6.98*eV, 7.05*eV};
-    //   G4double pdCirlexReflectivity[]   = {0.5,    0.5,     0.5};
+    G4double pdCirlexPhotonMomentum[]  = {6.91*eV, 6.98*eV, 7.05*eV};
+    G4double pdCirlexReflectivity[]   = {0.5,    0.5,     0.5};
     
-    //   G4MaterialPropertiesTable *pCirlexPropertiesTable = new
-    //   G4MaterialPropertiesTable();
+    G4MaterialPropertiesTable *pCirlexPropertiesTable = new G4MaterialPropertiesTable();
     
-    //   pCirlexPropertiesTable->AddProperty("REFLECTIVITY",
-    //   pdCirlexPhotonMomentum, pdCirlexReflectivity, iNbEntries);
-    //   Cirlex->SetMaterialPropertiesTable(pCirlexPropertiesTable);
+    pCirlexPropertiesTable->AddProperty("REFLECTIVITY", pdCirlexPhotonMomentum, pdCirlexReflectivity, iNbEntries);
+    Cirlex->SetMaterialPropertiesTable(pCirlexPropertiesTable);
     
     //------------------------------- stainless steel
     //-------------------------------
-    G4Material *SS304LSteel =
-    new G4Material("SS304LSteel", 8.00 * g / cm3, 5, kStateSolid);
+    G4Material *SS304LSteel = new G4Material("SS304LSteel", 8.00 * g / cm3, 5, kStateSolid);
     SS304LSteel->AddElement(Fe, 0.65);
     SS304LSteel->AddElement(Cr, 0.20);
     SS304LSteel->AddElement(Ni, 0.12);
     SS304LSteel->AddElement(Mn, 0.02);
     SS304LSteel->AddElement(Si, 0.01);
-    /*
+    
      G4double pdSteelPhotonMomentum[] = {6.91*eV, 6.98*eV, 7.05*eV};
      G4double pdSteelReflectivity[]   = {0.15,    0.2,     0.15};
-     G4MaterialPropertiesTable *pSteelPropertiesTable = new
-     G4MaterialPropertiesTable();
+     G4MaterialPropertiesTable *pSteelPropertiesTable = new G4MaterialPropertiesTable();
      
-     pSteelPropertiesTable->AddProperty("REFLECTIVITY", pdSteelPhotonMomentum,
-     pdSteelReflectivity, iNbEntries);
+     pSteelPropertiesTable->AddProperty("REFLECTIVITY", pdSteelPhotonMomentum,pdSteelReflectivity, iNbEntries);
      SS304LSteel->SetMaterialPropertiesTable(pSteelPropertiesTable);
-     */
+
+		//------------------------------- stainless steel -------------------------------
+		G4Material *SS316LSteel = new G4Material("SS316LSteel", 8.00*g/cm3, 6, kStateSolid);
+		SS316LSteel->AddElement(Fe, 0.682);
+		SS316LSteel->AddElement(Cr, 0.172);
+		SS316LSteel->AddElement(Ni, 0.109);
+		SS316LSteel->AddElement(Mn, 0.016);
+		SS316LSteel->AddElement(C, 0.0002);
+		SS316LSteel->AddElement(Mo, 0.021);
+
+		//As defined above:
+		//G4double pdSteelPhotonMomentum[] = {6.91*eV, 6.98*eV, 7.05*eV};
+		//G4double pdSteelReflectivity[]   = {0.15,    0.2,     0.15};
+		//G4MaterialPropertiesTable *pSteelPropertiesTable = new G4MaterialPropertiesTable();
+
+		pSteelPropertiesTable->AddProperty("REFLECTIVITY", pdSteelPhotonMomentum, pdSteelReflectivity, iNbEntries);
+		SS316LSteel->SetMaterialPropertiesTable(pSteelPropertiesTable);
+     
     
     // ****** BY AUKE-PC ******
     // --------------------------------------------------------
@@ -761,8 +773,7 @@ void XebraMaterials::DefineMaterials() {
     Teflon->AddElement(C, 0.240183);
     Teflon->AddElement(F, 0.759817);
     
-    G4double pdTeflonPhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV,
-        7.05 * eV};
+    G4double pdTeflonPhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
     G4double pdTeflonRefractiveIndex[iNbEntries] = {1.63, 1.61, 1.58};
     G4double pdTeflonReflectivity[iNbEntries] = {0.99, 0.99, 0.99};
     G4double pdTeflonSpecularLobe[iNbEntries] = {0.01, 0.01, 0.01};
@@ -770,8 +781,7 @@ void XebraMaterials::DefineMaterials() {
     G4double pdTeflonBackscatter[iNbEntries] = {0.01, 0.01, 0.01};
     G4double pdTeflonEfficiency[iNbEntries] = {1.0, 1.0, 1.0};
     
-    G4MaterialPropertiesTable *pTeflonPropertiesTable =
-    new G4MaterialPropertiesTable();
+    G4MaterialPropertiesTable *pTeflonPropertiesTable = new G4MaterialPropertiesTable();
     
     pTeflonPropertiesTable->AddProperty("RINDEX", pdTeflonPhotonMomentum,
                                         pdTeflonRefractiveIndex, iNbEntries);
