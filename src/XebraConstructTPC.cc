@@ -666,6 +666,10 @@ using std::stringstream;
 	PMT6PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT6_Body", GXe_Logical, false, 0);
 	PMT7PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT7_Body", GXe_Logical, false, 0);
 
+//**********************************************OPTICAL SURFACES**********************************************
+
+
+
 
 //**********************************************VISUALIZATION**********************************************
 
@@ -711,6 +715,10 @@ using std::stringstream;
 	SensorVisAtt = new G4VisAttributes(SensorColor);
 	SensorVisAtt->SetVisibility(true);
 
+//**********************************************SENSITIVE DETECTORS**********************************************
+
+	// PMTs already made SDs in corresponding classes
+
 	//Sensitive Detector: Setting the LXe_Logical as a Sensitive Detector
 	G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
 	XebraLXeSensitiveDetector *pLXeSD = new XebraLXeSensitiveDetector("Xebra/LXeSD");
@@ -736,12 +744,12 @@ void XebraConstructTPC:: PrintGeometryInformation()
 	G4cout << "LXe:                               " << LXeMass << " kg " << "    =============    " << LXeVolume << " m3 " << G4endl;
 	const G4double GXeMass = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
 	const G4double GXeVolume = GXeMass/(GXe->GetDensity()*m3/kg);
-	G4cout << "GXe:                              	" << GXeMass << " kg " << "     =============    " << GXeVolume << " m3 " << G4endl;
+	G4cout << "GXe:                               " << GXeMass << " kg " << "     =============    " << GXeVolume << " m3 " << G4endl;
 	const G4double TotalXenonMass = LXeMass + GXeMass;
 	const G4double TotalXenonVolume = LXeVolume + GXeVolume;
-	G4cout << "                                          =================================================== " << G4endl;
+	G4cout << "                                   ===================================================== " << G4endl;
 	G4cout << "Total Xenon in TPC envelope:       " << TotalXenonMass << " kg " << "    =============    " << TotalXenonVolume << " m3 " << G4endl;
-	G4cout << "============================================================================================= " << G4endl;
+	G4cout << "======================================================================================== " << G4endl;
 
 }
 

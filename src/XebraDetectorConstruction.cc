@@ -71,8 +71,8 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 
 void XebraDetectorConstruction::ConstructLaboratory()
 {
-        LabHalfZ = 20*m;
-        LabRadius = 20*m;
+        LabHalfZ = 3*m; //20*m
+        LabRadius = 3*m; //20*m
     
 	Air = G4Material::GetMaterial("G4_AIR");
 
