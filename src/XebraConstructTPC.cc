@@ -671,6 +671,30 @@ using std::stringstream;
 
 
 
+
+
+//**********************************************SENSITIVE DETECTORS**********************************************
+
+	// PMTs already made SDs in corresponding classes
+
+	//Sensitive Detector: Setting all the LXe as a Sensitive Detector.
+	G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
+	XebraLXeSensitiveDetector *pLXeSD = new XebraLXeSensitiveDetector("Xebra/LXeSD");
+	pSDManager->AddNewDetector(pLXeSD);
+
+	LXe_Logical->SetSensitiveDetector(pLXeSD);
+	LXe_extra_filling_log->SetSensitiveDetector(pLXeSD);
+	if (height_LXe_TPC_cylinder > 0.)	
+		{
+		LXe_weir_1_log->SetSensitiveDetector(pLXeSD);
+		}
+	if (height_LXe_GXe_cylinder > 0.)	
+		{
+		LXe_weir_2_log->SetSensitiveDetector(pLXeSD);
+		}
+
+	//ToDo: add extra filling and (if) filling weir
+
 //**********************************************VISUALIZATION**********************************************
 
 	// Visualization Settings : TeflonColor
@@ -715,15 +739,7 @@ using std::stringstream;
 	SensorVisAtt = new G4VisAttributes(SensorColor);
 	SensorVisAtt->SetVisibility(true);
 
-//**********************************************SENSITIVE DETECTORS**********************************************
-
-	// PMTs already made SDs in corresponding classes
-
-	//Sensitive Detector: Setting the LXe_Logical as a Sensitive Detector
-	G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
-	XebraLXeSensitiveDetector *pLXeSD = new XebraLXeSensitiveDetector("Xebra/LXeSD");
-	pSDManager->AddNewDetector(pLXeSD);
-	LXe_Logical->SetSensitiveDetector(pLXeSD);
+//**********************************************
 
 	return TPC_Logical;
 }
