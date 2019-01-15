@@ -677,7 +677,7 @@ using std::stringstream;
 
 	// PMTs already made SDs in corresponding classes
 
-	//Sensitive Detector: Setting all the LXe as a Sensitive Detector
+	//Sensitive Detector: Setting all the LXe as a Sensitive Detector.
 	G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
 	XebraLXeSensitiveDetector *pLXeSD = new XebraLXeSensitiveDetector("Xebra/LXeSD");
 	pSDManager->AddNewDetector(pLXeSD);
