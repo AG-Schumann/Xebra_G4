@@ -53,15 +53,32 @@ private:
 
 
   //Parameters for the inner Cryostat
+  G4double Cryostat_Inner_Tube_length;
+  G4double Cryostat_Inner_Tube_outerdiameter;
+  G4double Cryostat_Inner_Tube_wallthickness;
+  G4double Cryostat_Inner_Tube_innerdiameter;
+  G4double Cryostat_Inner_BottomPlate_length;
+  G4double Cryostat_Inner_BottomPlate_diameter;
+  G4double Cryostat_Inner_TubeFlange_length;
+  G4double Cryostat_Inner_TubeFlange_innerdiameter;
+  G4double Cryostat_Inner_TubeFlange_outerdiameter;
 
 
   //LogicalVolumes
   G4LogicalVolume* Cryostat_Envelop_log;
   G4LogicalVolume* GXe_Cryostat_TPCEnvelop_log;
 
+  G4LogicalVolume* Cryostat_Inner_SS_BottomPlate_log;
+  G4LogicalVolume* Cryostat_Inner_SS_Tube_log;
+  G4LogicalVolume* Cryostat_Inner_SS_TubeFlange_log;
+
 
   //PhysicalVolumes
 	G4VPhysicalVolume* GXe_Cryostat_TPCEnvelop_phys;
+
+  G4VPhysicalVolume* Cryostat_Inner_SS_BottomPlate_phys;
+  G4VPhysicalVolume* Cryostat_Inner_SS_Tube_phys;
+  G4VPhysicalVolume* Cryostat_Inner_SS_TubeFlange_phys;
 
   //Visualization
   G4VisAttributes *VacuumVisAtt;
