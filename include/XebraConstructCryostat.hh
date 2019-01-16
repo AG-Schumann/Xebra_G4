@@ -62,6 +62,19 @@ private:
   G4double Cryostat_Inner_TubeFlange_length;
   G4double Cryostat_Inner_TubeFlange_innerdiameter;
   G4double Cryostat_Inner_TubeFlange_outerdiameter;
+  G4double Cryostat_TPCEnvelop_overhang;
+  G4double Cryostat_Inner_UpperTubeFlange_length;
+  G4double Cryostat_Inner_UpperTubeFlange_innerdiameter;
+  G4double Cryostat_Inner_UpperTubeFlange_outerdiameter;
+  G4double Cryostat_Inner_UpperTube_innerdiameter;
+  G4double Cryostat_Inner_UpperTube_wallthickness;
+  G4double Cryostat_Inner_UpperTube_outerdiameter;
+  G4double Cryostat_Inner_MiddlePlate_length;
+  G4double Cryostat_Inner_MiddlePlate_innerdiameter;
+  G4double Cryostat_Inner_MiddlePlate_outerdiameter;
+  G4double Cryostat_Inner_UpperTube_length;
+  G4double Cryostat_Inner_UpperFlange_length;
+  G4double Cryostat_Inner_UpperFlange_outerdiameter;
 
 
   //LogicalVolumes
