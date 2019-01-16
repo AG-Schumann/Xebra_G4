@@ -71,4 +71,6 @@ PMT4_Body R8520_log GXe_Logical
 PMT5_Body R8520_log GXe_Logical
 PMT6_Body R8520_log GXe_Logical
 PMT7_Body R8520_log GXe_Logical
-TPCVolume TPC_Logical LabVolume
+GXe_Cryostat_TPCEnvelop GXe_Cryostat_TPCEnvelop_log Cryostat_Envelop_log
+CryostatVolume Cryostat_Envelop_log LabVolume
+TPCVolume TPC_Logical GXe_Cryostat_TPCEnvelop_log

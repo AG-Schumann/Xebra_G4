@@ -47,10 +47,11 @@ using std::max;
 
 XebraConstructCryostat::XebraConstructCryostat( XebraDetectorConstruction *){
 
-    // these values will be used as Cryostat Envelop for the air voulume preliminarily containing the cryostats 
-		// ToDo: change, also adjust mother volumes
-    Cryostat_Envelop_Radius = 1.*m;  
-    Cryostat_Envelop_Height = 2.5*m;
+  // Parameters for the Cryostat Envelop
+	// these values will be used as Cryostat Envelop for the air voulume preliminarily containing the cryostats 
+	// ToDo: change, also adjust mother volumes
+	Cryostat_Envelop_Radius = 1.*m;  
+	Cryostat_Envelop_Height = 2.5*m;
 
 }
 
@@ -63,10 +64,14 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 	//G4Material* Vacuum   =  G4Material::GetMaterial("Vacuum");
 	//G4Material* LXe = G4Material::GetMaterial("LXe");
-	//G4Material* GXe = G4Material::GetMaterial("GXe"); 
-	G4Material* Air = G4Material::GetMaterial("Air");
+	G4Material* GXe = G4Material::GetMaterial("GXe"); 
+	G4Material* Air = G4Material::GetMaterial("G4_AIR");;
 
 //**********************************************DEFINE PARAMETER**********************************************    
+
+	// Common Parameters used for the TPC Envelop
+	Cryostat_TPCEnvelop_Radius = 0.15*m / 2; //ToDo: implement directly from TPC class
+	Cryostat_TPCEnvelop_Height = 0.4*m;
 
 	// Common Parameters used to build the Outer Cryostat
 
@@ -82,6 +87,16 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	G4Tubs* Cryostat_Envelop_solid = new G4Tubs("Cryostat_Envelop_solid", 0., Cryostat_Envelop_Radius, Cryostat_Envelop_Height/2 , 0.*deg, 360.*deg);
 
 	Cryostat_Envelop_log = new G4LogicalVolume(Cryostat_Envelop_solid, Air, "Cryostat_Envelop_log", 0, 0, 0);
+
+	//**************************************************
+	// TPC Envelop
+	//**************************************************
+
+	G4Tubs* GXe_Cryostat_TPCEnvelop_solid = new G4Tubs("GXe_Cryostat_TPCEnvelop_solid", 0., Cryostat_TPCEnvelop_Radius, Cryostat_TPCEnvelop_Height/2 , 0.*deg, 360.*deg);
+
+	GXe_Cryostat_TPCEnvelop_log = new G4LogicalVolume(GXe_Cryostat_TPCEnvelop_solid, GXe, "GXe_Cryostat_TPCEnvelop_log", 0, 0, 0);
+
+	GXe_Cryostat_TPCEnvelop_phys = new G4PVPlacement(0, G4ThreeVector(), GXe_Cryostat_TPCEnvelop_log, "GXe_Cryostat_TPCEnvelop",  Cryostat_Envelop_log, false, 0);
 
 
 	//**************************************************
@@ -132,7 +147,7 @@ G4double XebraConstructCryostat::GetOuterHeightCryostat(){
 
 
 G4LogicalVolume* XebraConstructCryostat::GetMotherVolume(){
-  return this->Cryostat_Envelop_log; //ToDo: change!!!
+  return this->GXe_Cryostat_TPCEnvelop_log;
 }
 
 

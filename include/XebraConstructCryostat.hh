@@ -45,6 +45,10 @@ private:
   G4double Cryostat_Envelop_Radius;  
   G4double Cryostat_Envelop_Height;
 
+	// Parameters for the TPC Envelop
+  G4double Cryostat_TPCEnvelop_Radius;  
+  G4double Cryostat_TPCEnvelop_Height;
+
   //Parameters for the outer Cryostat
 
 
@@ -53,10 +57,11 @@ private:
 
   //LogicalVolumes
   G4LogicalVolume* Cryostat_Envelop_log;
+  G4LogicalVolume* GXe_Cryostat_TPCEnvelop_log;
 
 
   //PhysicalVolumes
-
+	G4VPhysicalVolume* GXe_Cryostat_TPCEnvelop_phys;
 
   //Visualization
   G4VisAttributes *VacuumVisAtt;

@@ -70,7 +70,8 @@
 # /xebra/gun/confine PMT_R8520_Inner_Vacuum
 # /xebra/gun/confine PMT_R8520_Photocathode
 # /xebra/gun/confine PMT7_Body
-/xebra/gun/confine PMT*
+# /xebra/gun/confine PMT*
+/xebra/gun/confine GXe*
 
 ##################
 #/xebra/gun/energytype Spectrum

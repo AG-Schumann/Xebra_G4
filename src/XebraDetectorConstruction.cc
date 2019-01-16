@@ -1,7 +1,7 @@
 #include "XebraDetectorConstruction.hh"
 
 // Detector components
-//a-temp// #include "XebraConstructCryostat.hh"
+#include "XebraConstructCryostat.hh"
 #include "XebraConstructTPC.hh"
 
 
@@ -34,21 +34,22 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
     XebraConstructTPC *tpc = new XebraConstructTPC(this);
     TPCLogicalVolume = tpc->Construct();
 
-    //a-temp//XebraConstructCryostat *cryostat = new XebraConstructCryostat(this);
-    //a-temp//CryostatLogicalVolume = cryostat->Construct();
+    XebraConstructCryostat *cryostat = new XebraConstructCryostat(this);
+    CryostatLogicalVolume = cryostat->Construct();
 
     /////////////////Place Components////////////////////
 
+		TPC_offset_origin = -29.5 * mm; //shift origin of coordinate system from center TPC volume to gate
+
     MotherLogicalVolume = LabLogicalVolume;
     
-    //a-temp//CryostatPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(),
-    //a-temp//                                           CryostatLogicalVolume,"CryostatVolume",
-    //a-temp//                                           MotherLogicalVolume, false, 0);
+    CryostatPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0.,0.,TPC_offset_origin),
+                                               CryostatLogicalVolume,"CryostatVolume",
+                                               MotherLogicalVolume, false, 0);
    
-    //a-temp//MotherLogicalVolume = cryostat->GetMotherVolume();
+    MotherLogicalVolume = cryostat->GetMotherVolume();
 
-		TPC_offset_origin = -29.5 * mm; //shift origin of coordinate system from center entire setup to gate
-    TPCPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0.,0.,TPC_offset_origin),
+    TPCPhysicalVolume = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.),
                                           TPCLogicalVolume,"TPCVolume",
                                           MotherLogicalVolume, false, 0);
 
@@ -56,7 +57,7 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 
    //////////////// Geometry Information /////////////////// 
    G4cout << "########################################################################################" << G4endl;
-   //a-temp//cryostat->PrintGeometryInformation();
+   cryostat->PrintGeometryInformation();
    tpc->PrintGeometryInformation();
    G4cout << "########################################################################################" << G4endl;
 
