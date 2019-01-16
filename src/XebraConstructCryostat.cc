@@ -57,6 +57,7 @@ XebraConstructCryostat::XebraConstructCryostat( XebraDetectorConstruction *){
 
 XebraConstructCryostat::~XebraConstructCryostat() {;}
 
+//ToDo: finish constrction cryos also with details
 
 G4LogicalVolume* XebraConstructCryostat::Construct(){
 
@@ -69,27 +70,72 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 //**********************************************DEFINE PARAMETER**********************************************    
 
+	//**************************************************
 	// Common Parameters used for the TPC Envelop
+	//**************************************************
+
 	Cryostat_TPCEnvelop_Radius = 0.15*m / 2; //ToDo: implement directly from TPC class
 	Cryostat_TPCEnvelop_Height = 0.4*m;
+	// Cryostat_TPCEnvelop_overhang see below
 
+	//**************************************************
 	// Common Parameters used to build the Outer Cryostat
+	//**************************************************
 
+		//ToDo: add outer cryostat, sample tube and vacuum
+
+	//**************************************************
 	// Common Parameters used to build the Inner Cryostat
-	Cryostat_Inner_Tube_outerdiameter = 154.*mm; // from Hositrad and order
-	Cryostat_Inner_Tube_wallthickness = 2.*mm;  // from order
-	Cryostat_Inner_Tube_innerdiameter = Cryostat_Inner_Tube_outerdiameter - 2*Cryostat_Inner_Tube_wallthickness; // must be 150.*mm
+	//**************************************************
 
-	Cryostat_Inner_TubeFlange_length = 22.3*mm; // from CF Flange components data sheet
+		// lower part (NW 150 CF)
+
+	Cryostat_Inner_Tube_outerdiameter = 154.*mm; // from Hositrad and order
+	Cryostat_Inner_Tube_wallthickness = 2.*mm;  // from Hositrad and order
+	Cryostat_Inner_Tube_innerdiameter = 150.*mm; // from Hositrad and order
+	// Cryostat_Inner_Tube_length see below
+
+	Cryostat_Inner_TubeFlange_length = 22.3*mm; // from CF Flange components data sheet for NW 150 CF
 	Cryostat_Inner_TubeFlange_innerdiameter = Cryostat_Inner_Tube_innerdiameter;
-	Cryostat_Inner_TubeFlange_outerdiameter = 203.*mm; // from CF Flange components data sheet
+	Cryostat_Inner_TubeFlange_outerdiameter = 203.*mm; // from CF Flange components data sheet for NW 150 CF, ToDo: check ambiguity
 
 	Cryostat_Inner_BottomPlate_length = 10.*mm; // from order
 	Cryostat_Inner_BottomPlate_diameter = Cryostat_Inner_Tube_outerdiameter;
 
 	Cryostat_Inner_Tube_length = 380.*mm - Cryostat_Inner_BottomPlate_length - Cryostat_Inner_TubeFlange_length; // from order and thesis Basho
 
+		// upper part (NW 250 CF)
 
+	Cryostat_Inner_UpperTube_innerdiameter = 250.*mm; // from CF Flange components data sheet for NW 250 CF //ToDo:check
+	Cryostat_Inner_UpperTube_wallthickness = 2.*mm; // from CF Flange components data sheet for NW 250 CF //ToDo:check
+	Cryostat_Inner_UpperTube_outerdiameter = 254.*mm; // from CF Flange components data sheet for NW 250 CF //ToDo:check
+	// Cryostat_Inner_UpperTube_length see below
+	
+	Cryostat_Inner_UpperTubeFlange_length = 26.*mm; // from CF Flange components data sheet for NW 250 CF and measurement
+	Cryostat_Inner_UpperTubeFlange_innerdiameter = Cryostat_Inner_UpperTube_innerdiameter;
+	Cryostat_Inner_UpperTubeFlange_outerdiameter = 304.*mm; // from CF Flange components data sheet for NW 250 CF, ToDo: check ambiguity
+
+	Cryostat_Inner_MiddlePlate_length = 22.3*mm; //rough measurement, ToDo: check!!!
+	Cryostat_Inner_MiddlePlate_innerdiameter = Cryostat_Inner_Tube_innerdiameter;
+	Cryostat_Inner_MiddlePlate_outerdiameter = Cryostat_Inner_UpperTube_outerdiameter;
+
+	Cryostat_Inner_UpperTube_length = 74.3*mm - Cryostat_Inner_MiddlePlate_length; //rough measurement, ToDo: check!!!
+
+		//Temporary top flange, not correct, ToDo: remove later!!!
+	Cryostat_Inner_UpperFlange_length = Cryostat_Inner_UpperTubeFlange_length;
+	Cryostat_Inner_UpperFlange_outerdiameter = Cryostat_Inner_UpperTubeFlange_outerdiameter;
+	
+
+		// GXe volume
+
+	Cryostat_TPCEnvelop_overhang = 0.4*m - (380.*mm - Cryostat_Inner_BottomPlate_length - Cryostat_Inner_MiddlePlate_length);
+
+
+
+
+	//ToDo: use to potentially cut or expand GXe volume
+	//ToDo: add closing flange(s?) and GXe volume
+	// gaps due to copper gaskets?
 
 
 
