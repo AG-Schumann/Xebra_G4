@@ -63,7 +63,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 //**********************************************MATERIALS**********************************************
 
 	//G4Material* Vacuum   =  G4Material::GetMaterial("Vacuum");
-	//G4Material* LXe = G4Material::GetMaterial("LXe");
+	G4Material* SS304LSteel = G4Material::GetMaterial("SS304LSteel");
 	G4Material* GXe = G4Material::GetMaterial("GXe"); 
 	G4Material* Air = G4Material::GetMaterial("G4_AIR");;
 
@@ -76,6 +76,21 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	// Common Parameters used to build the Outer Cryostat
 
 	// Common Parameters used to build the Inner Cryostat
+	Cryostat_Inner_Tube_outerdiameter = 154.*mm; // from Hositrad and order
+	Cryostat_Inner_Tube_wallthickness = 2.*mm;  // from order
+	Cryostat_Inner_Tube_innerdiameter = Cryostat_Inner_Tube_outerdiameter - 2*Cryostat_Inner_Tube_wallthickness; // must be 150.*mm
+
+	Cryostat_Inner_TubeFlange_length = 22.3*mm; // from CF Flange components data sheet
+	Cryostat_Inner_TubeFlange_innerdiameter = Cryostat_Inner_Tube_innerdiameter;
+	Cryostat_Inner_TubeFlange_outerdiameter = 203.*mm; // from CF Flange components data sheet
+
+	Cryostat_Inner_BottomPlate_length = 10.*mm; // from order
+	Cryostat_Inner_BottomPlate_diameter = Cryostat_Inner_Tube_outerdiameter;
+
+	Cryostat_Inner_Tube_length = 380.*mm - Cryostat_Inner_BottomPlate_length - Cryostat_Inner_TubeFlange_length; // from order and thesis Basho
+
+
+
 
 
 //**********************************************CONSTRUCTION**********************************************
@@ -104,12 +119,30 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 
 
-
 	//**************************************************
 	// Inner Cryostat
 	//**************************************************
 
-	// Cryostat_Inner_SS_...
+	// Bottom Plate
+	G4Tubs* Cryostat_Inner_SS_BottomPlate_solid = new G4Tubs("Cryostat_Inner_SS_BottomPlate_solid", 0., Cryostat_Inner_BottomPlate_diameter/2, Cryostat_Inner_BottomPlate_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Inner_SS_BottomPlate_log = new G4LogicalVolume(Cryostat_Inner_SS_BottomPlate_solid, SS304LSteel, "Cryostat_Inner_SS_BottomPlate_log");
+
+	Cryostat_Inner_SS_BottomPlate_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -Cryostat_TPCEnvelop_Height/2 - Cryostat_Inner_BottomPlate_length/2), Cryostat_Inner_SS_BottomPlate_log,"Cryostat_Inner_SS_BottomPlate", Cryostat_Envelop_log, 0, 0);
+
+	// Tube
+	G4Tubs* Cryostat_Inner_SS_Tube_solid = new G4Tubs("Cryostat_Inner_SS_Tube_solid", Cryostat_Inner_Tube_innerdiameter/2, Cryostat_Inner_Tube_outerdiameter/2, Cryostat_Inner_Tube_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Inner_SS_Tube_log = new G4LogicalVolume(Cryostat_Inner_SS_Tube_solid, SS304LSteel, "Cryostat_Inner_SS_Tube_log");
+
+	Cryostat_Inner_SS_Tube_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length/2), Cryostat_Inner_SS_Tube_log,"Cryostat_Inner_SS_Tube", Cryostat_Envelop_log, 0, 0);
+
+	// Tube Flange
+	G4Tubs* Cryostat_Inner_SS_TubeFlange_solid = new G4Tubs("Cryostat_Inner_SS_TubeFlange_solid", Cryostat_Inner_TubeFlange_innerdiameter/2, Cryostat_Inner_TubeFlange_outerdiameter/2, Cryostat_Inner_TubeFlange_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Inner_SS_TubeFlange_log = new G4LogicalVolume(Cryostat_Inner_SS_TubeFlange_solid, SS304LSteel, "Cryostat_Inner_SS_TubeFlange_log");
+
+	Cryostat_Inner_SS_TubeFlange_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length/2), Cryostat_Inner_SS_TubeFlange_log,"Cryostat_Inner_SS_TubeFlange", Cryostat_Envelop_log, 0, 0);
 
 
 
