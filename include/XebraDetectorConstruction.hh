@@ -71,16 +71,16 @@ private:
 	G4LogicalVolume *LabLogicalVolume;
 	G4VPhysicalVolume *LabPhysicalVolume;
 
-	//LOGICAL VOLUMES
-        //a-temp// G4LogicalVolume *CryostatLogicalVolume;
+	// PARAMETERS
+				G4double TPC_offset_origin; 
 
+	// LOGICAL VOLUMES
+        G4LogicalVolume *CryostatLogicalVolume;
         G4LogicalVolume *TPCLogicalVolume;
 
 
 	// PHYSICAL VOLUMES
-        //a-temp// G4VPhysicalVolume *CryostatPhysicalVolume;
-
-				G4double TPC_offset_origin; 
+        G4VPhysicalVolume *CryostatPhysicalVolume;
         G4VPhysicalVolume *TPCPhysicalVolume;
 
 
