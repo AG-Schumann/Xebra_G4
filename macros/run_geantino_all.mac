@@ -18,14 +18,14 @@
 /xebra/gun/type   Volume  
 /xebra/gun/shape  Cylinder
 # include entire TPC
-/xebra/gun/center 0. 0. 0. cm
-/xebra/gun/radius 0.12 m
-/xebra/gun/halfz  0.25 m
+#/xebra/gun/center 0. 0. 0. cm
+#/xebra/gun/radius 0.12 m
+#/xebra/gun/halfz  0.25 m
 
 # confine more:
-#/xebra/gun/center 0. 0. 10. mm
-#/xebra/gun/radius 80. mm
-#/xebra/gun/halfz  15. mm
+/xebra/gun/center 0. 0. 0. m
+/xebra/gun/radius 0.2 m
+/xebra/gun/halfz  0.4 m
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
@@ -71,9 +71,15 @@
 # /xebra/gun/confine PMT_R8520_Photocathode
 # /xebra/gun/confine PMT7_Body
 # /xebra/gun/confine PMT*
-# /xebra/gun/confine Cryostat_Inner_SS_BottomPlate*
-# /xebra/gun/confine Cryostat_Inner_SS_Tube*
-/xebra/gun/confine Cryostat_Inner_SS_TubeFlange*
+# /xebra/gun/confine Cryostat_Inner_SS_BottomPlate
+# /xebra/gun/confine Cryostat_Inner_SS_Tube
+# /xebra/gun/confine Cryostat_Inner_SS_TubeFlange
+# /xebra/gun/confine Cryostat_Inner_SS_MiddlePlate
+# /xebra/gun/confine Cryostat_Inner_SS_UpperTube
+# /xebra/gun/confine Cryostat_Inner_SS_UpperTubeFlange
+# /xebra/gun/confine Cryostat_Inner_SS_TopFlange1
+# /xebra/gun/confine Cryostat_Inner_SS_TopFlange2
+/xebra/gun/confine Cryostat_Inner_SS*
 
 ##################
 #/xebra/gun/energytype Spectrum
