@@ -11,7 +11,7 @@
 
 XebraConstructTPC::XebraConstructTPC(XebraDetectorConstruction *){
 
-	//these values will be used for the cryostat (given by Julia); ToDo: cylinder dimensions correct?
+	//these values will be used for the cryostat (given by Julia)
 	cryostat_innerRadius = 0.15*m / 2;
 	cryostat_innerHeight = 0.4*m; //roughly 0.4*m, according to thesis Basho: 37.*cm
 
@@ -767,7 +767,6 @@ using std::stringstream;
 		LXe_weir_2_log->SetSensitiveDetector(pLXeSD);
 		}
 
-	//ToDo: add extra filling and (if) filling weir
 
 //**********************************************VISUALIZATION**********************************************
 
