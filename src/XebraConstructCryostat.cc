@@ -133,7 +133,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	
 		// GXe volume
 
-	Cryostat_TPCEnvelop_overhang = 0.4*m - (Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length);
+	Cryostat_TPCEnvelop_overhang = 0.4*m - (Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length); // 7.7 mm
 
 
 	//ToDo: use to potentially cut or expand GXe volume
@@ -234,6 +234,45 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// Extra GXe volumes
 	//**************************************************
+
+	G4Tubs* GXe_Cryostat_extravolume_solid_orig = new G4Tubs("GXe_Cryostat_extravolume_solid_orig", 0., Cryostat_Inner_UpperTube_innerdiameter/2, (Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2 , 0.*deg, 360.*deg);
+
+	G4Tubs* GXe_Cryostat_extravolume_solid_union = new G4Tubs("GXe_Cryostat_extravolume_solid_union", 0., Cryostat_Inner_TopFlange1_innerdiameter/2, Cryostat_Inner_TopFlange1_length/2 , 0.*deg, 360.*deg);
+	G4VSolid* GXe_Cryostat_extravolume_solid_1 = new G4UnionSolid("GXe_Cryostat_extravolume_solid_1", GXe_Cryostat_extravolume_solid_orig, GXe_Cryostat_extravolume_solid_union, 0, G4ThreeVector(0., 0., (Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2 + Cryostat_Inner_TopFlange1_length/2));	
+
+	G4Tubs* GXe_Cryostat_extravolume_solid_cut =  new G4Tubs("GXe_Cryostat_extravolume_solid_cut", 0., 0.15*m / 2, Cryostat_TPCEnvelop_overhang/2 , 0.*deg, 360.*deg);	
+	G4VSolid* GXe_Cryostat_extravolume_solid = new G4SubtractionSolid("GXe_Cryostat_extravolume_solid", GXe_Cryostat_extravolume_solid_1, GXe_Cryostat_extravolume_solid_cut, 0, G4ThreeVector(0.,0.,-(Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2 + Cryostat_TPCEnvelop_overhang/2));
+
+	if (Cryostat_TPCEnvelop_overhang <= 0.)
+	{
+		G4cout << "########################################################################################" << G4endl;
+		G4cout << "								WARNING: Cryostat_TPCEnvelop_overhang <= 0." << G4endl;
+		G4cout << "########################################################################################" << G4endl;
+	}
+
+/*
+	G4Tubs* GXe_Cryostat_extravolume_solid_cut =  new G4Tubs("GXe_Cryostat_extravolume_solid_cut", 0., 0.15*m / 2, -Cryostat_TPCEnvelop_overhang/2 , 0.*deg, 360.*deg);
+	G4VSolid* GXe_Cryostat_extravolume_solid = new G4UnionSolid("GXe_Cryostat_extravolume_solid", GXe_Cryostat_extravolume_solid_1, GXe_Cryostat_extravolume_solid_cut, 0, G4ThreeVector(0.,0.,-(Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2 - Cryostat_TPCEnvelop_overhang/2));
+	if (Cryostat_TPCEnvelop_overhang >= 0.)
+	{
+		G4cout << "########################################################################################" << G4endl;
+		G4cout << "								WARNING: Cryostat_TPCEnvelop_overhang >= 0." << G4endl;
+		G4cout << "########################################################################################" << G4endl;
+	}
+*/
+/*
+	G4VSolid* GXe_Cryostat_extravolume_solid = GXe_Cryostat_extravolume_solid_1;
+	if (Cryostat_TPCEnvelop_overhang != 0.)
+	{
+		G4cout << "########################################################################################" << G4endl;
+		G4cout << "								WARNING: Cryostat_TPCEnvelop_overhang != 0." << G4endl;
+		G4cout << "########################################################################################" << G4endl;
+	}
+*/
+
+	GXe_Cryostat_extravolume_log = new G4LogicalVolume(GXe_Cryostat_extravolume_solid, GXe, "GXe_Cryostat_extravolume_log");
+
+	GXe_Cryostat_extravolume_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + (Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2), GXe_Cryostat_extravolume_log,"GXe_Cryostat_extravolume", Cryostat_Inner_MotherLogicalVolume, 0, 0);  //ToDo important: remove  + 200.*mm
 
 
 
