@@ -94,6 +94,7 @@ private:
   G4LogicalVolume* Cryostat_Inner_SS_UpperTubeFlange_log;
   G4LogicalVolume* Cryostat_Inner_SS_TopFlange1_log;
   G4LogicalVolume* Cryostat_Inner_SS_TopFlange2_log;
+  G4LogicalVolume* GXe_Cryostat_extravolume_log;
 
 
   //PhysicalVolumes
@@ -107,6 +108,7 @@ private:
   G4VPhysicalVolume* Cryostat_Inner_SS_UpperTubeFlange_phys;
   G4VPhysicalVolume* Cryostat_Inner_SS_TopFlange1_phys;
   G4VPhysicalVolume* Cryostat_Inner_SS_TopFlange2_phys;
+  G4VPhysicalVolume* GXe_Cryostat_extravolume_phys;
 
 
   //Visualization
