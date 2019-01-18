@@ -339,7 +339,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 	GXe_Cryostat_extravolume_log = new G4LogicalVolume(GXe_Cryostat_extravolume_solid, GXe, "GXe_Cryostat_extravolume_log");
 
-	GXe_Cryostat_extravolume_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + (Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2 + Cryostat_Inner_offset), GXe_Cryostat_extravolume_log,"GXe_Cryostat_extravolume", Cryostat_Inner_MotherLogicalVolume, 0, 0);  //ToDo important: remove  + 200.*mm
+	GXe_Cryostat_extravolume_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + (Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length)/2 + Cryostat_Inner_offset), GXe_Cryostat_extravolume_log,"GXe_Cryostat_extravolume", Cryostat_Inner_MotherLogicalVolume, 0, 0); 
 
 
 
@@ -375,6 +375,20 @@ G4double XebraConstructCryostat::GetOuterHeightCryostat(){
   return this->Cryostat_Envelop_Height;
 }
 
+G4double XebraConstructCryostat::GetGXeMass_Cryo_extravolume(){
+	G4Material* GXe = G4Material::GetMaterial("GXe");
+  GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
+  GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg);
+  return this->GXeMass_Cryo_extravolume;
+}
+
+G4double XebraConstructCryostat::GetGXeVolume_Cryo_extravolume(){
+	G4Material* GXe = G4Material::GetMaterial("GXe");
+  GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
+  GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg);
+  return this->GXeVolume_Cryo_extravolume;
+}
+
 
 G4LogicalVolume* XebraConstructCryostat::GetMotherVolume(){
   return this->GXe_Cryostat_TPCEnvelop_log;
@@ -384,31 +398,10 @@ G4LogicalVolume* XebraConstructCryostat::GetMotherVolume(){
 
 void XebraConstructCryostat::PrintGeometryInformation()
 {
-/*
-//================================== CRYOSTAT VESSEL MASSES =========================================================
-  const G4double OuterCryostatMass = OuterCryostatVessel_Logical->GetMass(false, false)/kg;
-  const G4double OuterCryostatVolume = OuterCryostatMass/(CryostatMaterial->GetDensity()*m3/kg);  
-  G4cout << "OuterCryostatVessel:                     " << OuterCryostatMass << " kg " << "     =============    " << OuterCryostatVolume << " m3 " << G4endl;
-
-  const G4double InnerCryostatMass = InnerCryostatVessel_Logical->GetMass(false, false)/kg;
-  const G4double InnerCryostatVolume = InnerCryostatMass/(CryostatMaterial->GetDensity()*m3/kg);  
-  G4cout << "InnerCryostatVessel:                     " << InnerCryostatMass << " kg " << "     =============    " << InnerCryostatVolume << " m3 " << G4endl;
-
-  const G4double InnerCryostatBottomFillerMass = InnerCryostatBottomFillerVessel_Logical->GetMass(false, false)/kg;
-  const G4double InnerCryostatBottomFillerVolume = InnerCryostatBottomFillerMass/(CryostatMaterial->GetDensity()*m3/kg);  
-  G4cout << "InnerCryostatBottomFillerVessel:         " << InnerCryostatBottomFillerMass << " kg " << "     =============    " << InnerCryostatBottomFillerVolume << " m3 " << G4endl;
-  G4cout << "============================================================================================= " << G4endl;
-
-//================================== XENON MASSES  =========================================================
-  const G4double LXeMass = InnerCryostatBottomVolume_Logical->GetMass(false, false)/kg;
-  const G4double LXeVolume = LXeMass/(LXe->GetDensity()*m3/kg);  
-  G4cout << "Liquid Xenon around BottomFiller:        " << LXeMass << " kg " << "     =============    " << LXeVolume << " m3 " << G4endl;
-
-  const G4double GXeMass = InnerCryostatVolume_Logical->GetMass(false, false)/kg;
-  const G4double GXeVolume = GXeMass/(LXe->GetDensity()*m3/kg);  
-  G4cout << "Gaseous Xenon in TopDome:                " << GXeMass << " kg " << "     =============    " << GXeVolume << " m3 " << G4endl;
-  G4cout << "============================================================================================= " << G4endl;	
-*/
-
+	G4Material* GXe = G4Material::GetMaterial("GXe");
+  const G4double GXeMass = GetGXeMass_Cryo_extravolume();//GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
+  const G4double GXeVolume = GetGXeVolume_Cryo_extravolume();//GXeMass/(GXe->GetDensity()*m3/kg);  
+  G4cout << "GXe extra filling cryo:            " << GXeMass << " kg " << "     =============    " << GXeVolume << " m3 " << G4endl;
+  G4cout << "======================================================================================== " << G4endl;	
 }
 
