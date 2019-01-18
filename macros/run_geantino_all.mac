@@ -24,8 +24,8 @@
 
 # confine more:
 /xebra/gun/center 0. 0. 0. m
-/xebra/gun/radius 0.2 m
-/xebra/gun/halfz  0.3 m
+/xebra/gun/radius 0.3 m
+/xebra/gun/halfz  0.8 m
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
@@ -81,7 +81,9 @@
 # /xebra/gun/confine Cryostat_Inner_SS_TopFlange2
 # /xebra/gun/confine Cryostat_Inner_SS*
 # /xebra/gun/confine GXe_Cryostat_extravolume
-/xebra/gun/confine GXe*
+# /xebra/gun/confine GXe*
+# /xebra/gun/confine Cryostat_Outer*
+/xebra/gun/confine Cryostat_Vacuum*
 
 ##################
 #/xebra/gun/energytype Spectrum

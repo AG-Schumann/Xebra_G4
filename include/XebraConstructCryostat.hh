@@ -50,7 +50,18 @@ private:
   G4double Cryostat_TPCEnvelop_Height;
 
   //Parameters for the outer Cryostat
-
+  G4double Cryostat_Outer_Tube_length;
+  G4double Cryostat_Outer_Tube_outerdiameter;
+  G4double Cryostat_Outer_Tube_wallthickness;
+  G4double Cryostat_Outer_Tube_innerdiameter;
+  G4double Cryostat_Outer_BottomPlate_length;
+  G4double Cryostat_Outer_BottomPlate_diameter;
+  G4double Cryostat_Outer_TubeFlange_length;
+  G4double Cryostat_Outer_TubeFlange_innerdiameter;
+  G4double Cryostat_Outer_TubeFlange_outerdiameter;
+  G4double Cryostat_Outer_TopFlange_length;
+  G4double Cryostat_Outer_TopFlange_outerdiameter;
+  G4double Cryostat_Outer_TopFlange_innerdiameter;
 
   //Parameters for the inner Cryostat
   G4double Cryostat_Inner_Tube_length;
@@ -85,6 +96,14 @@ private:
   G4LogicalVolume* Cryostat_Envelop_log;
   G4LogicalVolume* GXe_Cryostat_TPCEnvelop_log;
   G4LogicalVolume* Cryostat_Inner_MotherLogicalVolume;
+  G4LogicalVolume* Cryostat_Outer_MotherLogicalVolume;
+
+  G4LogicalVolume* Cryostat_Outer_Al_BottomPlate_log;
+  G4LogicalVolume* Cryostat_Outer_Al_Tube_log;
+  G4LogicalVolume* Cryostat_Outer_Al_TubeFlange_log;
+  G4LogicalVolume* Cryostat_Outer_SS_TopFlange_log;
+
+  G4LogicalVolume* Cryostat_Vacuum_log;
 
   G4LogicalVolume* Cryostat_Inner_SS_BottomPlate_log;
   G4LogicalVolume* Cryostat_Inner_SS_Tube_log;
@@ -99,6 +118,13 @@ private:
 
   //PhysicalVolumes
 	G4VPhysicalVolume* GXe_Cryostat_TPCEnvelop_phys;
+
+  G4VPhysicalVolume* Cryostat_Outer_Al_BottomPlate_phys;
+  G4VPhysicalVolume* Cryostat_Outer_Al_Tube_phys;
+  G4VPhysicalVolume* Cryostat_Outer_Al_TubeFlange_phys;
+  G4VPhysicalVolume* Cryostat_Outer_SS_TopFlange_phys;
+
+  G4VPhysicalVolume* Cryostat_Vacuum_phys;
 
   G4VPhysicalVolume* Cryostat_Inner_SS_BottomPlate_phys;
   G4VPhysicalVolume* Cryostat_Inner_SS_Tube_phys;
