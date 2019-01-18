@@ -35,6 +35,8 @@ public:
 
    G4double GetOuterRadiusCryostat();
    G4double GetOuterHeightCryostat();
+   G4double GetGXeMass_Cryo_extravolume();
+   G4double GetGXeVolume_Cryo_extravolume();
    G4LogicalVolume* GetMotherVolume();
 
   void PrintGeometryInformation();
@@ -90,6 +92,9 @@ private:
   G4double Cryostat_Inner_TopFlange2_length;
   G4double Cryostat_Inner_TopFlange2_outerdiameter;
   G4double Cryostat_Inner_TopFlange2_innerdiameter;
+
+  G4double GXeMass_Cryo_extravolume;
+  G4double GXeVolume_Cryo_extravolume;
 
   G4double Cryostat_Inner_upperedge_unshifted;
   G4double Cryostat_Outer_TopFlange_loweredge_unshifted;
