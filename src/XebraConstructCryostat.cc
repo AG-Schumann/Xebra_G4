@@ -63,10 +63,11 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 //**********************************************MATERIALS**********************************************
 
-	//G4Material* Vacuum   =  G4Material::GetMaterial("Vacuum");
+	G4Material* Vacuum   =  G4Material::GetMaterial("Vacuum");
 	G4Material* SS304LSteel = G4Material::GetMaterial("SS304LSteel");
 	G4Material* GXe = G4Material::GetMaterial("GXe"); 
-	G4Material* Air = G4Material::GetMaterial("G4_AIR");;
+	G4Material* Air = G4Material::GetMaterial("G4_AIR");
+	G4Material* Aluminium = G4Material::GetMaterial("Aluminium");
 
 //**********************************************DEFINE PARAMETER**********************************************    
 
@@ -78,11 +79,29 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_TPCEnvelop_Height = 0.4*m;
 	// Cryostat_TPCEnvelop_overhang see below
 
+
 	//**************************************************
 	// Common Parameters used to build the Outer Cryostat
 	//**************************************************
 
 		//ToDo: add outer cryostat, sample tube and vacuum
+ 
+	Cryostat_Outer_Tube_length = 130.*cm; // temporary dimension from thesis Basho, ToDo: correct!
+	Cryostat_Outer_Tube_wallthickness = 1.*cm; // guessed temporary dimension, ToDo: correct!
+	Cryostat_Outer_Tube_outerdiameter = 48.*cm; // temporary dimension from thesis Basho, ToDo: correct!
+	Cryostat_Outer_Tube_innerdiameter = 48.*cm - 2*Cryostat_Outer_Tube_wallthickness;
+
+	Cryostat_Outer_TubeFlange_length = 2.*cm; // roughly measured temporary dimension, ToDo: correct!
+	Cryostat_Outer_TubeFlange_innerdiameter = Cryostat_Outer_Tube_outerdiameter; // guessed temporary dimension, ToDo: correct!
+	Cryostat_Outer_TubeFlange_outerdiameter = Cryostat_Outer_Tube_outerdiameter + 2*1.*cm; // guessed temporary dimension, ToDo: correct!
+
+	Cryostat_Outer_BottomPlate_length = 1.*cm; // roughly measured temporary dimension, ToDo: correct!
+	Cryostat_Outer_BottomPlate_diameter = Cryostat_Outer_Tube_outerdiameter;
+
+	Cryostat_Outer_TopFlange_length = 2.3*cm; // roughly measured temporary dimension, ToDo: correct!
+	Cryostat_Outer_TopFlange_outerdiameter = Cryostat_Outer_TubeFlange_outerdiameter; // guessed temporary dimension, ToDo: correct!
+	Cryostat_Outer_TopFlange_innerdiameter = 0.;
+
 
 	//**************************************************
 	// Common Parameters used to build the Inner Cryostat
@@ -135,14 +154,22 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 	Cryostat_TPCEnvelop_overhang = 0.4*m - (Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length); // 7.7 mm
 
+	//**************************************************
+	// Position inner in outer cryo
+	//**************************************************
 
-	//ToDo: use to potentially cut or expand GXe volume
-	//ToDo: add closing flange(s?) and GXe volume
-	// To Do: gaps due to copper gaskets?, add details such as KF40 flanges, screw bolts,...
+	// ToDo: shift inner cryostat and adjust coordinate system accordingly
+
+
+
+
+
 
 
 
 //**********************************************CONSTRUCTION**********************************************
+
+	// To Do: gaps due to copper gaskets?, add details such as KF40 flanges, screw bolts, filler,...
 
 	//**************************************************
 	// Cryostat Envelop
@@ -156,14 +183,55 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// Outer Cryostat
 	//**************************************************
+	// very simplistic as temporary implementation, ToDo: correct later
 
+	Cryostat_Outer_MotherLogicalVolume = Cryostat_Envelop_log;
+
+	// Bottom Plate
+	G4Tubs* Cryostat_Outer_Al_BottomPlate_solid = new G4Tubs("Cryostat_Outer_Al_BottomPlate_solid", 0., Cryostat_Outer_BottomPlate_diameter/2, Cryostat_Outer_BottomPlate_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Outer_Al_BottomPlate_log = new G4LogicalVolume(Cryostat_Outer_Al_BottomPlate_solid, Aluminium, "Cryostat_Outer_Al_BottomPlate_log");
+
+	Cryostat_Outer_Al_BottomPlate_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, -(Cryostat_Outer_Tube_length + Cryostat_Outer_BottomPlate_length)/2), Cryostat_Outer_Al_BottomPlate_log,"Cryostat_Outer_Al_BottomPlate", Cryostat_Outer_MotherLogicalVolume, 0, 0);
+
+	// Tube
+	G4Tubs* Cryostat_Outer_Al_Tube_solid = new G4Tubs("Cryostat_Outer_Al_Tube_solid", Cryostat_Outer_Tube_innerdiameter/2, Cryostat_Outer_Tube_outerdiameter/2, Cryostat_Outer_Tube_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Outer_Al_Tube_log = new G4LogicalVolume(Cryostat_Outer_Al_Tube_solid, Aluminium, "Cryostat_Outer_Al_Tube_log");
+
+	Cryostat_Outer_Al_Tube_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, 0*cm), Cryostat_Outer_Al_Tube_log,"Cryostat_Outer_Al_Tube", Cryostat_Outer_MotherLogicalVolume, 0, 0);
+
+	// Tube Flange
+	G4Tubs* Cryostat_Outer_Al_TubeFlange_solid = new G4Tubs("Cryostat_Outer_Al_TubeFlange_solid", Cryostat_Outer_TubeFlange_innerdiameter/2, Cryostat_Outer_TubeFlange_outerdiameter/2, Cryostat_Outer_TubeFlange_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Outer_Al_TubeFlange_log = new G4LogicalVolume(Cryostat_Outer_Al_TubeFlange_solid, Aluminium, "Cryostat_Outer_Al_TubeFlange_log");
+
+	Cryostat_Outer_Al_TubeFlange_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, Cryostat_Outer_Tube_length/2 - Cryostat_Outer_TubeFlange_length/2), Cryostat_Outer_Al_TubeFlange_log,"Cryostat_Outer_Al_TubeFlange", Cryostat_Outer_MotherLogicalVolume, 0, 0);
+
+	// Top Flange
+	G4Tubs* Cryostat_Outer_SS_TopFlange_solid = new G4Tubs("Cryostat_Outer_SS_TopFlange_solid", Cryostat_Outer_TopFlange_innerdiameter/2, Cryostat_Outer_TopFlange_outerdiameter/2, Cryostat_Outer_TopFlange_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Outer_SS_TopFlange_log = new G4LogicalVolume(Cryostat_Outer_SS_TopFlange_solid, SS304LSteel, "Cryostat_Outer_SS_TopFlange_log");
+
+	Cryostat_Outer_SS_TopFlange_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, Cryostat_Outer_Tube_length/2 + Cryostat_Outer_TopFlange_length/2), Cryostat_Outer_SS_TopFlange_log,"Cryostat_Outer_SS_TopFlange", Cryostat_Outer_MotherLogicalVolume, 0, 0);
+
+
+	//**************************************************
+	// Vacuum
+	//**************************************************
+
+	G4Tubs* Cryostat_Vacuum_solid = new G4Tubs("Cryostat_Vacuum_solid", 0., Cryostat_Outer_Tube_innerdiameter/2, Cryostat_Outer_Tube_length/2 , 0.*deg, 360.*deg);
+
+	Cryostat_Vacuum_log = new G4LogicalVolume(Cryostat_Vacuum_solid, Vacuum, "Cryostat_Vacuum_log");
+
+	Cryostat_Vacuum_phys = new G4PVPlacement(nullptr, G4ThreeVector(0*cm, 0*cm, 0*cm), Cryostat_Vacuum_log,"Cryostat_Vacuum", Cryostat_Outer_MotherLogicalVolume, 0, 0);
 
 
 	//**************************************************
 	// TPC Envelop
 	//**************************************************
 
-	Cryostat_Inner_MotherLogicalVolume = Cryostat_Envelop_log;
+	Cryostat_Inner_MotherLogicalVolume = Cryostat_Vacuum_log;
 
 	G4Tubs* GXe_Cryostat_TPCEnvelop_solid = new G4Tubs("GXe_Cryostat_TPCEnvelop_solid", 0., Cryostat_TPCEnvelop_Radius, Cryostat_TPCEnvelop_Height/2 , 0.*deg, 360.*deg);
 

@@ -73,6 +73,7 @@ private:
 
 	// PARAMETERS
 				G4double TPC_offset_origin; 
+				G4double Cryostat_Inner_offset;
 
 	// LOGICAL VOLUMES
         G4LogicalVolume *CryostatLogicalVolume;
