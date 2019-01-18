@@ -827,7 +827,8 @@ G4double XebraConstructTPC::GetInnerHeightCryostat(){
  
 void XebraConstructTPC:: PrintGeometryInformation()
 {
-	//================================== Xenon ===============================================================  
+	//================================== Xenon =============================================================== 
+	G4cout << "======================================================================================== " << G4endl;
 	const G4double LXeMass = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
 	const G4double LXeVolume = LXeMass/(LXe->GetDensity()*m3/kg);
 	G4cout << "LXe:                               " << LXeMass << " kg " << "    =============    " << LXeVolume << " m3 " << G4endl;

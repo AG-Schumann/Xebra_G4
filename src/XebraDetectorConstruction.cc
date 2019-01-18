@@ -57,8 +57,8 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 
    //////////////// Geometry Information /////////////////// 
    G4cout << "########################################################################################" << G4endl;
-   cryostat->PrintGeometryInformation();
    tpc->PrintGeometryInformation();
+   cryostat->PrintGeometryInformation();
    G4cout << "########################################################################################" << G4endl;
 
    if(pCheckOverlap) SecondOverlapCheck();

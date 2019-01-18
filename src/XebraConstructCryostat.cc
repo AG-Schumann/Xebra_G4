@@ -398,10 +398,9 @@ G4LogicalVolume* XebraConstructCryostat::GetMotherVolume(){
 
 void XebraConstructCryostat::PrintGeometryInformation()
 {
-	G4Material* GXe = G4Material::GetMaterial("GXe");
   const G4double GXeMass = GetGXeMass_Cryo_extravolume();//GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
   const G4double GXeVolume = GetGXeVolume_Cryo_extravolume();//GXeMass/(GXe->GetDensity()*m3/kg);  
   G4cout << "GXe extra filling cryo:            " << GXeMass << " kg " << "     =============    " << GXeVolume << " m3 " << G4endl;
-  G4cout << "======================================================================================== " << G4endl;	
+  G4cout << "======================================================================================== " << G4endl;
 }
 
