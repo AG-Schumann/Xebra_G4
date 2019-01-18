@@ -91,6 +91,11 @@ private:
   G4double Cryostat_Inner_TopFlange2_outerdiameter;
   G4double Cryostat_Inner_TopFlange2_innerdiameter;
 
+  G4double Cryostat_Inner_upperedge_unshifted;
+  G4double Cryostat_Outer_TopFlange_loweredge_unshifted;
+  G4double Cryostats_dist_unshifted;
+  G4double Cryostats_dist_real;
+  G4double Cryostat_Inner_offset;
 
   //LogicalVolumes
   G4LogicalVolume* Cryostat_Envelop_log;
