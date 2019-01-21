@@ -43,6 +43,13 @@ public:
 
 private:
 
+	//Materials
+	G4Material* Vacuum;
+	G4Material* SS304LSteel;
+	G4Material* GXe;
+	G4Material* Air;
+	G4Material* Aluminium;
+
   //Parameters for the Cryostat Envelop
   G4double Cryostat_Envelop_Radius;  
   G4double Cryostat_Envelop_Height;
