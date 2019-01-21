@@ -392,5 +392,6 @@
  /usr/local/geant4/include/Geant4/G4VStoreNotifier.hh \
  /usr/local/geant4/include/Geant4/G4VNotifier.hh \
  include/XebraConstructCryostat.hh include/XebraDetectorConstruction.hh \
+ include/XebraConstructTPC.hh \
  /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
  include/XebraConstructTPC.hh
