@@ -63,11 +63,11 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 //**********************************************MATERIALS**********************************************
 
-	G4Material* Vacuum   =  G4Material::GetMaterial("Vacuum");
-	G4Material* SS304LSteel = G4Material::GetMaterial("SS304LSteel");
-	G4Material* GXe = G4Material::GetMaterial("GXe"); 
-	G4Material* Air = G4Material::GetMaterial("G4_AIR");
-	G4Material* Aluminium = G4Material::GetMaterial("Aluminium");
+	Vacuum   =  G4Material::GetMaterial("Vacuum");
+	SS304LSteel = G4Material::GetMaterial("SS304LSteel");
+	GXe = G4Material::GetMaterial("GXe"); 
+	Air = G4Material::GetMaterial("G4_AIR");
+	Aluminium = G4Material::GetMaterial("Aluminium");
 
 //**********************************************DEFINE PARAMETER**********************************************    
 
@@ -376,14 +376,12 @@ G4double XebraConstructCryostat::GetOuterHeightCryostat(){
 }
 
 G4double XebraConstructCryostat::GetGXeMass_Cryo_extravolume(){
-	G4Material* GXe = G4Material::GetMaterial("GXe");
   GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
   GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg);
   return this->GXeMass_Cryo_extravolume;
 }
 
 G4double XebraConstructCryostat::GetGXeVolume_Cryo_extravolume(){
-	G4Material* GXe = G4Material::GetMaterial("GXe");
   GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
   GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg);
   return this->GXeVolume_Cryo_extravolume;

@@ -824,19 +824,39 @@ G4double XebraConstructTPC::GetInnerRadiusCryostat(){
 G4double XebraConstructTPC::GetInnerHeightCryostat(){
 	return this->cryostat_innerHeight;
 }
+
+G4double XebraConstructTPC::GetLXeMass_TPC(){
+  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
+  LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
+  return this->LXeMass_TPC;
+}
+
+G4double XebraConstructTPC::GetLXeVolume_TPC(){
+  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
+  LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
+  return this->LXeVolume_TPC;
+}
+
+G4double XebraConstructTPC::GetGXeMass_TPC(){
+  GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
+  GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
+  return this->GXeMass_TPC;
+}
+
+G4double XebraConstructTPC::GetGXeVolume_TPC(){
+  GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
+  GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
+  return this->GXeVolume_TPC;
+}
  
 void XebraConstructTPC:: PrintGeometryInformation()
 {
 	//================================== Xenon =============================================================== 
 	G4cout << "======================================================================================== " << G4endl;
-	const G4double LXeMass = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
-	const G4double LXeVolume = LXeMass/(LXe->GetDensity()*m3/kg);
-	G4cout << "LXe:                               " << LXeMass << " kg " << "    =============    " << LXeVolume << " m3 " << G4endl;
-	const G4double GXeMass = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
-	const G4double GXeVolume = GXeMass/(GXe->GetDensity()*m3/kg);
-	G4cout << "GXe:                               " << GXeMass << " kg " << "     =============    " << GXeVolume << " m3 " << G4endl;
-	const G4double TotalXenonMass = LXeMass + GXeMass;
-	const G4double TotalXenonVolume = LXeVolume + GXeVolume;
+	G4cout << "LXe:                               " << LXeMass_TPC << " kg " << "    =============    " << LXeVolume_TPC << " m3 " << G4endl;
+	G4cout << "GXe:                               " << GXeMass_TPC << " kg " << "    =============    " << GXeVolume_TPC << " m3 " << G4endl;
+	const G4double TotalXenonMass = LXeMass_TPC + GXeMass_TPC;
+	const G4double TotalXenonVolume = LXeVolume_TPC + GXeVolume_TPC;
 	G4cout << "                                   ===================================================== " << G4endl;
 	G4cout << "Total Xenon in TPC envelope:       " << TotalXenonMass << " kg " << "    =============    " << TotalXenonVolume << " m3 " << G4endl;
 	G4cout << "======================================================================================== " << G4endl;

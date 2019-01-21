@@ -19,6 +19,11 @@ public:
 
 	G4double GetInnerRadiusCryostat();
 	G4double GetInnerHeightCryostat();
+	
+	 G4double GetLXeMass_TPC();
+   G4double GetLXeVolume_TPC();
+	 G4double GetGXeMass_TPC();
+   G4double GetGXeVolume_TPC();
 
 	void PrintGeometryInformation();
 
@@ -85,6 +90,11 @@ private:
 	G4RotationMatrix* rmz285;
 	G4RotationMatrix* rmz300;
 	G4RotationMatrix* rmy90;
+	
+	G4double LXeMass_TPC;
+	G4double LXeVolume_TPC;
+	G4double GXeMass_TPC;
+	G4double GXeVolume_TPC;
  
 	//Solids
 	G4Tubs *TPC_cylinder;
