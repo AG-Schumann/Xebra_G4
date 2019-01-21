@@ -3,6 +3,7 @@
 
 //XEBRA header files
 #include "XebraDetectorConstruction.hh"
+#include "XebraConstructTPC.hh"
 
 //G4 Header Files
 #include <G4SystemOfUnits.hh>

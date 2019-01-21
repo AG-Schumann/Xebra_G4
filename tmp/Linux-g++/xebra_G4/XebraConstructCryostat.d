@@ -392,8 +392,9 @@
  /usr/local/geant4/include/Geant4/G4PhysicalVolumeStore.hh \
  /usr/local/geant4/include/Geant4/G4VStoreNotifier.hh \
  /usr/local/geant4/include/Geant4/G4VNotifier.hh \
+ include/XebraConstructTPC.hh \
  /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
- /usr/local/geant4/include/Geant4/G4Cons.hh \
+ include/XebraConstructTPC.hh /usr/local/geant4/include/Geant4/G4Cons.hh \
  /usr/local/geant4/include/Geant4/G4Cons.icc \
  /usr/local/geant4/include/Geant4/G4Sphere.hh \
  /usr/local/geant4/include/Geant4/G4Sphere.icc \
