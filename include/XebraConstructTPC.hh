@@ -20,10 +20,10 @@ public:
 	G4double GetInnerRadiusCryostat();
 	G4double GetInnerHeightCryostat();
 	
-	 G4double GetLXeMass_TPC();
-   G4double GetLXeVolume_TPC();
-	 G4double GetGXeMass_TPC();
-   G4double GetGXeVolume_TPC();
+	G4double GetLXeMass_TPC();
+  G4double GetLXeVolume_TPC();
+	G4double GetGXeMass_TPC();
+  G4double GetGXeVolume_TPC();
 
 	void PrintGeometryInformation();
 
