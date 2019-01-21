@@ -852,11 +852,16 @@ G4double XebraConstructTPC::GetGXeVolume_TPC(){
 void XebraConstructTPC:: PrintGeometryInformation()
 {
 	//================================== Xenon =============================================================== 
+	LXeMass_T = XebraConstructTPC::GetLXeMass_TPC();
+	GXeMass_T = XebraConstructTPC::GetGXeMass_TPC();
+	LXeVolume_T = XebraConstructTPC::GetLXeVolume_TPC();
+	GXeVolume_T = XebraConstructTPC::GetGXeVolume_TPC();
+	
 	G4cout << "======================================================================================== " << G4endl;
-	G4cout << "LXe:                               " << LXeMass_TPC << " kg " << "    =============    " << LXeVolume_TPC << " m3 " << G4endl;
-	G4cout << "GXe:                               " << GXeMass_TPC << " kg " << "    =============    " << GXeVolume_TPC << " m3 " << G4endl;
-	const G4double TotalXenonMass = LXeMass_TPC + GXeMass_TPC;
-	const G4double TotalXenonVolume = LXeVolume_TPC + GXeVolume_TPC;
+	G4cout << "LXe:                               " << LXeMass_T << " kg " << "    =============    " << LXeVolume_T << " m3 " << G4endl;
+	G4cout << "GXe:                               " << GXeMass_T << " kg " << "    =============    " << GXeVolume_T << " m3 " << G4endl;
+	G4double TotalXenonMass = LXeMass_T + GXeMass_T;
+	G4double TotalXenonVolume = LXeVolume_T + GXeVolume_T;
 	G4cout << "                                   ===================================================== " << G4endl;
 	G4cout << "Total Xenon in TPC envelope:       " << TotalXenonMass << " kg " << "    =============    " << TotalXenonVolume << " m3 " << G4endl;
 	G4cout << "======================================================================================== " << G4endl;

@@ -49,6 +49,12 @@ private:
 	G4Material* GXe;
 	G4Material* Air;
 	G4Material* Aluminium;
+	
+ 	G4double GXeMass_Cryo_extravolume;
+	G4double GXeVolume_Cryo_extravolume;
+	
+	G4double GXeMass_C;
+	G4double GXeVolume_C;
 
   //Parameters for the Cryostat Envelop
   G4double Cryostat_Envelop_Radius;  
@@ -99,9 +105,6 @@ private:
   G4double Cryostat_Inner_TopFlange2_length;
   G4double Cryostat_Inner_TopFlange2_outerdiameter;
   G4double Cryostat_Inner_TopFlange2_innerdiameter;
-
-  G4double GXeMass_Cryo_extravolume;
-  G4double GXeVolume_Cryo_extravolume;
 
   G4double Cryostat_Inner_upperedge_unshifted;
   G4double Cryostat_Outer_TopFlange_loweredge_unshifted;
