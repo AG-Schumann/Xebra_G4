@@ -40,6 +40,16 @@ private:
 	G4Material *Torlon;
 	G4Material *GridMeshSS316LSteelLXe;
 	G4Material *GridMeshSS316LSteelGXe;
+	
+	G4double LXeMass_TPC;
+	G4double LXeVolume_TPC;
+	G4double GXeMass_TPC;
+	G4double GXeVolume_TPC;
+	
+	G4double LXeMass_T;
+	G4double LXeVolume_T;
+	G4double GXeMass_T;
+	G4double GXeVolume_T;
 
 	//Parameters
 	G4double cryostat_innerRadius;
@@ -91,10 +101,6 @@ private:
 	G4RotationMatrix* rmz300;
 	G4RotationMatrix* rmy90;
 	
-	G4double LXeMass_TPC;
-	G4double LXeVolume_TPC;
-	G4double GXeMass_TPC;
-	G4double GXeVolume_TPC;
  
 	//Solids
 	G4Tubs *TPC_cylinder;

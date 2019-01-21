@@ -55,8 +55,9 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 
 
 
-   //////////////// Geometry Information /////////////////// 
+   //////////////// Geometry Information ///////////////////   
    G4cout << "########################################################################################" << G4endl;
+   //PrintGeometryInformation();
    tpc->PrintGeometryInformation();
    cryostat->PrintGeometryInformation();
    G4cout << "########################################################################################" << G4endl;
@@ -86,7 +87,31 @@ void XebraDetectorConstruction::ConstructLaboratory()
 	LabLogicalVolume->SetVisAttributes(G4VisAttributes::Invisible);
 }
 
-void XebraDetectorConstruction::PrintGeometryInformation(){;}  //removed water from here, now empty
+void XebraDetectorConstruction::PrintGeometryInformation()
+{
+	//XebraConstructCryostat *cryo = new XebraConstructCryostat(this);
+	//G4double GXeMass_Cryostat = cryo->GetGXeMass_Cryo_extravolume();	
+/*	G4double GXeVolume_Cryostat = cryo->GetGXeVolume_Cryo_extravolume();
+	
+	XebraConstructTPC *tpc = new XebraConstructTPC(this);
+	G4double LXeMass_TPC = tpc->GetLXeMass_TPC();
+	G4double GXeMass_TPC = tpc->GetGXeMass_TPC();
+	G4double LXeVolume_TPC = tpc->GetLXeVolume_TPC();
+	G4double GXeVolume_TPC = tpc->GetGXeVolume_TPC();
+	
+	G4double GXeMass = GXeMass_Cryostat + GXeMass_TPC;
+	G4double GXeVolume = GXeVolume_Cryostat + GXeVolume_TPC;
+	
+	G4double TotalXenonMass = LXeMass_TPC + GXeMass_Cryostat + GXeMass_TPC;
+	G4double TotalXenonVolume = LXeVolume_TPC + GXeVolume_Cryostat + GXeVolume_TPC;
+
+	G4cout << "======================================================================================== " << G4endl;
+	G4cout << "LXe:                               " << LXeMass_TPC << " kg " << "    =============    " << LXeVolume_TPC << " m3 " << G4endl;
+	G4cout << "GXe:                               " << GXeMass << " kg " << "    =============    " << GXeVolume << " m3 " << G4endl;
+	G4cout << "                                   ===================================================== " << G4endl;
+	G4cout << "Total Xenon in inner cryostat:     " << TotalXenonMass << " kg " << "    =============    " << TotalXenonVolume << " m3 " << G4endl;
+	G4cout << "======================================================================================== " << G4endl;*/
+}
 
 
 void XebraDetectorConstruction::SecondOverlapCheck()
