@@ -105,7 +105,7 @@ void XebraAnalysisManager::BeginOfRun(const G4Run *)
   m_pTree->Branch("post_MomDirZ", "vector<float>", &m_pEventData->m_pPostMomDirZ);
   m_pTree->Branch("pre_ekin", "vector<float>", &m_pEventData->m_pPreKineticEnergy);
   m_pTree->Branch("post_ekin", "vector<float>", &m_pEventData->m_pPostKineticEnergy);
-    
+/*    
   m_pTree->Branch("LScint_etot", &m_pEventData->m_fLScintTotalEnergyDeposited, "LScint_etot/F");
   m_pTree->Branch("LScint_nsteps", &m_pEventData->m_iLScintNbSteps, "LScint_nsteps/I");
   m_pTree->Branch("LScint_trackid", "vector<int>", &m_pEventData->m_pLScintTrackId);
@@ -121,7 +121,7 @@ void XebraAnalysisManager::BeginOfRun(const G4Run *)
   m_pTree->Branch("LScint_ed_bCorr", "vector<float>", &m_pEventData->m_pLScintEnergyDepositedBirksCorrected);
   m_pTree->Branch("LScint_time", "vector<float>", &m_pEventData->m_pLScintTime);
   m_pTree->Branch("LScint_ekin", "vector<float>", &m_pEventData->m_pLScintKineticEnergy);
-  
+*/  
   m_pTree->Branch("type_pri", "vector<string>", &m_pEventData->m_pPrimaryParticleType);
   m_pTree->Branch("xp_pri", &m_pEventData->m_fPrimaryX, "xp_pri/F");
   m_pTree->Branch("yp_pri", &m_pEventData->m_fPrimaryY, "yp_pri/F");
@@ -182,13 +182,13 @@ void XebraAnalysisManager::BeginOfEvent(const G4Event *)
     G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
     m_iPmtHitsCollectionID = pSDManager->GetCollectionID("PmtHitsCollection");
   }
-
+/*
   if(m_iLScintHitsCollectionID == -1)
   {
     G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
     m_iLScintHitsCollectionID = pSDManager->GetCollectionID("LScintHitsCollection");
   } 
-  
+*/  
 }
 
 void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
@@ -215,13 +215,13 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
         pPmtHitsCollection = (XebraPmtHitsCollection *)(pHCofThisEvent->GetHC(m_iPmtHitsCollectionID));
         iNbPmtHits = (pPmtHitsCollection)?(pPmtHitsCollection->entries()):(0);
 	  }
-
+/*
       if(m_iLScintHitsCollectionID != -1)
 	  {
         pLScintHitsCollection = (XebraLScintHitsCollection *)(pHCofThisEvent->GetHC(m_iLScintHitsCollectionID));
         iNbLScintHits = (pLScintHitsCollection)?(pLScintHitsCollection->entries()):(0);
 	  }
-      
+*/      
   }
 
   // get the event ID and primary particle information

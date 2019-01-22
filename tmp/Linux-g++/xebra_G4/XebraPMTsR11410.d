@@ -393,6 +393,7 @@
  /usr/local/geant4/include/Geant4/G4VStoreNotifier.hh \
  /usr/local/geant4/include/Geant4/G4VNotifier.hh \
  /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
+ include/XebraPmtSensitiveDetector.hh include/XebraPmtHit.hh \
  /usr/local/geant4/include/Geant4/G4Polyhedra.hh \
  /usr/local/geant4/include/Geant4/G4VCSGfaceted.hh \
  /usr/local/geant4/include/Geant4/G4PolyhedraSide.hh \
@@ -405,4 +406,4 @@
  /usr/local/geant4/include/Geant4/G4Polycone.icc \
  /usr/local/geant4/include/Geant4/G4Ellipsoid.hh \
  /usr/local/geant4/include/Geant4/G4Ellipsoid.icc \
- include/XebraPmtSensitiveDetector.hh include/XebraPmtHit.hh
+ include/XebraPmtSensitiveDetector.hh

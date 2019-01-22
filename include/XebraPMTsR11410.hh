@@ -3,6 +3,7 @@
 
 //XEBRA header files
 #include "XebraConstructTPC.hh"
+#include "XebraPmtSensitiveDetector.hh"
 
 //Additional Header Files
 #include <globals.hh>
@@ -32,6 +33,7 @@ public:
   G4LogicalVolume* Construct();
 
 private:
+	G4SDManager *pSDManager;
     
   G4double dPMTThickness;
   G4double dPMTHeight;
@@ -66,6 +68,8 @@ private:
   G4VPhysicalVolume *m_pPMTWindowPhysicalVolume;
   G4VPhysicalVolume *m_pPMTPhotocathodePhysicalVolume;
   G4VPhysicalVolume *m_PMTCeramicPhysicalVolume;
+  
+  XebraPmtSensitiveDetector* PMT_R11410_SD;
 };
 
 #endif
