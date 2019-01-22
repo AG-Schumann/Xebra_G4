@@ -147,7 +147,7 @@ void XebraDetectorConstruction::VolumesHierarchy() {
 
   std::string f_name =  "VolumesList.dat";
   std::ofstream f_volumeslist(f_name);
-  G4cout << ">>> Writing list of volumes to file: " << f_name << G4endl;
+  G4cout << ">>> Writing list of volumes to file: " << f_name << G4endl << G4endl;
   f_volumeslist << "PhysicalVolume LogicalVolume MotherLogicalVolume" << G4endl;
 
   // loop over all volumes in G4PhysicalVolumeStore and write to file
