@@ -160,8 +160,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
 
 
   //------------------------------- PMT sensitivity -------------------------------
-  G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
-  XebraPmtSensitiveDetector* pPMT_R8520_SD;
+  pSDManager = G4SDManager::GetSDMpointer();
 
   if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
      {

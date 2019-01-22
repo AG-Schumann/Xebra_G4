@@ -3,6 +3,7 @@
 
 //XEBRA header files
 #include "XebraConstructTPC.hh"
+#include "XebraPmtSensitiveDetector.hh"
 
 //Additional Header Files
 #include <globals.hh>
@@ -32,8 +33,7 @@ public:
 	G4LogicalVolume* Construct();
 
 private:
-    
-	// Parameters:
+	G4SDManager *pSDManager;
 
 	// Solids:
 	G4Box* R8520_body_solid_orig_1;
@@ -129,6 +129,9 @@ private:
   G4VPhysicalVolume* R8520_ring_phys;
   G4VPhysicalVolume* R8520_vacuum_phys;
   G4VPhysicalVolume* R8520_photocathode_phys;
+  
+  // Sensitive Detectors
+  XebraPmtSensitiveDetector* pPMT_R8520_SD;
 
 };
 
