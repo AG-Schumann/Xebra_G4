@@ -89,8 +89,8 @@ void XebraDetectorConstruction::ConstructLaboratory()
 
 void XebraDetectorConstruction::PrintGeometryInformation()
 {
-	//G4double GXeMass_Cryostat = XebraConstructCryostat::GetGXeMass_Cryo_extravolume();	
-	/*XebraConstructCryostat *cryo = new XebraConstructCryostat(this);
+	/*G4double GXeMass_Cryostat = XebraConstructCryostat::GetGXeMass_Cryo_extravolume();	
+	XebraConstructCryostat *cryo = new XebraConstructCryostat(this);
 	G4double GXeMass_Cryostat = cryo->GetGXeMass_Cryo_extravolume();	
 	G4double GXeVolume_Cryostat = cryo->GetGXeVolume_Cryo_extravolume();
 	

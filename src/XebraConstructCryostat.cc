@@ -362,7 +362,10 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	GXeVisAtt->SetVisibility(true);
 
 
-//**********************************************RETURN**********************************************  
+//**********************************************RETURN********************************************** 
+
+  GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
+  GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg); 
 
   return Cryostat_Envelop_log; // ToDo: change
 }
@@ -377,14 +380,10 @@ G4double XebraConstructCryostat::GetOuterHeightCryostat(){
 }
 
 G4double XebraConstructCryostat::GetGXeMass_Cryo_extravolume(){
-  GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
-  GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg);
   return this->GXeMass_Cryo_extravolume;
 }
 
 G4double XebraConstructCryostat::GetGXeVolume_Cryo_extravolume(){
-  GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
-  GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg);
   return this->GXeVolume_Cryo_extravolume;
 }
 
