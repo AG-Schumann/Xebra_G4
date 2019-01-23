@@ -814,6 +814,12 @@ using std::stringstream;
 
 //**********************************************
 
+  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
+  LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
+
+  GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
+  GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
+
 	return TPC_Logical;
 }
 
@@ -826,26 +832,18 @@ G4double XebraConstructTPC::GetInnerHeightCryostat(){
 }
 
 G4double XebraConstructTPC::GetLXeMass_TPC(){
-  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
-  LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
   return this->LXeMass_TPC;
 }
 
 G4double XebraConstructTPC::GetLXeVolume_TPC(){
-  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
-  LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
   return this->LXeVolume_TPC;
 }
 
 G4double XebraConstructTPC::GetGXeMass_TPC(){
-  GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
-  GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
   return this->GXeMass_TPC;
 }
 
 G4double XebraConstructTPC::GetGXeVolume_TPC(){
-  GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
-  GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
   return this->GXeVolume_TPC;
 }
  
