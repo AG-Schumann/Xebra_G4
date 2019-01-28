@@ -148,7 +148,6 @@ void XebraDetectorConstruction::SecondOverlapCheck()
       overlapFlag = (*thePVStore)[i]->CheckOverlaps(5000) | overlapFlag;
   }
 
-
 }
 
 
@@ -176,4 +175,12 @@ void XebraDetectorConstruction::VolumesHierarchy() {
   }
   f_volumeslist.close();
 }
+
+
+//***********************************************
+// Added by Alex
+//***********************************************
+
+
+
 
