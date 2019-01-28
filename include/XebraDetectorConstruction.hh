@@ -50,6 +50,26 @@ public:
     G4VPhysicalVolume* Construct();
 
     void SetCheckOverlap(G4bool dCheckOverlap)             {pCheckOverlap = dCheckOverlap;};
+    
+    // Added by Alex:
+    
+    void SetTeflonReflectivity(G4double dReflectivity);
+		void SetGXeTeflonReflectivity(G4double dGXeReflectivity);
+		void SetSS304LSteelReflectivity(G4double dReflectivity);
+		void SetLXeScintillation(G4bool dScintillation);
+		void SetLXeLevel(G4double dlevel);
+		void SetMaterial (const G4String&);
+		void SetLXeMeshMaterial (const G4String&);
+		void SetGXeMeshMaterial (const G4String&);
+		void SetLXeAbsorbtionLength(G4double dAbsorbtionLength);
+		void SetGXeAbsorbtionLength(G4double dAbsorbtionLength);
+		void SetLXeRayScatterLength(G4double dRayScatterLength);
+		void SetLXeRefractionIndex(G4double dRefractionIndex);
+	
+		void SetLXeMeshTransparency(G4double dTransparency); 
+		void SetGXeMeshTransparency(G4double dTransparency); 
+
+		static G4double GetGeometryParameter(const char *szParameter);
 
 private:
 	void ConstructLaboratory();	
