@@ -114,6 +114,9 @@ using std::stringstream;
 
 	TPC_cylinder = new G4Tubs("TPC_cylinder", 0.*cm, cryostat_innerRadius, cryostat_innerHeight/2, 0.*deg, 360.*deg);  
 	GXe_cylinder = new G4Tubs("GXe_cylinder", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
+	
+	LXe_ActiveVolume_solid = new G4Tubs("LXe_ActiveVolume_solid", 0.*mm, 35.*mm, (68.5*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
+	LXe_ActiveVolume_extra_filling_solid = new G4Tubs("LXe_ActiveVolume_extra_filling_solid", 0.*mm, 35.*mm, (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg); //ToDo:make SD and include in mass calculations (here and in Constr.Det.), cut out of GXe and LXe extra filling
 		
 		// fillings in weir
 		filling_ratio_weir = 0.5; // ratio by how much the weir is filled with LXe, default = 0.5, range = (0,1)
@@ -466,6 +469,8 @@ using std::stringstream;
 
 	TPC_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "TPC_Logical", 0, 0, 0);
 	LXe_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "LXe_Logical", 0, 0, 0);
+	LXe_ActiveVolume_Logical = new G4LogicalVolume(LXe_ActiveVolume_solid, LXe, "LXe_ActiveVolume_Logical", 0, 0, 0);
+	LXe_ActiveVolume_extra_filling_Logical = new G4LogicalVolume(LXe_ActiveVolume_extra_filling_solid, LXe, "LXe_ActiveVolume_extra_filling_Logical", 0, 0, 0);
 	GXe_Logical = new G4LogicalVolume(GXe_cylinder, GXe, "GXe_Logical", 0, 0, 0);
 	if (height_LXe_TPC_cylinder > 0.)	
 		{
@@ -529,6 +534,10 @@ using std::stringstream;
   
 	// Replacing LXe with GXe
 	GXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., cryostat_innerHeight/2 - GXe_height/2), GXe_Logical,"GXe_TPC", LXe_Logical, false, 0);
+	
+	// Placing LXe Active Volume
+	LXe_ActiveVolume_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., (-TPC_dimension_z / 2 + 152.0*mm + 3.*mm + 0.15*mm + TPC_offset_z) + (68.5*mm - 0.15*mm)/2), LXe_ActiveVolume_Logical,"LXe_ActiveVolume", LXe_Logical, false, 0);
+	LXe_ActiveVolume_extra_filling_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2), LXe_ActiveVolume_extra_filling_Logical,"LXe_ActiveVolume_extra_filling", LXe_extra_filling_log, false, 0);
 
 	// Filling weir with LXe and GXe
 	if (height_LXe_TPC_cylinder > 0.)
@@ -673,6 +682,7 @@ using std::stringstream;
 
 //**********************************************OPTICAL SURFACES**********************************************
 // see https://indico.cern.ch/event/679723/contributions/2792554/attachments/1559217/2453758/BookForApplicationDevelopers.pdf, p. 219
+// ToDo: check and maybe change / remove
 
   G4double dSigmaAlpha = 0.1;
 	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface",
@@ -696,9 +706,13 @@ using std::stringstream;
 	// PTFE Reflector
 	new G4LogicalBorderSurface("LXe_PTFEReflectorLXe_LogicalBorderSurface",
 		LXe_Physical, TPC_PTFE_reflector_LXe_phys, pTeflonOpticalSurface);
+	new G4LogicalBorderSurface("LXe_PTFEReflectorLXe_LogicalBorderSurface2",
+		LXe_ActiveVolume_Physical, TPC_PTFE_reflector_LXe_phys, pTeflonOpticalSurface);
 
 	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface",
 		LXe_extra_filling_phys, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
+	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface",
+		LXe_ActiveVolume_extra_filling_Physical, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
 
 	// Top PMT Holder
 	if (LXe_extra_filling_height > 16.*mm)	
@@ -766,6 +780,8 @@ using std::stringstream;
 		{
 		LXe_weir_2_log->SetSensitiveDetector(pLXeSD);
 		}
+	LXe_ActiveVolume_Logical->SetSensitiveDetector(pLXeSD);
+	LXe_ActiveVolume_extra_filling_Logical->SetSensitiveDetector(pLXeSD);
 
 
 //**********************************************VISUALIZATION**********************************************
@@ -814,11 +830,15 @@ using std::stringstream;
 
 //**********************************************
 
-  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg;
+  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg + LXe_ActiveVolume_Logical->GetMass(false, false)/kg + LXe_ActiveVolume_extra_filling_Logical->GetMass(false, false)/kg;
   LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
 
   GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
   GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
+  
+  LXeMass_ActiveVolume = LXe_ActiveVolume_Logical->GetMass(false, false)/kg + LXe_ActiveVolume_extra_filling_Logical->GetMass(false, false)/kg;
+  LXeVolume_ActiveVolume = LXeMass_ActiveVolume/(LXe->GetDensity()*m3/kg);
+
 
 	return TPC_Logical;
 }
@@ -839,6 +859,14 @@ G4double XebraConstructTPC::GetLXeVolume_TPC(){
   return this->LXeVolume_TPC;
 }
 
+G4double XebraConstructTPC::GetLXeMass_ActiveVolume(){
+  return this->LXeMass_ActiveVolume;
+}
+
+G4double XebraConstructTPC::GetLXeVolume_ActiveVolume(){
+  return this->LXeVolume_ActiveVolume;
+}
+
 G4double XebraConstructTPC::GetGXeMass_TPC(){
   return this->GXeMass_TPC;
 }
@@ -851,8 +879,10 @@ void XebraConstructTPC:: PrintGeometryInformation()
 {
 	//================================== Xenon =============================================================== 
 	LXeMass_T = XebraConstructTPC::GetLXeMass_TPC();
+	LXeMass_A = XebraConstructTPC::GetLXeMass_ActiveVolume();
 	GXeMass_T = XebraConstructTPC::GetGXeMass_TPC();
 	LXeVolume_T = XebraConstructTPC::GetLXeVolume_TPC();
+	LXeVolume_A = XebraConstructTPC::GetLXeVolume_ActiveVolume();
 	GXeVolume_T = XebraConstructTPC::GetGXeVolume_TPC();
 	
 	G4cout << "======================================================================================== " << G4endl;
@@ -862,6 +892,8 @@ void XebraConstructTPC:: PrintGeometryInformation()
 	G4double TotalXenonVolume = LXeVolume_T + GXeVolume_T;
 	G4cout << "                                   ===================================================== " << G4endl;
 	G4cout << "Total Xenon in TPC envelope:       " << TotalXenonMass << " kg " << "    =============    " << TotalXenonVolume << " m3 " << G4endl;
+	G4cout << "======================================================================================== " << G4endl;
+	G4cout << "LXe in active volume:              " << LXeMass_A << " kg " << "    =============    " << LXeVolume_A << " m3 " << G4endl;
 	G4cout << "======================================================================================== " << G4endl;
 
 }
