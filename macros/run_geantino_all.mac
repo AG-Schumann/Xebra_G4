@@ -83,7 +83,8 @@
 # /xebra/gun/confine GXe_Cryostat_extravolume
 # /xebra/gun/confine GXe*
 # /xebra/gun/confine Cryostat_Outer*
-/xebra/gun/confine Cryostat_Vacuum*
+# /xebra/gun/confine Cryostat_Vacuum*
+/xebra/gun/confine LXe_ActiveVolume*
 
 ##################
 #/xebra/gun/energytype Spectrum

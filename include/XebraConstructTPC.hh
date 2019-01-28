@@ -22,6 +22,8 @@ public:
 	
 	G4double GetLXeMass_TPC();
   G4double GetLXeVolume_TPC();
+  G4double GetLXeMass_ActiveVolume();
+  G4double GetLXeVolume_ActiveVolume();
 	G4double GetGXeMass_TPC();
   G4double GetGXeVolume_TPC();
 
@@ -43,11 +45,15 @@ private:
 	
 	G4double LXeMass_TPC;
 	G4double LXeVolume_TPC;
+	G4double LXeMass_ActiveVolume;
+	G4double LXeVolume_ActiveVolume;
 	G4double GXeMass_TPC;
 	G4double GXeVolume_TPC;
 	
 	G4double LXeMass_T;
 	G4double LXeVolume_T;
+	G4double LXeMass_A;
+	G4double LXeVolume_A;
 	G4double GXeMass_T;
 	G4double GXeVolume_T;
 
@@ -105,6 +111,8 @@ private:
 	//Solids
 	G4Tubs *TPC_cylinder;
 	G4Tubs *GXe_cylinder; 
+	G4Tubs *LXe_ActiveVolume_solid;
+		G4Tubs *LXe_ActiveVolume_extra_filling_solid;
 	G4double filling_ratio_weir;
 	G4double height_LXe_TPC_cylinder;
 	G4double height_GXe_TPC_cylinder;
@@ -351,6 +359,8 @@ private:
 
 	G4LogicalVolume *TPC_Logical;
 	G4LogicalVolume *LXe_Logical;
+	G4LogicalVolume *LXe_ActiveVolume_Logical;
+	G4LogicalVolume *LXe_ActiveVolume_extra_filling_Logical;
 	G4LogicalVolume *GXe_Logical;
 	G4LogicalVolume* LXe_weir_1_log;
 	G4LogicalVolume* GXe_weir_1_log;
@@ -392,6 +402,8 @@ private:
 	G4VPhysicalVolume *test_phys;
 
 	G4VPhysicalVolume *LXe_Physical;
+	G4VPhysicalVolume *LXe_ActiveVolume_Physical;
+	G4VPhysicalVolume *LXe_ActiveVolume_extra_filling_Physical;
 	G4VPhysicalVolume *GXe_Physical; 
 	G4VPhysicalVolume* LXe_weir_1_phys;
 	G4VPhysicalVolume* GXe_weir_1_phys;

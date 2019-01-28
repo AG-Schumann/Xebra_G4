@@ -65,8 +65,10 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 	G4double GXeVolume_Cryostat = cryostat->GetGXeVolume_Cryo_extravolume();
 	
 	G4double LXeMass_TPC = tpc->GetLXeMass_TPC();
+	G4double LXeMass_ActiveVolume = tpc->GetLXeMass_ActiveVolume();
 	G4double GXeMass_TPC = tpc->GetGXeMass_TPC();
 	G4double LXeVolume_TPC = tpc->GetLXeVolume_TPC();
+	G4double LXeVolume_ActiveVolume = tpc->GetLXeVolume_ActiveVolume();
 	G4double GXeVolume_TPC = tpc->GetGXeVolume_TPC();
 	
 	G4double GXeMass = GXeMass_Cryostat + GXeMass_TPC;
@@ -76,27 +78,28 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 	G4double TotalXenonVolume = LXeVolume_TPC + GXeVolume_Cryostat + GXeVolume_TPC;
 
 	G4cout << " " << G4endl;	
-	G4cout << "########################################################################################" << G4endl;	
-	G4cout << "========================================================================================" << G4endl;
-	G4cout << "                Xenon masses and volumes simulated in cryostat envelope                 " << G4endl;
-	G4cout << "========================================================================================" << G4endl;
-	G4cout << "                                       Mass                             Volume          " << G4endl;
-	G4cout << "========================================================================================" << G4endl;
+	G4cout << "##################################################################################" << G4endl;	
+	G4cout << "==================================================================================" << G4endl;
+	G4cout << "           Xenon masses and volumes simulated in the cryostat envelope            " << G4endl;
+	G4cout << "==================================================================================" << G4endl;
+	G4cout << "                                 Mass                             Volume          " << G4endl;
+	G4cout << "==================================================================================" << G4endl;
   //G4cout << "LXe in TPC envelope:                   " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl; 
   //G4cout << "                                       =================================================" << G4endl;
   //G4cout << "Total LXe in cryostat envelope:        " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl;
-	G4cout << "Total LXe                              " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl;
+	G4cout << "Total LXe                        " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl;
+	G4cout << "- active volume LXe              " << LXeMass_ActiveVolume << " kg " << "    =============    " << LXeVolume_ActiveVolume << " m3 " << G4endl;
 	//G4cout << "========================================================================================" << G4endl;
   //G4cout << "GXe in TPC envelope:                   " << GXeMass_TPC << " kg " << "   =============    " << GXeVolume_TPC << " m3 " << G4endl; 
   //G4cout << "GXe extra filling in inner cryostat:   " << GXeMass_Cryostat << " kg " << "   =============    " << GXeVolume_Cryostat << " m3 " << G4endl;
   //G4cout << "                                       =================================================" << G4endl;
   //G4cout << "Total GXe in cryostat envelope:        " << GXeMass << " kg " << "   =============    " << GXeVolume << " m3 " << G4endl;
-  G4cout << "Total GXe                              " << GXeMass << " kg " << "   =============    " << GXeVolume << " m3 " << G4endl;
-  G4cout << "========================================================================================" << G4endl;
+  G4cout << "Total GXe                        " << GXeMass << " kg " << "   =============    " << GXeVolume << " m3 " << G4endl;
+  G4cout << "==================================================================================" << G4endl;
   //G4cout << "Total Xenon in cryostat envelope:      " << TotalXenonMass << " kg " << "     =============    " << TotalXenonVolume << " m3 " << G4endl;
-  G4cout << "Total Xenon                            " << TotalXenonMass << " kg " << "     =============    " << TotalXenonVolume << " m3 " << G4endl;
-  G4cout << "========================================================================================" << G4endl; 
-	G4cout << "########################################################################################" << G4endl;
+  G4cout << "Total Xenon                      " << TotalXenonMass << " kg " << "     =============    " << TotalXenonVolume << " m3 " << G4endl;
+  G4cout << "==================================================================================" << G4endl; 
+	G4cout << "##################################################################################" << G4endl;
 
    /////////////////////////////////////////////////////////
 

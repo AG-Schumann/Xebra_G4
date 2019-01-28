@@ -247,7 +247,7 @@ void XebraMaterials::DefineMaterials() {
     //    G4Material *LXe = new G4Material("LXe", 2.9172*g/cm3, 1, kStateLiquid,
     // 168.15*kelvin, 1.5*atmosphere);
     G4Material *LXe = new G4Material("LXe", 2.85 * g / cm3, 1, kStateLiquid,
-                                     168.15 * kelvin, 1.5 * atmosphere);
+                                     168.15 * kelvin, 1.5 * atmosphere); //ToDo: Check density
     LXe->AddElement(Xe, 1);
     
     G4double pdLXePhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV}; //178nm
