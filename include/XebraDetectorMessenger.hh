@@ -69,6 +69,18 @@ class XebraDetectorMessenger: public G4UImessenger
     // do we want tot check for overlapping objects?
     G4UIcmdWithABool          *m_pCheckOverlapCmd;
     G4UIcmdWithABool          *m_pSetTPCCmd;
+    
+    // Added by Alex
+    G4UIcmdWithADoubleAndUnit *m_pLXeLevelCmd;
+		G4UIcmdWithAString	*m_pMaterCmd;
+		G4UIcmdWithAString	*m_pLXeMeshMaterialCmd;
+		G4UIcmdWithAString	*m_pGXeMeshMaterialCmd;
+		G4UIcmdWithADouble *m_pGXeTeflonReflectivityCmd;
+		G4UIcmdWithADoubleAndUnit *m_pGXeAbsorbtionLengthCmd;
+		G4UIcmdWithADouble *m_pLXeRefractionIndexCmd;
+		G4UIcmdWithADouble *m_pGridMeshTransparencyCmd;
+		G4UIcmdWithADouble *m_pLXeMeshTransparencyCmd;
+		G4UIcmdWithADouble *m_pGXeMeshTransparencyCmd;
 
 };
 
