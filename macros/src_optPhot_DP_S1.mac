@@ -33,8 +33,8 @@
 
 ##################
 # particle type + energy spectrum
-/Xe/gun/energy   6.98 eV
-/Xe/gun/particle opticalphoton
+/xebra/gun/energy   6.98 eV
+/xebra/gun/particle opticalphoton
 
 ##################
 # scintillation processes in the LXe
