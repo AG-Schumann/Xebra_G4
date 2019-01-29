@@ -358,5 +358,28 @@ void XebraDetectorConstruction::SetLXeScintillation(G4bool bScintillation) {
   }
 }
 
+// SetSS304LSteelReflectivity
+
+void XebraDetectorConstruction::SetSS304LSteelReflectivity(G4double dSteelReflectivity) {
+  G4Material *pSteelMaterial = G4Material::GetMaterial(G4String("SS304LSteel"));
+
+  if(pSteelMaterial)
+    {
+      G4cout << "----> Setting SS304LSteel reflectivity to " << dSteelReflectivity << G4endl;
+
+      G4MaterialPropertiesTable *pSteelPropertiesTable = pSteelMaterial->GetMaterialPropertiesTable();
+		
+      G4double Steel_PP[] = { 6.91 * eV, 6.98 * eV, 7.05 * eV };
+      G4double Steel_REFL[] = {dSteelReflectivity, dSteelReflectivity, dSteelReflectivity};
+      pSteelPropertiesTable->RemoveProperty("REFLECTIVITY");
+      pSteelPropertiesTable->AddProperty("REFLECTIVITY", Steel_PP, Steel_REFL, 3);
+    }
+  else
+    {
+      G4cout << "ls!> SS304LSteel material not found!" << G4endl;
+      exit(-1);
+    }
+}
+
 //***********************End of code************************
 
