@@ -3,6 +3,18 @@
 # by Alex
 #################
 
+##################
+# optical properties
+/Xe/detector/setTeflonReflectivity 0.95
+/Xe/detector/setGXeTeflonReflectivity 0.95
+
+/Xe/detector/setLXeAbsorbtionLength 100 cm 
+/Xe/detector/setGXeAbsorbtionLength 100 m 
+
+/Xe/detector/setLXeRayScatterLength 30 cm
+
+/Xe/detector/setLXeRefractionIndex 1.63
+
 #################
 # verbosity
 /control/verbose 0
