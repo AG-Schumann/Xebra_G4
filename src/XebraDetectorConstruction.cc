@@ -25,7 +25,7 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
     XebraMaterials *Materials = new XebraMaterials();
     Materials->DefineMaterials();
     
-    //////////////// Construt Laboratory ///////////////////
+    //////////////// Construct Laboratory ///////////////////
     ConstructLaboratory();
 
     G4cout << G4endl << "Laboratory constructed" << G4endl;
@@ -84,19 +84,10 @@ G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 	G4cout << "==================================================================================" << G4endl;
 	G4cout << "                                 Mass                             Volume          " << G4endl;
 	G4cout << "==================================================================================" << G4endl;
-  //G4cout << "LXe in TPC envelope:                   " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl; 
-  //G4cout << "                                       =================================================" << G4endl;
-  //G4cout << "Total LXe in cryostat envelope:        " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl;
 	G4cout << "Total LXe                        " << LXeMass_TPC << " kg " << "     =============    " << LXeVolume_TPC << " m3 " << G4endl;
 	G4cout << "- active volume LXe              " << LXeMass_ActiveVolume << " kg " << "    =============    " << LXeVolume_ActiveVolume << " m3 " << G4endl;
-	//G4cout << "========================================================================================" << G4endl;
-  //G4cout << "GXe in TPC envelope:                   " << GXeMass_TPC << " kg " << "   =============    " << GXeVolume_TPC << " m3 " << G4endl; 
-  //G4cout << "GXe extra filling in inner cryostat:   " << GXeMass_Cryostat << " kg " << "   =============    " << GXeVolume_Cryostat << " m3 " << G4endl;
-  //G4cout << "                                       =================================================" << G4endl;
-  //G4cout << "Total GXe in cryostat envelope:        " << GXeMass << " kg " << "   =============    " << GXeVolume << " m3 " << G4endl;
   G4cout << "Total GXe                        " << GXeMass << " kg " << "   =============    " << GXeVolume << " m3 " << G4endl;
   G4cout << "==================================================================================" << G4endl;
-  //G4cout << "Total Xenon in cryostat envelope:      " << TotalXenonMass << " kg " << "     =============    " << TotalXenonVolume << " m3 " << G4endl;
   G4cout << "Total Xenon                      " << TotalXenonMass << " kg " << "     =============    " << TotalXenonVolume << " m3 " << G4endl;
   G4cout << "==================================================================================" << G4endl; 
 	G4cout << "##################################################################################" << G4endl;
@@ -181,6 +172,191 @@ void XebraDetectorConstruction::VolumesHierarchy() {
 // Added by Alex
 //***********************************************
 
+// SetLXeAbsorbtionLength
 
+void XebraDetectorConstruction::SetLXeAbsorbtionLength(G4double dAbsorbtionLength) {
+  G4Material *pLXeMaterial = G4Material::GetMaterial(G4String("LXe"));
 
+  if(pLXeMaterial)
+    {
+      G4cout << "----> Setting LXe absorbtion length to " << dAbsorbtionLength/cm << " cm" << G4endl;
+
+      G4MaterialPropertiesTable *pLXePropertiesTable = pLXeMaterial->GetMaterialPropertiesTable();
+			
+      G4double LXe_PP[] = {6.91*eV, 6.98*eV, 7.05*eV};
+      G4double LXe_ABSL[] = {dAbsorbtionLength, dAbsorbtionLength, dAbsorbtionLength};
+      pLXePropertiesTable->RemoveProperty("ABSLENGTH");
+      pLXePropertiesTable->AddProperty("ABSLENGTH", LXe_PP, LXe_ABSL, 3);
+    }
+  else
+    {
+      G4cout << "ls!> LXe materials not found!" << G4endl;
+      exit(-1);
+    }
+}
+
+// SetGXeAbsorbtionLength
+
+void XebraDetectorConstruction::SetGXeAbsorbtionLength(G4double dAbsorbtionLength) {
+  G4Material *pGXeMaterial = G4Material::GetMaterial(G4String("GXe"));
+  
+  if(pGXeMaterial)
+    {
+      G4cout << "----> Setting GXe absorbtion length to " << dAbsorbtionLength/m << " m" << G4endl;
+    
+      G4MaterialPropertiesTable *pGXePropertiesTable = pGXeMaterial->GetMaterialPropertiesTable();
+    
+      const G4int iNbEntries = 3;
+    
+      G4double GXe_PP[iNbEntries] = {6.91*eV, 6.98*eV, 7.05*eV};
+      G4double GXe_ABSL[iNbEntries] = {dAbsorbtionLength, dAbsorbtionLength, dAbsorbtionLength};
+      pGXePropertiesTable->RemoveProperty("ABSLENGTH");
+      pGXePropertiesTable->AddProperty("ABSLENGTH", GXe_PP, GXe_ABSL, iNbEntries);
+    }
+  else
+    {
+      G4cout << "ls!> GXe materials not found!" << G4endl;
+      exit(-1);
+    }
+}
+
+// SetTeflonReflectivity
+
+void XebraDetectorConstruction::SetTeflonReflectivity(G4double dReflectivity) {
+  G4Material *pTeflonMaterial = G4Material::GetMaterial(G4String("Teflon"));
+
+  if(pTeflonMaterial)
+    {
+      G4cout << "----> Setting Teflon reflectivity to " << dReflectivity << G4endl;
+
+      G4MaterialPropertiesTable *pTeflonPropertiesTable = pTeflonMaterial->GetMaterialPropertiesTable();
+		
+      G4double teflon_PP[] = { 6.91 * eV, 6.98 * eV, 7.05 * eV };
+      G4double teflon_REFL[] = {dReflectivity, dReflectivity, dReflectivity};
+      pTeflonPropertiesTable->RemoveProperty("REFLECTIVITY");
+      pTeflonPropertiesTable->AddProperty("REFLECTIVITY", teflon_PP, teflon_REFL, 3);
+    }
+  else
+    {
+      G4cout << "ls!> Teflon material not found!" << G4endl;
+      exit(-1);
+    }
+}
+
+// SetGXeTeflonReflectivity
+
+void XebraDetectorConstruction::SetGXeTeflonReflectivity(G4double dGXeReflectivity)
+{
+  G4Material *pGXeTeflonMaterial = G4Material::GetMaterial(G4String("GXeTeflon"));
+  
+  if(pGXeTeflonMaterial)
+    {
+      G4cout << "----> Setting GXe Teflon reflectivity to " << dGXeReflectivity << G4endl;
+    
+      G4MaterialPropertiesTable *pGXeTeflonPropertiesTable = pGXeTeflonMaterial->GetMaterialPropertiesTable();
+    
+      const G4int iNbEntries = 3;
+    
+      G4double teflon_PP[iNbEntries] = { 6.91 * eV, 6.98 * eV, 7.05 * eV };
+      G4double teflon_REFL[iNbEntries] = {dGXeReflectivity, dGXeReflectivity, dGXeReflectivity};
+      pGXeTeflonPropertiesTable->RemoveProperty("REFLECTIVITY");
+      pGXeTeflonPropertiesTable->AddProperty("REFLECTIVITY", teflon_PP, teflon_REFL, iNbEntries);
+   }
+  else
+   {
+     G4cout << "ls!> GXe Teflon material not found!" << G4endl;
+     exit(-1);
+   }
+}
+
+// SetLXeRayScatterLength
+
+void XebraDetectorConstruction::SetLXeRayScatterLength(G4double dRayScatterLength) {
+  G4Material *pLXeMaterial = G4Material::GetMaterial(G4String("LXe"));
+  
+  if(pLXeMaterial)
+    {      
+      G4cout << "----> Setting LXe scattering length to " << dRayScatterLength/cm << " cm" << G4endl;
+      
+      G4MaterialPropertiesTable *pLXePropertiesTable = pLXeMaterial->GetMaterialPropertiesTable();
+              
+      G4double LXe_PP[] = {6.91*eV, 6.98*eV, 7.05*eV};
+      G4double LXe_SCAT[] = {dRayScatterLength, dRayScatterLength, dRayScatterLength};
+      pLXePropertiesTable->RemoveProperty("RAYLEIGH");
+      pLXePropertiesTable->AddProperty("RAYLEIGH", LXe_PP, LXe_SCAT, 3);
+    }
+  else
+    {
+      G4cout << "ls!> LXe materials not found!" << G4endl;
+      exit(-1);
+    }
+
+}
+
+// SetLXeRefractionIndex
+
+void XebraDetectorConstruction::SetLXeRefractionIndex(G4double dRefractionIndex)
+{
+  G4Material *pLXeMaterial = G4Material::GetMaterial(G4String("LXe"));
+  
+  if(pLXeMaterial)
+    {
+      G4cout << "----> Setting LXe refraction index to " << dRefractionIndex << G4endl;
+    
+      G4MaterialPropertiesTable *pLXePropertiesTable = pLXeMaterial->GetMaterialPropertiesTable();
+	
+      const G4int iNbEntries = 3;
+    
+      G4double LXe_PP[iNbEntries] = {6.91*eV, 6.98*eV, 7.05*eV};
+      G4double LXe_RI[iNbEntries] = {dRefractionIndex, dRefractionIndex, dRefractionIndex};
+      pLXePropertiesTable->RemoveProperty("RINDEX");
+	  pLXePropertiesTable->AddProperty("RINDEX", LXe_PP, LXe_RI, iNbEntries);
+    }
+  else
+    {
+      G4cout << "ls!> LXe materials not found!" << G4endl;
+      exit(-1);
+    }
+}
+
+// SetLXeScintillation
+
+void XebraDetectorConstruction::SetLXeScintillation(G4bool bScintillation) {
+  G4cout << "----> Setting LXe(GXe) scintillation to " << bScintillation << G4endl;
+			
+	G4Material *pLXeMaterial = G4Material::GetMaterial(G4String("LXe"));
+	if(pLXeMaterial) 
+	{	
+		G4MaterialPropertiesTable *pLXePropertiesTable = pLXeMaterial->GetMaterialPropertiesTable();
+		if(bScintillation)
+		{
+			//pLXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 10./(1.0*keV));
+  		pLXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 1./(21.6*eV)); //ToDo: keep in mind that this changes the default value
+			//pLXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 100000./(1.0*keV));//create 1e5 photons per keV
+		}    
+	}
+  else
+  {
+  	G4cout << "ls!> LXe materials not found!" << G4endl;
+    exit(-1);
+  }
+	
+  G4Material *pGXeMaterial = G4Material::GetMaterial(G4String("GXe"));
+  if(pGXeMaterial)
+  {	
+  	G4MaterialPropertiesTable *pGXePropertiesTable = pGXeMaterial->GetMaterialPropertiesTable();
+    if(bScintillation)
+		{
+			//pGXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 1000/(1.0*keV));
+			pGXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 1./(21.6*eV)); //ToDo: keep in mind that this changes the default value
+		}  
+	}
+  else
+  {
+  	G4cout << "ls!> GXe materials not found!" << G4endl;
+    exit(-1);
+  }
+}
+
+//***********************End of code************************
 
