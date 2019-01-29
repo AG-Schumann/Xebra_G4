@@ -1,0 +1,46 @@
+#################
+# Macro to simulate optical photons in the LXe phase of a dual phase setup
+# by Alex
+#################
+
+#################
+# verbosity
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/xebra/gun/verbose 0
+
+#################
+# seed
+/run/random/setRandomSeed 0
+
+#################
+# gun
+/xebra/gun/angtype iso
+/xebra/gun/type    Volume  
+/xebra/gun/shape   Cylinder
+
+#################
+# only the active volume (z: 0<>-71.5|r: 35)
+/xebra/gun/center 0. 0. -35.75 mm
+/xebra/gun/radius 35.0 mm
+/xebra/gun/halfz  35.75 mm
+
+##################
+# select the volume to confine the source
+/xebra/gun/confine LXe*
+
+##################
+# particle type + energy spectrum
+/Xe/gun/energy   6.98 eV
+/Xe/gun/particle opticalphoton
+
+##################
+# scintillation processes in the LXe
+/Xe/detector/setLXeScintillation false
+
+##################
+# tree Filling options
+/run/writeEmpty true
+

@@ -233,17 +233,19 @@ void XebraDetectorMessenger::SetNewValue(G4UIcommand *pUIcommand, G4String hNewV
   if(pUIcommand == m_pCheckOverlapCmd)
 	  m_pXeDetector->SetCheckOverlap(m_pCheckOverlapCmd->GetNewBoolValue(hNewValue));
 	
-	// Added by Alex: //ToDo: implement
-	/*
+	// Added by Alex:
+/*
 	if(pUIcommand == m_pMaterCmd )
 		m_pXeDetector->SetMaterial(hNewValue);
-
+*/
+/*
 	if(pUIcommand == m_pLXeMeshMaterialCmd )
 		m_pXeDetector->SetLXeMeshMaterial(hNewValue);
-
+*/
+/*
 	if(pUIcommand == m_pGXeMeshMaterialCmd )
 		m_pXeDetector->SetGXeMeshMaterial(hNewValue);
-
+*/
 	if(pUIcommand == m_pLXeScintillationCmd)
 		m_pXeDetector->SetLXeScintillation(m_pLXeScintillationCmd->GetNewBoolValue(hNewValue));
 
@@ -261,16 +263,17 @@ void XebraDetectorMessenger::SetNewValue(G4UIcommand *pUIcommand, G4String hNewV
 
 	if(pUIcommand == m_pLXeRayScatterLengthCmd)
 		m_pXeDetector->SetLXeRayScatterLength(m_pLXeRayScatterLengthCmd->GetNewDoubleValue(hNewValue));
-
+/*
 	if(pUIcommand == m_pLXeMeshTransparencyCmd)
 		m_pXeDetector->SetLXeMeshTransparency(m_pLXeMeshTransparencyCmd->GetNewDoubleValue(hNewValue));
-
+*/
+/*
 	if(pUIcommand == m_pGXeMeshTransparencyCmd)
 		m_pXeDetector->SetGXeMeshTransparency(m_pGXeMeshTransparencyCmd->GetNewDoubleValue(hNewValue));
-
+*/
 	if(pUIcommand == m_pLXeRefractionIndexCmd)
       m_pXeDetector->SetLXeRefractionIndex(m_pLXeRefractionIndexCmd->GetNewDoubleValue(hNewValue));	
-  */
+
 }
 
 
