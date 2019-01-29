@@ -9,6 +9,6 @@
 /Xe/detector/setLXeAbsorbtionLength 100 cm 
 /Xe/detector/setGXeAbsorbtionLength 100 m 
 
-# /Xe/detector/setLXeRayScatterLength 30 cm
+/Xe/detector/setLXeRayScatterLength 30 cm
 
-# /Xe/detector/setLXeRefractionIndex 1.63
+/Xe/detector/setLXeRefractionIndex 1.63
