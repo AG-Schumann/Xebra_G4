@@ -40,19 +40,19 @@ XebraPmtHit::operator==(const XebraPmtHit &hXebraPmtHit) const
 
 void XebraPmtHit::Draw()
 {
-   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
-   
-   if(pVVisManager)
-   {
-       G4Circle hCircle(m_hPosition);
-       G4Colour hColour(1.000, 0.973, 0.184);
-       G4VisAttributes hVisAttributes(hColour);
-       
-       hCircle.SetScreenSize(0.1);
-       hCircle.SetFillStyle(G4Circle::filled);
-       hCircle.SetVisAttributes(hVisAttributes);
-       pVVisManager->Draw(hCircle);
-   }
+    //G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
+    
+    //if(pVVisManager)
+    //{
+    //    G4Circle hCircle(m_hPosition);
+    //    G4Colour hColour(1.000, 0.973, 0.184);
+    //    G4VisAttributes hVisAttributes(hColour);
+    //    
+    //    hCircle.SetScreenSize(0.1);
+    //    hCircle.SetFillStyle(G4Circle::filled);
+    //    hCircle.SetVisAttributes(hVisAttributes);
+    //    pVVisManager->Draw(hCircle);
+    //}
 }
 
 void XebraPmtHit::Print()

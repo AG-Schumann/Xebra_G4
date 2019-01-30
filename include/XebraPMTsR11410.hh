@@ -32,9 +32,7 @@ public:
 
   G4LogicalVolume* Construct();
 
-private:
-	G4SDManager *pSDManager;
-    
+private:    
   G4double dPMTThickness;
   G4double dPMTHeight;
   G4double dPMTDinodeCutZ;
@@ -68,8 +66,6 @@ private:
   G4VPhysicalVolume *m_pPMTWindowPhysicalVolume;
   G4VPhysicalVolume *m_pPMTPhotocathodePhysicalVolume;
   G4VPhysicalVolume *m_PMTCeramicPhysicalVolume;
-  
-  XebraPmtSensitiveDetector* PMT_R11410_SD;
 };
 
 #endif

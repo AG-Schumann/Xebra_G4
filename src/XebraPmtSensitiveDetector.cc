@@ -12,6 +12,7 @@ using namespace std;
 #include <G4SDManager.hh>
 #include <G4ios.hh>
 #include <G4SystemOfUnits.hh>
+#include <G4HCofThisEvent.hh>
 
 XebraPmtSensitiveDetector::XebraPmtSensitiveDetector(G4String hName): G4VSensitiveDetector(hName)
 {
