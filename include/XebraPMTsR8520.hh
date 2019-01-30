@@ -33,8 +33,6 @@ public:
 	G4LogicalVolume* Construct();
 
 private:
-	G4SDManager *pSDManager;
-
 	// Solids:
 	G4Box* R8520_body_solid_orig_1;
 	G4Box* R8520_body_solid_orig_2;
@@ -129,9 +127,6 @@ private:
   G4VPhysicalVolume* R8520_ring_phys;
   G4VPhysicalVolume* R8520_vacuum_phys;
   G4VPhysicalVolume* R8520_photocathode_phys;
-  
-  // Sensitive Detectors
-  XebraPmtSensitiveDetector* pPMT_R8520_SD;
 
 };
 

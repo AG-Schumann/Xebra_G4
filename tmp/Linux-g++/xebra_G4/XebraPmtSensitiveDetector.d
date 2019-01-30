@@ -342,4 +342,5 @@
  /usr/local/geant4/include/Geant4/G4VSensitiveDetector.hh \
  /usr/local/geant4/include/Geant4/G4HCtable.hh \
  /usr/local/geant4/include/Geant4/G4ios.hh \
- /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh
+ /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
+ /usr/local/geant4/include/Geant4/G4HCofThisEvent.hh
