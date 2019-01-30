@@ -94,7 +94,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 	Cryostat_Outer_TubeFlange_length = 2.*cm; // roughly measured temporary dimension, ToDo: correct!
 	Cryostat_Outer_TubeFlange_innerdiameter = Cryostat_Outer_Tube_outerdiameter; // guessed temporary dimension, ToDo: correct!
-	Cryostat_Outer_TubeFlange_outerdiameter = Cryostat_Outer_Tube_outerdiameter + 2*1.*cm; // guessed temporary dimension, ToDo: correct!
+	Cryostat_Outer_TubeFlange_outerdiameter = Cryostat_Outer_Tube_outerdiameter + 2*3.*cm; // roughly measured temporary dimension, ToDo: correct!
 
 	Cryostat_Outer_BottomPlate_length = 1.*cm; // roughly measured temporary dimension, ToDo: correct!
 	Cryostat_Outer_BottomPlate_diameter = Cryostat_Outer_Tube_outerdiameter;
@@ -135,7 +135,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_Inner_UpperTubeFlange_innerdiameter = Cryostat_Inner_UpperTube_innerdiameter;
 	Cryostat_Inner_UpperTubeFlange_outerdiameter = 304.*mm; // from CF Flange components data sheet for NW 250 CF, ToDo: check ambiguity
 
-	Cryostat_Inner_MiddlePlate_length = 22.3*mm; //rough measurement, taken from CF Flange components data sheet for NW 150 CF, ToDo: check!!!
+	Cryostat_Inner_MiddlePlate_length = 16.*mm; //rough measurement
 	Cryostat_Inner_MiddlePlate_innerdiameter = Cryostat_Inner_Tube_innerdiameter;
 	Cryostat_Inner_MiddlePlate_outerdiameter = Cryostat_Inner_UpperTube_outerdiameter;
 
@@ -163,7 +163,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_Inner_upperedge_unshifted = -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length + Cryostat_Inner_TopFlange1_length + Cryostat_Inner_TopFlange2_length;
 	Cryostat_Outer_TopFlange_loweredge_unshifted = Cryostat_Outer_Tube_length/2 + Cryostat_Outer_TopFlange_length;
 	Cryostats_dist_unshifted = Cryostat_Outer_TopFlange_loweredge_unshifted - Cryostat_Inner_upperedge_unshifted;
-	Cryostats_dist_real = Cryostats_dist_unshifted; // ToDo: replace with real distance
+	Cryostats_dist_real = 21.*cm; // rough measurement
 	Cryostat_Inner_offset = Cryostats_dist_unshifted - Cryostats_dist_real;
 
 
