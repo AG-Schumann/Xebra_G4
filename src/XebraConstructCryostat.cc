@@ -89,8 +89,8 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
  
 	Cryostat_Outer_Tube_length = 130.*cm; // temporary dimension from thesis Basho, ToDo: correct!
 	Cryostat_Outer_Tube_wallthickness = 1.*cm; // guessed temporary dimension, ToDo: correct!
-	Cryostat_Outer_Tube_outerdiameter = 48.*cm; // temporary dimension from thesis Basho, ToDo: correct!
-	Cryostat_Outer_Tube_innerdiameter = 48.*cm - 2*Cryostat_Outer_Tube_wallthickness;
+	Cryostat_Outer_Tube_innerdiameter = 48.*cm; // temporary dimension from thesis Basho, ToDo: correct!
+	Cryostat_Outer_Tube_outerdiameter = 48.*cm + 2*Cryostat_Outer_Tube_wallthickness;
 
 	Cryostat_Outer_TubeFlange_length = 2.*cm; // roughly measured temporary dimension, ToDo: correct!
 	Cryostat_Outer_TubeFlange_innerdiameter = Cryostat_Outer_Tube_outerdiameter; // guessed temporary dimension, ToDo: correct!

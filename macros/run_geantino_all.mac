@@ -23,7 +23,7 @@
 #/xebra/gun/halfz  0.25 m
 
 # confine more:
-/xebra/gun/center 0. 0. 0. m
+/xebra/gun/center 0. 0. -0.2 m
 /xebra/gun/radius 0.3 m
 /xebra/gun/halfz  0.8 m
 
