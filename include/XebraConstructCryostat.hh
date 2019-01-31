@@ -117,6 +117,10 @@ private:
   // Orientation components in cryo vacuum
   G4double orientation_ang_vac;
   G4RotationMatrix* rmz_orientation_ang_vac;
+  G4RotationMatrix* rmx90;
+  G4RotationMatrix* rmxm90;
+  G4RotationMatrix* rmy90;
+  G4RotationMatrix* rmym90;
   
   // Parameters for the CF lines
   G4double Cryostat_CF16lines_length;
@@ -144,6 +148,7 @@ private:
 	G4double Cryostat_sampletube_tube2_zlength;
 	G4double Cryostat_sampletube_tube2_diaglength;
 	G4double Cryostat_sampletube_tube2_length;
+	G4double Cryostat_sampletube_knee1_ang;
 	
 
   //LogicalVolumes
@@ -171,6 +176,8 @@ private:
   
   G4LogicalVolume* Cryostat_CF16lines_log;
 	G4LogicalVolume* Cryostat_CF40lines_log;
+	
+	G4LogicalVolume* Cryostat_sampletube_log;
 
 
   //PhysicalVolumes
@@ -197,6 +204,8 @@ private:
   G4VPhysicalVolume* Cryostat_CF40line_1_phys;
   G4VPhysicalVolume* Cryostat_CF40line_2_phys;
   G4VPhysicalVolume* Cryostat_CF40line_3_phys;
+  
+  G4VPhysicalVolume* Cryostat_sampletube_phys;
 
 
   //Visualization

@@ -170,9 +170,21 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// Orientation components in cryo vacuum
 	//**************************************************
-	orientation_ang_vac = -90. * deg;	
+	orientation_ang_vac = -90. * deg;
 	rmz_orientation_ang_vac = new G4RotationMatrix();
-	rmz_orientation_ang_vac->rotateZ(orientation_ang_vac);	
+	rmz_orientation_ang_vac->rotateZ(-orientation_ang_vac);	
+	
+	rmx90 = new G4RotationMatrix();
+	rmx90->rotateX(90.*deg);	
+	
+	rmxm90 = new G4RotationMatrix();
+	rmxm90->rotateX(-90.*deg);
+	
+	rmy90 = new G4RotationMatrix();
+	rmy90->rotateY(90.*deg);	
+	
+	rmym90 = new G4RotationMatrix();
+	rmym90->rotateY(-90.*deg);
 	
 	//**************************************************
 	// Common Parameters used to build the CF lines
@@ -211,6 +223,8 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_sampletube_tube2_zlength     = (Cryostat_Inner_BottomPlate_length + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length) - (Cryostat_sampletube_tube3_length + (Cryostat_sampletube_tube3_dist - Cryostat_sampletube_tube4_dist));
 	Cryostat_sampletube_tube2_diaglength  = std::sqrt(std::pow((Cryostat_sampletube_tube1_postition_r - Cryostat_sampletube_tube3_postition_r - Cryostat_sampletube_outerdiameter),2) + std::pow((Cryostat_sampletube_tube2_zlength),2));
 	Cryostat_sampletube_tube2_length      = std::sqrt(std::pow((Cryostat_sampletube_tube2_diaglength),2) - std::pow((Cryostat_sampletube_outerdiameter),2));
+	
+	Cryostat_sampletube_knee1_ang = std::asin((Cryostat_sampletube_tube1_postition_r - Cryostat_sampletube_tube3_postition_r - Cryostat_sampletube_outerdiameter)/(Cryostat_sampletube_tube2_diaglength)) + std::asin(Cryostat_sampletube_outerdiameter/Cryostat_sampletube_tube2_diaglength);
 
 
 //**********************************************CONSTRUCTION**********************************************
@@ -409,6 +423,29 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	// Sample tube
 	//**************************************************
 	
+	// tube parts
+	
+	G4Tubs* Cryostat_sampletube_tube1_solid = new G4Tubs("Cryostat_sampletube_tube1_solid", Cryostat_sampletube_innerdiameter/2, Cryostat_sampletube_outerdiameter/2, Cryostat_sampletube_tube1_length/2 , 0.*deg, 360.*deg);
+	G4Tubs* Cryostat_sampletube_tube2_solid = new G4Tubs("Cryostat_sampletube_tube2_solid", Cryostat_sampletube_innerdiameter/2, Cryostat_sampletube_outerdiameter/2, Cryostat_sampletube_tube2_length/2 , 0.*deg, 360.*deg);
+	G4Tubs* Cryostat_sampletube_tube3_solid = new G4Tubs("Cryostat_sampletube_tube3_solid", Cryostat_sampletube_innerdiameter/2, Cryostat_sampletube_outerdiameter/2, Cryostat_sampletube_tube3_length/2 , 0.*deg, 360.*deg);
+	G4Tubs* Cryostat_sampletube_tube4_solid = new G4Tubs("Cryostat_sampletube_tube4_solid", Cryostat_sampletube_innerdiameter/2, Cryostat_sampletube_outerdiameter/2, Cryostat_sampletube_tube4_length/2 , 0.*deg, 360.*deg);
+	
+	G4Torus* Cryostat_sampletube_knee1_solid = new G4Torus("Cryostat_sampletube_knee1_solid", Cryostat_sampletube_innerdiameter/2, 0.99*Cryostat_sampletube_outerdiameter/2, Cryostat_sampletube_outerdiameter/2, 0.*deg, Cryostat_sampletube_knee1_ang);
+	//G4VSolid* Cryostat_sampletube_knee2_solid = new G4Torus("Cryostat_sampletube_knee2_solid", Cryostat_sampletube_innerdiameter/2, Cryostat_sampletube_outerdiameter/2, Cryostat_sampletube_outerdiameter/2, 0.*deg, -45.*deg);
+	//G4VSolid* Cryostat_sampletube_knee3_solid = new G4Torus("Cryostat_sampletube_knee3_solid", Cryostat_sampletube_innerdiameter/2, Cryostat_sampletube_tube3_dist/2, Cryostat_sampletube_outerdiameter/2, 0.*deg, 90.*deg);
+	
+	// union solid
+	
+	G4VSolid* Cryostat_sampletube_union1_solid = new G4UnionSolid("Cryostat_sampletube_union1_solid", Cryostat_sampletube_tube1_solid, Cryostat_sampletube_knee1_solid, rmx90, G4ThreeVector(-Cryostat_sampletube_outerdiameter/2, 0, -Cryostat_sampletube_tube1_length/2));
+	
+	G4VSolid* Cryostat_sampletube_solid = Cryostat_sampletube_union1_solid;
+	
+	
+	// logical and physical volume
+	
+	Cryostat_sampletube_log = new G4LogicalVolume(Cryostat_sampletube_solid, SS304LSteel, "Cryostat_sampletube_log");
+	
+	Cryostat_sampletube_phys = new G4PVPlacement(rmz_orientation_ang_vac, G4ThreeVector(Cryostat_sampletube_tube1_postition_r * cos(orientation_ang_vac), Cryostat_sampletube_tube1_postition_r * sin(orientation_ang_vac), Cryostat_Outer_Tube_length/2 - Cryostat_sampletube_tube1_length/2), Cryostat_sampletube_log,"Cryostat_sampletube", Cryostat_Vacuum_log, 0, 0);	// ToDo: correct placement and rotation
 	
 
 
