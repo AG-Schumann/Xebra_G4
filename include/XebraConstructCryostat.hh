@@ -106,12 +106,30 @@ private:
   G4double Cryostat_Inner_TopFlange2_length;
   G4double Cryostat_Inner_TopFlange2_outerdiameter;
   G4double Cryostat_Inner_TopFlange2_innerdiameter;
-
+  
+  // Position shift inner in outer cryo
   G4double Cryostat_Inner_upperedge_unshifted;
   G4double Cryostat_Outer_TopFlange_loweredge_unshifted;
   G4double Cryostats_dist_unshifted;
   G4double Cryostats_dist_real;
   G4double Cryostat_Inner_offset;
+  
+  // Orientation components in cryo vacuum
+  G4double orientation_ang_vac;
+  G4RotationMatrix* rmz_orientation_ang_vac;
+  
+  // Parameters for the CF lines
+  G4double Cryostat_CF16lines_length;
+  G4double Cryostat_CF16lines_outerdiameter;
+  G4double Cryostat_CF16lines_wallthickness;
+  G4double Cryostat_CF16lines_innerdiameter;
+  G4double Cryostat_CF16lines_postition_r;
+  G4double Cryostat_CF40lines_length;
+  G4double Cryostat_CF40lines_outerdiameter;
+  G4double Cryostat_CF40lines_wallthickness;
+  G4double Cryostat_CF40lines_innerdiameter;
+  G4double Cryostat_CF40lines_postition_r;
+  
 
   //LogicalVolumes
   G4LogicalVolume* Cryostat_Envelop_log;
@@ -135,6 +153,9 @@ private:
   G4LogicalVolume* Cryostat_Inner_SS_TopFlange1_log;
   G4LogicalVolume* Cryostat_Inner_SS_TopFlange2_log;
   G4LogicalVolume* GXe_Cryostat_extravolume_log;
+  
+  G4LogicalVolume* Cryostat_CF16lines_log;
+	G4LogicalVolume* Cryostat_CF40lines_log;
 
 
   //PhysicalVolumes
@@ -156,6 +177,11 @@ private:
   G4VPhysicalVolume* Cryostat_Inner_SS_TopFlange1_phys;
   G4VPhysicalVolume* Cryostat_Inner_SS_TopFlange2_phys;
   G4VPhysicalVolume* GXe_Cryostat_extravolume_phys;
+  
+  G4VPhysicalVolume* Cryostat_CF16line_1_phys;
+  G4VPhysicalVolume* Cryostat_CF40line_1_phys;
+  G4VPhysicalVolume* Cryostat_CF40line_2_phys;
+  G4VPhysicalVolume* Cryostat_CF40line_3_phys;
 
 
   //Visualization
