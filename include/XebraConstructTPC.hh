@@ -112,7 +112,7 @@ private:
 	G4Tubs *TPC_cylinder;
 	G4Tubs *GXe_cylinder; 
 	G4Tubs *LXe_ActiveVolume_solid;
-		G4Tubs *LXe_ActiveVolume_extra_filling_solid;
+	G4Tubs *LXe_ActiveVolume_extra_filling_solid;
 	G4double filling_ratio_weir;
 	G4double height_LXe_TPC_cylinder;
 	G4double height_GXe_TPC_cylinder;
