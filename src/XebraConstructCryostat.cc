@@ -170,7 +170,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// Orientation components in cryo vacuum
 	//**************************************************
-	orientation_ang_vac = 0. * deg;	
+	orientation_ang_vac = -90. * deg;	
 	rmz_orientation_ang_vac = new G4RotationMatrix();
 	rmz_orientation_ang_vac->rotateZ(orientation_ang_vac);	
 	
@@ -181,13 +181,36 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_CF16lines_outerdiameter = 19.05*mm;
 	Cryostat_CF16lines_wallthickness = 1.6*mm;
 	Cryostat_CF16lines_innerdiameter = Cryostat_CF16lines_outerdiameter - 2*Cryostat_CF16lines_wallthickness;
-	Cryostat_CF16lines_postition_r   = 13.*cm/2;
+	Cryostat_CF16lines_postition_r   = 12.5*cm/2;
 	
 	Cryostat_CF40lines_length        = Cryostats_dist_real;
 	Cryostat_CF40lines_outerdiameter = 42.4*mm;
 	Cryostat_CF40lines_wallthickness = 2.*mm;
 	Cryostat_CF40lines_innerdiameter = Cryostat_CF40lines_outerdiameter - 2*Cryostat_CF40lines_wallthickness;
 	Cryostat_CF40lines_postition_r   = 12.5*cm/2;
+	
+	//**************************************************
+	// Common Parameters used to build the sample tube
+	//**************************************************	
+	Cryostat_sampletube_outerdiameter = 28.*mm;
+	Cryostat_sampletube_innerdiameter = 25.*mm;
+	
+	// numbering tubes from high to low z
+	
+	Cryostat_sampletube_tube1_length      = Cryostats_dist_real + Cryostat_Inner_TopFlange1_length + Cryostat_Inner_TopFlange2_length;
+	Cryostat_sampletube_tube1_postition_r = Cryostat_Outer_Tube_innerdiameter/2 - Cryostat_sampletube_outerdiameter/2 - 1.*mm; //225.*mm
+	
+	Cryostat_sampletube_tube3_length      = 280.*mm;
+	Cryostat_sampletube_tube3_dist        = 45.*mm; // keep fixed
+	Cryostat_sampletube_tube3_postition_r = Cryostat_sampletube_tube3_dist + Cryostat_Inner_Tube_outerdiameter/2;
+	
+	Cryostat_sampletube_tube4_length      = 107.*mm;
+	Cryostat_sampletube_tube4_cap_length  = 4.*mm;
+	Cryostat_sampletube_tube4_dist        = 36.*mm; // keep fixed
+	
+	Cryostat_sampletube_tube2_zlength     = (Cryostat_Inner_BottomPlate_length + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length) - (Cryostat_sampletube_tube3_length + (Cryostat_sampletube_tube3_dist - Cryostat_sampletube_tube4_dist));
+	Cryostat_sampletube_tube2_diaglength  = std::sqrt(std::pow((Cryostat_sampletube_tube1_postition_r - Cryostat_sampletube_tube3_postition_r - Cryostat_sampletube_outerdiameter),2) + std::pow((Cryostat_sampletube_tube2_zlength),2));
+	Cryostat_sampletube_tube2_length      = std::sqrt(std::pow((Cryostat_sampletube_tube2_diaglength),2) - std::pow((Cryostat_sampletube_outerdiameter),2));
 
 
 //**********************************************CONSTRUCTION**********************************************
@@ -375,10 +398,18 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_CF16lines_log = new G4LogicalVolume(Cryostat_CF16lines_solid, SS304LSteel, "Cryostat_CF16lines_log");
 	Cryostat_CF40lines_log = new G4LogicalVolume(Cryostat_CF40lines_solid, SS304LSteel, "Cryostat_CF40lines_log");	
 
-	Cryostat_CF16line_1_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF16lines_postition_r * cos(-90.*deg + orientation_ang_vac + 60.*deg), Cryostat_CF16lines_postition_r * sin(-90.*deg + orientation_ang_vac + 60.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF16lines_length/2), Cryostat_CF16lines_log,"Cryostat_CF16line_1", Cryostat_Vacuum_log, 0, 0);	
-	Cryostat_CF40line_1_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(-90.*deg + orientation_ang_vac + 0.*deg), Cryostat_CF40lines_postition_r * sin(-90.*deg + orientation_ang_vac + 0.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_1", Cryostat_Vacuum_log, 0, 0);
-	Cryostat_CF40line_2_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(-90.*deg + orientation_ang_vac + 120.*deg), Cryostat_CF40lines_postition_r * sin(-90.*deg + orientation_ang_vac + 120.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_2", Cryostat_Vacuum_log, 0, 0);
-	Cryostat_CF40line_3_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(-90.*deg + orientation_ang_vac + 240.*deg), Cryostat_CF40lines_postition_r * sin(-90.*deg + orientation_ang_vac + 240.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_3", Cryostat_Vacuum_log, 0, 0);
+	Cryostat_CF16line_1_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF16lines_postition_r * cos(orientation_ang_vac + 60.*deg), Cryostat_CF16lines_postition_r * sin(orientation_ang_vac + 60.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF16lines_length/2), Cryostat_CF16lines_log,"Cryostat_CF16line_1", Cryostat_Vacuum_log, 0, 0);	
+	Cryostat_CF40line_1_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(orientation_ang_vac + 0.*deg), Cryostat_CF40lines_postition_r * sin(orientation_ang_vac + 0.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_1", Cryostat_Vacuum_log, 0, 0);
+	Cryostat_CF40line_2_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(orientation_ang_vac + 120.*deg), Cryostat_CF40lines_postition_r * sin(orientation_ang_vac + 120.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_2", Cryostat_Vacuum_log, 0, 0);
+	Cryostat_CF40line_3_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(orientation_ang_vac + 240.*deg), Cryostat_CF40lines_postition_r * sin(orientation_ang_vac + 240.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_3", Cryostat_Vacuum_log, 0, 0);
+	
+	// ToDo: maybe add corresponding holes in flanges
+	
+	//**************************************************
+	// Sample tube
+	//**************************************************
+	
+	
 
 
 

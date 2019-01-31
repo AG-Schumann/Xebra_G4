@@ -130,6 +130,21 @@ private:
   G4double Cryostat_CF40lines_innerdiameter;
   G4double Cryostat_CF40lines_postition_r;
   
+	// Parameters for the sample tube
+	G4double Cryostat_sampletube_outerdiameter;
+	G4double Cryostat_sampletube_innerdiameter;
+	G4double Cryostat_sampletube_tube1_length;
+	G4double Cryostat_sampletube_tube1_postition_r;
+	G4double Cryostat_sampletube_tube3_length;
+	G4double Cryostat_sampletube_tube3_dist;
+	G4double Cryostat_sampletube_tube3_postition_r;
+	G4double Cryostat_sampletube_tube4_length;
+	G4double Cryostat_sampletube_tube4_cap_length;
+	G4double Cryostat_sampletube_tube4_dist;
+	G4double Cryostat_sampletube_tube2_zlength;
+	G4double Cryostat_sampletube_tube2_diaglength;
+	G4double Cryostat_sampletube_tube2_length;
+	
 
   //LogicalVolumes
   G4LogicalVolume* Cryostat_Envelop_log;
