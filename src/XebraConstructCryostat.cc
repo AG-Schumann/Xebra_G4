@@ -438,7 +438,13 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	
 	G4VSolid* Cryostat_sampletube_union1_solid = new G4UnionSolid("Cryostat_sampletube_union1_solid", Cryostat_sampletube_tube1_solid, Cryostat_sampletube_knee1_solid, rmx90, G4ThreeVector(-Cryostat_sampletube_outerdiameter/2, 0, -Cryostat_sampletube_tube1_length/2));
 	
-	G4VSolid* Cryostat_sampletube_solid = Cryostat_sampletube_union1_solid;
+	rmy_tube2 = new G4RotationMatrix();
+	rmy_tube2->rotateY(-Cryostat_sampletube_knee1_ang);
+	
+	G4VSolid* Cryostat_sampletube_union2_solid = new G4UnionSolid("Cryostat_sampletube_union2_solid", Cryostat_sampletube_union1_solid, Cryostat_sampletube_tube2_solid, rmy_tube2, G4ThreeVector(- (Cryostat_sampletube_tube1_postition_r - Cryostat_sampletube_tube3_postition_r)/2, 0, -Cryostat_sampletube_tube1_length/2 - Cryostat_sampletube_tube2_zlength/2));
+	
+	//
+	G4VSolid* Cryostat_sampletube_solid = Cryostat_sampletube_union2_solid;
 	
 	
 	// logical and physical volume

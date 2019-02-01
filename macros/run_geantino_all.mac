@@ -28,7 +28,7 @@
 #/xebra/gun/halfz  0.8 m
 
 # custom confine:
-/xebra/gun/center 0. -0.2 0.3 m
+/xebra/gun/center 0. -0.2 0.2 m
 /xebra/gun/radius 0.1 m
 /xebra/gun/halfz  0.2 m
 

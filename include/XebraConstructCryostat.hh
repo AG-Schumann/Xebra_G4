@@ -149,6 +149,7 @@ private:
 	G4double Cryostat_sampletube_tube2_diaglength;
 	G4double Cryostat_sampletube_tube2_length;
 	G4double Cryostat_sampletube_knee1_ang;
+	G4RotationMatrix* rmy_tube2;
 	
 
   //LogicalVolumes
