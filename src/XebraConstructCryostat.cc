@@ -69,6 +69,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	GXe = G4Material::GetMaterial("GXe"); 
 	Air = G4Material::GetMaterial("G4_AIR");
 	Aluminium = G4Material::GetMaterial("Aluminium");
+	Copper = G4Material::GetMaterial("Copper");
 
 //**********************************************DEFINE PARAMETER**********************************************    
 
@@ -455,7 +456,12 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	
 	Cryostat_sampletube_phys = new G4PVPlacement(rmz_orientation_ang_vac, G4ThreeVector(Cryostat_sampletube_tube1_postition_r * cos(orientation_ang_vac), Cryostat_sampletube_tube1_postition_r * sin(orientation_ang_vac), Cryostat_Outer_Tube_length/2 - Cryostat_sampletube_tube1_length/2), Cryostat_sampletube_log,"Cryostat_sampletube", Cryostat_Vacuum_log, 0, 0);	// ToDo: correct placement and rotation
 	
-
+	//**************************************************
+	// Copper heater
+	//**************************************************
+	G4Box* Cryostat_Cu_heater_solid = new G4Box("Cryostat_Cu_heater_solid", 12.*cm / 2, 5.2*cm / 2, 0.8*cm / 2);
+	Cryostat_Cu_heater_log = new G4LogicalVolume(Cryostat_Cu_heater_solid, Copper, "Cryostat_Cu_heater_log");
+	Cryostat_Cu_heater_phys = new G4PVPlacement(rmz_orientation_ang_vac, G4ThreeVector((0.*cm) * cos(orientation_ang_vac), (0.*cm) * sin(orientation_ang_vac), -Cryostat_TPCEnvelop_Height/2 - Cryostat_Inner_BottomPlate_length + Cryostat_Inner_offset - 0.8*cm / 2), Cryostat_Cu_heater_log,"Cryostat_Cu_heater", Cryostat_Vacuum_log, 0, 0);
 
 
 //**********************************************VISUALIZATION**********************************************

@@ -50,6 +50,7 @@ private:
 	G4Material* GXe;
 	G4Material* Air;
 	G4Material* Aluminium;
+	G4Material* Copper;
 	
  	G4double GXeMass_Cryo_extravolume;
 	G4double GXeVolume_Cryo_extravolume;
@@ -180,6 +181,8 @@ private:
 	G4LogicalVolume* Cryostat_CF40lines_log;
 	
 	G4LogicalVolume* Cryostat_sampletube_log;
+	
+	G4LogicalVolume* Cryostat_Cu_heater_log;
 
 
   //PhysicalVolumes
@@ -208,6 +211,8 @@ private:
   G4VPhysicalVolume* Cryostat_CF40line_3_phys;
   
   G4VPhysicalVolume* Cryostat_sampletube_phys;
+  
+  G4VPhysicalVolume* Cryostat_Cu_heater_phys;
 
 
   //Visualization
