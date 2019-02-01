@@ -1,0 +1,61 @@
+#################
+# Macro to simulate Kr83m in the LXe phase of a dual phase setup
+# by Alex
+#################
+
+##################
+# optical properties
+/Xe/detector/setTeflonReflectivity 0.95
+/Xe/detector/setGXeTeflonReflectivity 0.95
+
+/Xe/detector/setLXeAbsorbtionLength 100 cm 
+/Xe/detector/setGXeAbsorbtionLength 100 m 
+
+/Xe/detector/setLXeRayScatterLength 30 cm
+
+/Xe/detector/setLXeRefractionIndex 1.63
+
+#################
+# verbosity
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/xebra/gun/verbose 0
+
+#################
+# seed
+/run/random/setRandomSeed 0
+
+#################
+# gun
+/xebra/gun/angtype iso
+/xebra/gun/type    Volume  
+/xebra/gun/shape   Cylinder
+
+#################
+# only the active volume (z: 0<>-71.5|r: 35)
+/xebra/gun/center 0. 0. -35.75 mm
+/xebra/gun/radius 35.0 mm
+/xebra/gun/halfz  35.75 mm
+
+##################
+# select the volume to confine the source
+/xebra/gun/confine LXe*
+
+##################
+# particle type + energy spectrum
+/Xe/gun/energy 0 keV
+/Xe/gun/particle ion
+
+# for 83mKr / Kr-83m
+/Xe/gun/ion 36 83 0 41.5437
+
+##################
+# scintillation processes in the LXe
+/Xe/detector/setLXeScintillation true
+
+##################
+# tree Filling options
+/run/writeEmpty true
+

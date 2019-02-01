@@ -1,0 +1,60 @@
+#################
+# Macro to simulate external radioactive point sources for a dual phase setup
+# by Alex
+#################
+
+##################
+# optical properties
+/Xe/detector/setTeflonReflectivity 0.95
+/Xe/detector/setGXeTeflonReflectivity 0.95
+
+/Xe/detector/setLXeAbsorbtionLength 100 cm 
+/Xe/detector/setGXeAbsorbtionLength 100 m 
+
+/Xe/detector/setLXeRayScatterLength 30 cm
+
+/Xe/detector/setLXeRefractionIndex 1.63
+
+#################
+# verbosity
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/xebra/gun/verbose 0
+
+#################
+# seed
+/run/random/setRandomSeed 0
+
+#################
+# gun
+/xebra/gun/angtype iso
+/xebra/gun/type    Point
+
+#################
+# place inside sample tube assuming that centered in z-ccordinate wrt to active volume
+/xebra/gun/center 0. 122. -35.75 mm
+
+##################
+# particle type + energy spectrum
+/Xe/gun/energy 0 keV
+/Xe/gun/particle ion
+
+# for Co57
+# /Xe/gun/ion 27 57 0 0
+
+# for Co60
+# /Xe/gun/ion 27 60 0 0
+
+# for 137Cs
+/Xe/gun/ion 55 137 0 0
+
+##################
+# scintillation processes in the LXe
+/Xe/detector/setLXeScintillation false
+
+##################
+# tree Filling options
+/run/writeEmpty true
+
