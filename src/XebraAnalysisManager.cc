@@ -345,7 +345,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
   
   if(iNbLXeHits || iNbPmtHits || iNbLScintHits)
   {
-    // LXe hits
+		// LXe hits
     for(G4int i=0; i<iNbLXeHits; i++)
     {
 	  XebraLXeHit *pHit = (*pLXeHitsCollection)[i];
@@ -405,29 +405,22 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
       }
 	} */
 
- //    G4int iNbTopPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbTopPMTs");
- //    G4int iNbBottomPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbBottomPMTs");
- //    G4int iNbLSPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbLSPMTs");
- //    G4int iNbWaterPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbWaterPMTs");
 
- //    m_pEventData->m_pPmtHits->resize(iNbTopPmts+iNbBottomPmts+iNbLSPmts+iNbWaterPmts, 0);
+		G4int iNbTopPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbTopPMTs");
+		G4int iNbBottomPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbBottomPMTs");
 
- //    //G4cout << "Nb hits " << iNbPmtHits << G4endl;
- //    // Pmt hits
- //    for(G4int i=0; i<iNbPmtHits; i++)
- //    {
- //        (*(m_pEventData->m_pPmtHits))[(*pPmtHitsCollection)[i]->GetPmtNb()]++;
- //        //G4cout << "PMTID " << (*pPmtHitsCollection)[i]->GetPmtNb() << G4endl;  
- //    }   
+		m_pEventData->m_pPmtHits->resize(iNbTopPmts+iNbBottomPmts, 0);
 
- //    m_pEventData->m_iNbTopPmtHits =
-	// accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbTopPmts, 0);
- //    m_pEventData->m_iNbBottomPmtHits =
-	// accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, 0);
- //    m_pEventData->m_iNbLSPmtHits =
-	// accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts+iNbLSPmts, 0);
- //    m_pEventData->m_iNbWaterPmtHits =
-	// accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts+iNbLSPmts, m_pEventData->m_pPmtHits->end(), 0);
+    // Pmt hits
+    //G4cout << "Nb hits " << iNbPmtHits << G4endl;
+    for(G4int i=0; i<iNbPmtHits; i++)
+    {
+        (*(m_pEventData->m_pPmtHits))[(*pPmtHitsCollection)[i]->GetPmtNb()]++;
+        //G4cout << "PMTID " << (*pPmtHitsCollection)[i]->GetPmtNb() << G4endl;  
+    }   
+
+    m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbTopPmts, 0);
+    m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, 0);
 
  //    //if((fTotalEnergyDeposited > 0. || iNbPmtHits > 0) && !FilterEvent(m_pEventData))
  //    //APC	if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0)
