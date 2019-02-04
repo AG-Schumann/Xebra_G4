@@ -38,17 +38,36 @@
 
 ##################
 # particle type + energy spectrum
-/Xe/gun/energy 0 keV
-/Xe/gun/particle ion
-
-# for Co57
-# /Xe/gun/ion 27 57 0 0
-
-# for Co60
-# /Xe/gun/ion 27 60 0 0
+/xebra/gun/energy 0 keV
+/xebra/gun/particle ion
 
 # for 137Cs
-/Xe/gun/ion 55 137 0 0
+/xebra/gun/ion 55 137 0 0
+
+# for Co57
+# /xebra/gun/ion 27 57 0 0
+
+# for Co60
+# /xebra/gun/ion 27 60 0 0
+
+# for K40
+#/xebra/gun/ion 19 40 0 0
+
+# for U238->Ra226
+#/xebra/gun/ion 92 238 0 0
+#/grdm/nucleusLimits 238 230 92 90
+
+# for Ar110m
+#/xebra/gun/ion 47 110 0 118.
+
+# for Rb83->Kr83
+#/xebra/gun/ion 37 83 0 0 
+#/grdm/nucleusLimits 83 83 37 36
+
+# for Kr85
+/xebra/gun/ion 36 85 0 0 
+
+
 
 ##################
 # scintillation processes in the LXe

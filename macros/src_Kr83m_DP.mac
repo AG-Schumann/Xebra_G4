@@ -45,11 +45,11 @@
 
 ##################
 # particle type + energy spectrum
-/Xe/gun/energy 0 keV
-/Xe/gun/particle ion
+/xebra/gun/energy 0 keV
+/xebra/gun/particle ion
 
 # for 83mKr / Kr-83m
-/Xe/gun/ion 36 83 0 41.5437
+/xebra/gun/ion 36 83 0 41.5437
 
 ##################
 # scintillation processes in the LXe
