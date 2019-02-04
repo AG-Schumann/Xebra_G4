@@ -116,7 +116,7 @@ using std::stringstream;
 	GXe_cylinder = new G4Tubs("GXe_cylinder", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
 	
 	LXe_ActiveVolume_solid = new G4Tubs("LXe_ActiveVolume_solid", 0.*mm, 35.*mm, (68.5*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
-	LXe_ActiveVolume_extra_filling_solid = new G4Tubs("LXe_ActiveVolume_extra_filling_solid", 0.*mm, 35.*mm, (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg); //ToDo:make SD and include in mass calculations (here and in Constr.Det.), cut out of GXe and LXe extra filling
+	LXe_ActiveVolume_extra_filling_solid = new G4Tubs("LXe_ActiveVolume_extra_filling_solid", 0.*mm, 35.*mm, (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
 		
 		// fillings in weir
 		filling_ratio_weir = 0.5; // ratio by how much the weir is filled with LXe, default = 0.5, range = (0,1)
@@ -463,7 +463,7 @@ using std::stringstream;
 
 
 
-// ToDo: Add missing TPC components.
+// ToDo: Add missing TPC components (LLM and SLMs).
 
 //**************************************************LOGICALVOLUMES*****************************************************
 
