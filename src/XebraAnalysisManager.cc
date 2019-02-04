@@ -232,8 +232,8 @@ void XebraAnalysisManager::BeginOfRun(const G4Run *)
   //m_pTree->AutoSave();
   
   // Added by Alex:
-  m_pTree->SetMaxTreeSize(1000*Long64_t(2000000000)); //2TB
-	m_pTree->AutoSave();
+  //m_pTree->SetMaxTreeSize(1000*Long64_t(2000000000)); //2TB
+	//m_pTree->AutoSave();
   
   // Write the number of events in the output file
   m_pNbEventsToSimulateParameter = new TParameter<int>("nbevents", m_iNbEventsToSimulate);
@@ -450,7 +450,13 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
   else
   {
   if(fTotalEnergyDeposited > 0.) m_pTree->Fill();
+  // if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0) m_pTree->Fill(); // only events with some activity are written to the tree
   }
+  
+  // auto save functionality to avoid data loss/ROOT can recover aborted simulations
+	//if ( pEvent->GetEventID() % 10000 == 0)
+		//m_pTree->AutoSave();
+  
   }
   m_pEventData->Clear(); 
   m_pTreeFile->cd();

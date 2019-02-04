@@ -94,6 +94,9 @@ private:
 	// PARAMETERS
 				G4double TPC_offset_origin; 
 				G4double Cryostat_Inner_offset;
+				
+				static map<G4String, G4double> m_hGeometryParameters;
+				void DefineGeometryParameters();
 
 	// LOGICAL VOLUMES
         G4LogicalVolume *CryostatLogicalVolume;

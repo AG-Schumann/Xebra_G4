@@ -4,6 +4,8 @@
 #include "XebraConstructCryostat.hh"
 #include "XebraConstructTPC.hh"
 
+map<G4String, G4double> XebraDetectorConstruction::m_hGeometryParameters;
+
 
 //G4 Header Files
 #include <G4SystemOfUnits.hh>
@@ -17,6 +19,10 @@ XebraDetectorConstruction::XebraDetectorConstruction(G4String fName) {
 
 XebraDetectorConstruction::~XebraDetectorConstruction(){
   	delete m_pDetectorMessenger;
+}
+
+G4double XebraDetectorConstruction::GetGeometryParameter(const char *szParameter) {
+  return m_hGeometryParameters[szParameter];
 }
 
 G4VPhysicalVolume* XebraDetectorConstruction::Construct()
@@ -379,6 +385,18 @@ void XebraDetectorConstruction::SetSS304LSteelReflectivity(G4double dSteelReflec
       G4cout << "ls!> SS304LSteel material not found!" << G4endl;
       exit(-1);
     }
+}
+
+//******************************************************************/
+// DefineGeometryParameters
+//******************************************************************/
+void XebraDetectorConstruction::DefineGeometryParameters() {
+	m_hGeometryParameters["NbTopPmtsFirstRow"]   = 2;
+  m_hGeometryParameters["NbTopPmtsSecondRow"]  = 3;
+  m_hGeometryParameters["NbTopPmtsThirdRow"]  = 2;
+  m_hGeometryParameters["NbTopPmts"] = 7;
+  
+  m_hGeometryParameters["NbBottomPmts"] = 1;
 }
 
 //***********************End of code************************
