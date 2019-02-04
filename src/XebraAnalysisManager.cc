@@ -232,8 +232,8 @@ void XebraAnalysisManager::BeginOfRun(const G4Run *)
   //m_pTree->AutoSave();
   
   // Added by Alex:
-  //m_pTree->SetMaxTreeSize(1000*Long64_t(2000000000)); //2TB
-	//m_pTree->AutoSave();
+  m_pTree->SetMaxTreeSize(1000*Long64_t(2000000000)); //2TB
+	m_pTree->AutoSave();
   
   // Write the number of events in the output file
   m_pNbEventsToSimulateParameter = new TParameter<int>("nbevents", m_iNbEventsToSimulate);
@@ -243,6 +243,9 @@ void XebraAnalysisManager::BeginOfRun(const G4Run *)
 
 }
 
+//******************************************************************/
+// EndOfRun action/end of the simulation
+//******************************************************************/
 void XebraAnalysisManager::EndOfRun(const G4Run *)
 {
   runTime->Stop();
@@ -257,8 +260,12 @@ void XebraAnalysisManager::EndOfRun(const G4Run *)
   m_pTreeFile->Close();
 }
 
+//******************************************************************/
+//	BeginOfEvent action - for each beamed particle
+//******************************************************************/
 void XebraAnalysisManager::BeginOfEvent(const G4Event *)
 {
+	// initialize the HitCollections if needed (-1 = not initialized)
   if(m_iLXeHitsCollectionID == -1)
   {
     G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
@@ -279,6 +286,9 @@ void XebraAnalysisManager::BeginOfEvent(const G4Event *)
 */  
 }
 
+//******************************************************************/
+// EndOfEvent action - getting all event data
+//******************************************************************/
 void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
 {
   _events->cd();
@@ -286,7 +296,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
   G4HCofThisEvent* pHCofThisEvent = pEvent->GetHCofThisEvent();
   XebraLXeHitsCollection* pLXeHitsCollection = 0;
   XebraPmtHitsCollection* pPmtHitsCollection = 0;
-  XebraLScintHitsCollection* pLScintHitsCollection = 0;
+  //XebraLScintHitsCollection* pLScintHitsCollection = 0;
   
   G4int iNbLXeHits = 0, iNbPmtHits = 0, iNbLScintHits = 0;
 	
@@ -370,7 +380,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
     }
 
     // LScint hits
-    for(G4int i=0; i<iNbLScintHits; i++)
+/*    for(G4int i=0; i<iNbLScintHits; i++)
 	{
 	  XebraLScintHit *pHit = (*pLScintHitsCollection)[i];
 
@@ -393,7 +403,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
 
         iLScintNbSteps++;
       }
-	}
+	} */
 
  //    G4int iNbTopPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbTopPMTs");
  //    G4int iNbBottomPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbBottomPMTs");
