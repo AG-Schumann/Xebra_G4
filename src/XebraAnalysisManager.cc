@@ -406,7 +406,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
 	} */
 
 
-		G4int iNbTopPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbTopPMTs");
+/*		G4int iNbTopPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbTopPMTs");
 		G4int iNbBottomPmts = (G4int) XebraDetectorConstruction::GetGeometryParameter("NbBottomPMTs");
 
 		m_pEventData->m_pPmtHits->resize(iNbTopPmts+iNbBottomPmts, 0);
@@ -420,7 +420,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
     }   
 
     m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbTopPmts, 0);
-    m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, 0);
+    m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, 0);*/
 
  //    //if((fTotalEnergyDeposited > 0. || iNbPmtHits > 0) && !FilterEvent(m_pEventData))
  //    //APC	if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0)
