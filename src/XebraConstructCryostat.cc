@@ -50,15 +50,12 @@ XebraConstructCryostat::XebraConstructCryostat( XebraDetectorConstruction *){
 
   // Parameters for the Cryostat Envelop
 	// these values will be used as Cryostat Envelop for the air voulume preliminarily containing the cryostats 
-	// ToDo: change, also adjust mother volumes
 	Cryostat_Envelop_Radius = 1.*m;  
 	Cryostat_Envelop_Height = 2.5*m;
 
 }
 
 XebraConstructCryostat::~XebraConstructCryostat() {;}
-
-//ToDo: finish constrction cryos also with details
 
 G4LogicalVolume* XebraConstructCryostat::Construct(){
 
@@ -77,7 +74,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	// Common Parameters used for the TPC Envelop
 	//**************************************************
 
-	Cryostat_TPCEnvelop_Radius = 0.15*m / 2; //ToDo: implement directly from TPC class
+	Cryostat_TPCEnvelop_Radius = 0.15*m / 2;
 	Cryostat_TPCEnvelop_Height = 0.4*m;
 	// Cryostat_TPCEnvelop_overhang see below
 
@@ -85,23 +82,21 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// Common Parameters used to build the Outer Cryostat
 	//**************************************************
-
-		//ToDo: add outer cryostat, sample tube and vacuum
  
-	Cryostat_Outer_Tube_length = 130.*cm; // temporary dimension from thesis Basho, ToDo: correct!
-	Cryostat_Outer_Tube_wallthickness = 1.*cm; // guessed temporary dimension, ToDo: correct!
-	Cryostat_Outer_Tube_innerdiameter = 48.*cm; // temporary dimension from thesis Basho, ToDo: correct!
+	Cryostat_Outer_Tube_length = 130.*cm; // temporary dimension from thesis Basho
+	Cryostat_Outer_Tube_wallthickness = 1.*cm; // guessed temporary dimension
+	Cryostat_Outer_Tube_innerdiameter = 48.*cm; // temporary dimension from thesis Basho
 	Cryostat_Outer_Tube_outerdiameter = 48.*cm + 2*Cryostat_Outer_Tube_wallthickness;
 
-	Cryostat_Outer_TubeFlange_length = 2.*cm; // roughly measured temporary dimension, ToDo: correct!
-	Cryostat_Outer_TubeFlange_innerdiameter = Cryostat_Outer_Tube_outerdiameter; // guessed temporary dimension, ToDo: correct!
-	Cryostat_Outer_TubeFlange_outerdiameter = Cryostat_Outer_Tube_outerdiameter + 2*3.*cm; // roughly measured temporary dimension, ToDo: correct!
+	Cryostat_Outer_TubeFlange_length = 2.*cm; // roughly measured temporary dimension
+	Cryostat_Outer_TubeFlange_innerdiameter = Cryostat_Outer_Tube_outerdiameter; // guessed temporary dimension
+	Cryostat_Outer_TubeFlange_outerdiameter = Cryostat_Outer_Tube_outerdiameter + 2*3.*cm; // roughly measured temporary dimension
 
-	Cryostat_Outer_BottomPlate_length = 1.*cm; // roughly measured temporary dimension, ToDo: correct!
+	Cryostat_Outer_BottomPlate_length = 1.*cm; // roughly measured temporary dimension
 	Cryostat_Outer_BottomPlate_diameter = Cryostat_Outer_Tube_outerdiameter;
 
-	Cryostat_Outer_TopFlange_length = 2.3*cm; // roughly measured temporary dimension, ToDo: correct!
-	Cryostat_Outer_TopFlange_outerdiameter = Cryostat_Outer_TubeFlange_outerdiameter; // guessed temporary dimension, ToDo: correct!
+	Cryostat_Outer_TopFlange_length = 2.3*cm; // roughly measured temporary dimension
+	Cryostat_Outer_TopFlange_outerdiameter = Cryostat_Outer_TubeFlange_outerdiameter; // guessed temporary dimension
 	Cryostat_Outer_TopFlange_innerdiameter = 0.;
 
 
@@ -118,7 +113,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 	Cryostat_Inner_TubeFlange_length = 22.3*mm; // from CF Flange components data sheet for NW 150 CF
 	Cryostat_Inner_TubeFlange_innerdiameter = Cryostat_Inner_Tube_innerdiameter;
-	Cryostat_Inner_TubeFlange_outerdiameter = 203.*mm; // from CF Flange components data sheet for NW 150 CF, ToDo: check ambiguity
+	Cryostat_Inner_TubeFlange_outerdiameter = 203.*mm; // from CF Flange components data sheet for NW 150 CF
 
 	Cryostat_Inner_BottomPlate_length = 10.*mm; // from order
 	Cryostat_Inner_BottomPlate_diameter = Cryostat_Inner_Tube_outerdiameter;
@@ -127,29 +122,29 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 
 		// upper part (NW 250 CF)
 
-	Cryostat_Inner_UpperTube_innerdiameter = 250.*mm; // from CF Flange components data sheet for NW 250 CF //ToDo:check
-	Cryostat_Inner_UpperTube_wallthickness = 2.*mm; // from CF Flange components data sheet for NW 250 CF //ToDo:check
-	Cryostat_Inner_UpperTube_outerdiameter = 254.*mm; // from CF Flange components data sheet for NW 250 CF //ToDo:check
+	Cryostat_Inner_UpperTube_innerdiameter = 250.*mm; // from CF Flange components data sheet for NW 250 CF
+	Cryostat_Inner_UpperTube_wallthickness = 2.*mm; // from CF Flange components data sheet for NW 250 CF
+	Cryostat_Inner_UpperTube_outerdiameter = 254.*mm; // from CF Flange components data sheet for NW 250 CF
 	// Cryostat_Inner_UpperTube_length see below
 	
 	Cryostat_Inner_UpperTubeFlange_length = 26.*mm; // from CF Flange components data sheet for NW 250 CF and measurement
 	Cryostat_Inner_UpperTubeFlange_innerdiameter = Cryostat_Inner_UpperTube_innerdiameter;
-	Cryostat_Inner_UpperTubeFlange_outerdiameter = 304.*mm; // from CF Flange components data sheet for NW 250 CF, ToDo: check ambiguity
+	Cryostat_Inner_UpperTubeFlange_outerdiameter = 304.*mm; // from CF Flange components data sheet for NW 250 CF
 
 	Cryostat_Inner_MiddlePlate_length = 16.*mm; //rough measurement
 	Cryostat_Inner_MiddlePlate_innerdiameter = Cryostat_Inner_Tube_innerdiameter;
 	Cryostat_Inner_MiddlePlate_outerdiameter = Cryostat_Inner_UpperTube_outerdiameter;
 
-	Cryostat_Inner_UpperTube_length = 74.3*mm - Cryostat_Inner_MiddlePlate_length; //rough measurement, ToDo: check!!!
+	Cryostat_Inner_UpperTube_length = 74.3*mm - Cryostat_Inner_MiddlePlate_length; //rough measurement
 
-		//Temporary top part, ToDo: ckeck!!!
+		//Temporary top part
 
 	Cryostat_Inner_TopFlange1_length = Cryostat_Inner_UpperTubeFlange_length;
 	Cryostat_Inner_TopFlange1_outerdiameter = Cryostat_Inner_UpperTubeFlange_outerdiameter;
 	Cryostat_Inner_TopFlange1_innerdiameter = 152.4*mm;  // from CF Flange components data sheet for NW 250 CF > NW 150 CF Zero Length Reducer
 
 	Cryostat_Inner_TopFlange2_length = 22.3*mm; // from CF Flange components data sheet for NW 150 CF
-	Cryostat_Inner_TopFlange2_outerdiameter = 203.*mm; // from CF Flange components data sheet for NW 150 CF, ToDo: check ambiguity
+	Cryostat_Inner_TopFlange2_outerdiameter = 203.*mm; // from CF Flange components data sheet for NW 150 CF
 	Cryostat_Inner_TopFlange2_innerdiameter = 0.;
 	
 		// GXe volume
@@ -160,7 +155,6 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	// Position shift inner in outer cryo
 	//**************************************************
 
-	// ToDo: shift inner cryostat and adjust coordinate system accordingly
 	Cryostat_Inner_upperedge_unshifted = -Cryostat_TPCEnvelop_Height/2 + Cryostat_Inner_Tube_length + Cryostat_Inner_TubeFlange_length + Cryostat_Inner_MiddlePlate_length + Cryostat_Inner_UpperTube_length + Cryostat_Inner_UpperTubeFlange_length + Cryostat_Inner_TopFlange1_length + Cryostat_Inner_TopFlange2_length;
 	Cryostat_Outer_TopFlange_loweredge_unshifted = Cryostat_Outer_Tube_length/2; // + Cryostat_Outer_TopFlange_length
 	Cryostats_dist_unshifted = Cryostat_Outer_TopFlange_loweredge_unshifted - Cryostat_Inner_upperedge_unshifted;
@@ -244,7 +238,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// Outer Cryostat
 	//**************************************************
-	// very simplistic as temporary implementation, ToDo: correct later
+	// very simplistic as temporary implementation
 
 	Cryostat_Outer_MotherLogicalVolume = Cryostat_Envelop_log;
 
@@ -406,6 +400,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	//**************************************************
 	// CF lines
 	//**************************************************
+	// ToDo: correct placement and rotation
 	
 	G4Tubs* Cryostat_CF16lines_solid = new G4Tubs("Cryostat_CF16lines_solid", Cryostat_CF16lines_innerdiameter/2, Cryostat_CF16lines_outerdiameter/2, Cryostat_CF16lines_length/2 , 0.*deg, 360.*deg);	
 	G4Tubs* Cryostat_CF40lines_solid = new G4Tubs("Cryostat_CF40lines_solid", Cryostat_CF40lines_innerdiameter/2, Cryostat_CF40lines_outerdiameter/2, Cryostat_CF40lines_length/2 , 0.*deg, 360.*deg);
@@ -417,8 +412,6 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
 	Cryostat_CF40line_1_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(orientation_ang_vac + 0.*deg), Cryostat_CF40lines_postition_r * sin(orientation_ang_vac + 0.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_1", Cryostat_Vacuum_log, 0, 0);
 	Cryostat_CF40line_2_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(orientation_ang_vac + 120.*deg), Cryostat_CF40lines_postition_r * sin(orientation_ang_vac + 120.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_2", Cryostat_Vacuum_log, 0, 0);
 	Cryostat_CF40line_3_phys = new G4PVPlacement(nullptr, G4ThreeVector(Cryostat_CF40lines_postition_r * cos(orientation_ang_vac + 240.*deg), Cryostat_CF40lines_postition_r * sin(orientation_ang_vac + 240.*deg), Cryostat_Outer_Tube_length/2 - Cryostat_CF40lines_length/2), Cryostat_CF40lines_log,"Cryostat_CF40line_3", Cryostat_Vacuum_log, 0, 0);
-	
-	// ToDo: maybe add corresponding holes in flanges
 	
 	//**************************************************
 	// Sample tube
@@ -487,7 +480,7 @@ G4LogicalVolume* XebraConstructCryostat::Construct(){
   GXeMass_Cryo_extravolume = GXe_Cryostat_extravolume_log->GetMass(false, false)/kg;
   GXeVolume_Cryo_extravolume = GXeMass_Cryo_extravolume/(GXe->GetDensity()*m3/kg); 
 
-  return Cryostat_Envelop_log; // ToDo: change
+  return Cryostat_Envelop_log;
 }
 
 
