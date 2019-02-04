@@ -5,6 +5,11 @@
 #include "XebraPMTsR11410.hh"
 #include "XebraPMTsR8520.hh"
 
+// Added by Alex
+#include "XebraLXeSensitiveDetector.hh"
+#include "XebraPmtSensitiveDetector.hh"
+#include "XebraDetectorMessenger.hh"
+
 //Optical surface properties
 #include <G4OpticalSurface.hh>
 #include <G4LogicalBorderSurface.hh>

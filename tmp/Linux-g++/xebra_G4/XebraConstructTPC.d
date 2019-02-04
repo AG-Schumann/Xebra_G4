@@ -407,7 +407,8 @@
  /usr/local/geant4/include/Geant4/G4Polycone.icc \
  /usr/local/geant4/include/Geant4/G4Ellipsoid.hh \
  /usr/local/geant4/include/Geant4/G4Ellipsoid.icc \
- include/XebraPMTsR8520.hh \
+ include/XebraPMTsR8520.hh include/XebraLXeSensitiveDetector.hh \
+ include/XebraPmtSensitiveDetector.hh include/XebraDetectorMessenger.hh \
  /usr/local/geant4/include/Geant4/G4OpticalSurface.hh \
  /usr/local/geant4/include/Geant4/G4Physics2DVector.hh \
  /usr/local/geant4/include/Geant4/G4Physics2DVector.icc \
