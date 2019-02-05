@@ -775,6 +775,8 @@ using std::stringstream;
 	XebraLXeSensitiveDetector *pLXeSD = new XebraLXeSensitiveDetector("Xebra/LXeSD");
 	pSDManager->AddNewDetector(pLXeSD);
 
+	// ToDo: check which volumes to make LXe SD
+	/*
 	LXe_Logical->SetSensitiveDetector(pLXeSD);
 	LXe_extra_filling_log->SetSensitiveDetector(pLXeSD);
 	if (height_LXe_TPC_cylinder > 0.)	
@@ -785,6 +787,7 @@ using std::stringstream;
 		{
 		LXe_weir_2_log->SetSensitiveDetector(pLXeSD);
 		}
+	*/
 	LXe_ActiveVolume_Logical->SetSensitiveDetector(pLXeSD);
 	LXe_ActiveVolume_extra_filling_Logical->SetSensitiveDetector(pLXeSD);
 
