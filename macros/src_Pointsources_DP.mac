@@ -35,6 +35,7 @@
 #################
 # place inside sample tube assuming that centered in z-ccordinate wrt to active volume
 /xebra/gun/center 0. -122. -35.75 mm
+# /xebra/gun/center 0. 0. -35.75 mm
 
 ##################
 # particle type + energy spectrum

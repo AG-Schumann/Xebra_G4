@@ -44,6 +44,34 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 							aStep->GetPostStepPoint()->GetMomentum().y()/MomModulo , 
 							aStep->GetPostStepPoint()->GetMomentum().z()/MomModulo );
         
+  Int_t SaveTopPmt = 0; // ToDo: experiment with this flag to see if top pmts are hit
+	if (SaveTopPmt){    
+		if(particle="opticalphoton" && aStep->GetTrack()->GetVolume()->GetName()=="PMT_R8520_Photocathode"){
+				myAnalysisManager->FillParticleInSave(3,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									//aStep->GetPostStepPoint()->GetMomentum(),
+									direction,
+									eP,
+									timeP,
+									trackID);      
+		}
+	}
+  
+  Int_t SaveBottomPmt = 1; // ToDo: experiment with this flag to see if top pmts are hit
+	if (SaveBottomPmt){ 
+		if(particle="opticalphoton" && aStep->GetTrack()->GetVolume()->GetName()=="PMT_R11410_Photocathode"){
+				myAnalysisManager->FillParticleInSave(4,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									//aStep->GetPostStepPoint()->GetMomentum(),
+									direction,
+									eP,
+									timeP,
+									trackID);      
+		}
+	}
+        
 	Int_t SaveCryo = 0;
 	if (SaveCryo){
 		// Get information when a particle cross the whole shield and hit the external part of the outer cryostat
@@ -62,7 +90,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
         
-	Int_t SaveCapture = 1;
+	Int_t SaveCapture = 0;
 	if (SaveCapture){
 	
 		if(trackID==1 && particle!="neutron"){
