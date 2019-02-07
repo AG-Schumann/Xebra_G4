@@ -34,8 +34,10 @@
 
 #################
 # place inside sample tube assuming that centered in z-ccordinate wrt to active volume
+## position centered in sample tube
 /xebra/gun/center 0. -122. -35.75 mm
-# /xebra/gun/center 0. 0. -35.75 mm
+## position centered in LXe outside of reflector
+#/xebra/gun/center 0. -45. -35.75 mm
 
 ##################
 # particle type + energy spectrum
@@ -66,15 +68,16 @@
 #/grdm/nucleusLimits 83 83 37 36
 
 # for Kr85
-/xebra/gun/ion 36 85 0 0 
+#/xebra/gun/ion 36 85 0 0 
 
 
 
 ##################
 # scintillation processes in the LXe
 /Xe/detector/setLXeScintillation false
+#/Xe/detector/setLXeScintillation true
 
 ##################
 # tree Filling options
-/run/writeEmpty true
+/run/writeEmpty false
 

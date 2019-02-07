@@ -29,6 +29,8 @@
 
 #################
 # gun
+#/xebra/gun/angtype direction
+#/xebra/gun/direction  0 0 1 
 /xebra/gun/angtype iso
 /xebra/gun/type    Volume  
 /xebra/gun/shape   Cylinder
