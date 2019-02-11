@@ -419,8 +419,11 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
         //G4cout << "PMTID " << (*pPmtHitsCollection)[i]->GetPmtNb() << G4endl;  
     }   
 
-    m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbTopPmts, 0);
-    m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, 0);
+    //m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbTopPmts, 0);
+    //m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbTopPmts, m_pEventData->m_pPmtHits->begin()+iNbTopPmts+iNbBottomPmts, 0);
+    
+    m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbBottomPmts, 0);
+    m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbBottomPmts, m_pEventData->m_pPmtHits->begin()+iNbBottomPmts+iNbTopPmts, 0);
 
  //    //if((fTotalEnergyDeposited > 0. || iNbPmtHits > 0) && !FilterEvent(m_pEventData))
  //    //APC	if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0)
@@ -442,8 +445,8 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
   }
   else
   {
-  if(fTotalEnergyDeposited > 0.) m_pTree->Fill();
-  // if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0) m_pTree->Fill(); // only events with some activity are written to the tree
+  // if(fTotalEnergyDeposited > 0.) m_pTree->Fill();
+  if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0) m_pTree->Fill(); // only events with some activity are written to the tree
   }
   
   // auto save functionality to avoid data loss/ROOT can recover aborted simulations

@@ -397,6 +397,9 @@ private:
 
 	G4LogicalVolume *PMTR11410LogicalVolume;
 	G4LogicalVolume *PMTR8520LogicalVolume;
+	
+	G4LogicalVolume *R11410_GetPhotocathodeLogicalVolume;
+	G4LogicalVolume *R8520_GetPhotocathodeLogicalVolume;
 
 	//PhysicalVolumes
 	G4VPhysicalVolume *test_phys;
