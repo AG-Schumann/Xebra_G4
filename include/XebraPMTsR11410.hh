@@ -31,6 +31,7 @@ public:
   ~XebraPMTsR11410();
 
   G4LogicalVolume* Construct();
+  G4LogicalVolume* GetPhotocathodeLogicalVolume();
 
 private:    
   G4double dPMTThickness;

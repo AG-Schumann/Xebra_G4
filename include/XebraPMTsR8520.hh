@@ -31,6 +31,7 @@ public:
 	~XebraPMTsR8520();
 
 	G4LogicalVolume* Construct();
+	G4LogicalVolume* GetPhotocathodeLogicalVolume();
 
 private:
 	// Solids:

@@ -165,14 +165,14 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
 
   //------------------------------- PMT sensitivity -------------------------------
   // Cyril
-  G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
+  /*G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
   
   if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
 	{
 		XebraPmtSensitiveDetector* pPMT_R11410_SD = new XebraPmtSensitiveDetector("Xebra/PMT_R11410_SD");
 		pSDManager->AddNewDetector(pPMT_R11410_SD);
 		m_pPMTPhotocathodeLogicalVolume->SetSensitiveDetector(pPMT_R11410_SD);
-	}
+	}*/
   
   //---------------------------------- attributes ---------------------------------
   
@@ -200,4 +200,8 @@ G4LogicalVolume* XebraPMTsR11410::Construct()
 
 
   return m_pPMTLogicalVolume;
+}
+
+G4LogicalVolume* XebraPMTsR11410::GetPhotocathodeLogicalVolume(){
+  return this->m_pPMTPhotocathodeLogicalVolume;
 }

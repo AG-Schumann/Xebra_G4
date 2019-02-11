@@ -768,10 +768,9 @@ using std::stringstream;
 
 //**********************************************SENSITIVE DETECTORS**********************************************
 
-	// PMTs already made SDs in corresponding classes
-
-	//Sensitive Detector: Setting all the LXe as a Sensitive Detector.
 	G4SDManager *pSDManager = G4SDManager::GetSDMpointer();
+	
+	//Sensitive Detector: Setting all the LXe as a Sensitive Detector.
 	XebraLXeSensitiveDetector *pLXeSD = new XebraLXeSensitiveDetector("Xebra/LXeSD");
 	pSDManager->AddNewDetector(pLXeSD);
 
@@ -790,6 +789,20 @@ using std::stringstream;
 */
 	LXe_ActiveVolume_Logical->SetSensitiveDetector(pLXeSD);
 	LXe_ActiveVolume_extra_filling_Logical->SetSensitiveDetector(pLXeSD);
+	
+	//Sensitive Detector: Setting the PMTs as sensitive detector
+		// PMTs already made SDs in corresponding classes
+	R11410_GetPhotocathodeLogicalVolume = r11410->GetPhotocathodeLogicalVolume();
+	R8520_GetPhotocathodeLogicalVolume = r8520->GetPhotocathodeLogicalVolume();
+	
+	if(pSDManager->GetCollectionID("PmtHitsCollection")==-1)
+	{
+		XebraPmtSensitiveDetector* pPmtSD = new XebraPmtSensitiveDetector("Xebra/PmtSD");
+		pSDManager->AddNewDetector(pPmtSD);
+		
+		R11410_GetPhotocathodeLogicalVolume->SetSensitiveDetector(pPmtSD);
+		R8520_GetPhotocathodeLogicalVolume->SetSensitiveDetector(pPmtSD);
+	}
 
 
 //**********************************************VISUALIZATION**********************************************
