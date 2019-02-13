@@ -2,6 +2,8 @@
 #include "XebraPMTsR11410.hh"
 #include "XebraPmtSensitiveDetector.hh"
 
+#include "XebraConstructTPC.hh"
+
 //Additional Header Files
 #include <globals.hh>
 

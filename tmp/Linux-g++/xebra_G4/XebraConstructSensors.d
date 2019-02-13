@@ -332,6 +332,7 @@
  /usr/local/geant4/include/Geant4/G4Allocator.hh \
  /usr/local/geant4/include/Geant4/G4ThreeVector.hh \
  include/XebraLXeSensitiveDetector.hh include/XebraLXeHit.hh \
+ include/XebraPmtSensitiveDetector.hh include/XebraPmtHit.hh \
  /usr/include/c++/6/math.h /usr/include/c++/6/numeric \
  /usr/include/c++/6/bits/stl_numeric.h /usr/include/c++/6/cassert \
  /usr/local/root_v6.12.04/root-6.12.04_build/include/TParameter.h \
@@ -392,5 +393,4 @@
  /usr/local/geant4/include/Geant4/G4PhysicalVolumeStore.hh \
  /usr/local/geant4/include/Geant4/G4VStoreNotifier.hh \
  /usr/local/geant4/include/Geant4/G4VNotifier.hh \
- /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
- include/XebraPmtSensitiveDetector.hh include/XebraPmtHit.hh
+ /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh

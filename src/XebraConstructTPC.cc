@@ -608,7 +608,8 @@ using std::stringstream;
 	//Placing PMT R11410
 	rmy180 = new G4RotationMatrix();
 	rmy180->rotateY(180.*deg);
-	PMT0PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMT0_Body", LXe_Logical, false, 0);
+	G4int iPmtNb=0;
+	PMT0PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,-(83.5*mm + 114.0*mm/2 -29.5*mm)), PMTR11410LogicalVolume,"PMT0_Body", LXe_Logical, false, iPmtNb);
 
 	//**************************************************
 	// Placing all TPC components fully emerged in original GXe volume (neglecting extra filling)
@@ -677,13 +678,20 @@ using std::stringstream;
 	}
 
 	//Placing PMT R8520
-	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT1_Body", GXe_Logical, false, 0);
-	PMT2PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT2_Body", GXe_Logical, false, 0);
-	PMT3PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT3_Body", GXe_Logical, false, 0);
-	PMT4PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT4_Body", GXe_Logical, false, 0);
-	PMT5PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT5_Body", GXe_Logical, false, 0);
-	PMT6PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT6_Body", GXe_Logical, false, 0);
-	PMT7PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT7_Body", GXe_Logical, false, 0);
+	iPmtNb=1;
+	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT1_Body", GXe_Logical, false, iPmtNb);
+	iPmtNb=2;
+	PMT2PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT2_Body", GXe_Logical, false, iPmtNb);
+	iPmtNb=3;
+	PMT3PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT3_Body", GXe_Logical, false, iPmtNb);
+	iPmtNb=4;
+	PMT4PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT4_Body", GXe_Logical, false, iPmtNb);
+	iPmtNb=5;
+	PMT5PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT5_Body", GXe_Logical, false, iPmtNb);
+	iPmtNb=6;
+	PMT6PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT6_Body", GXe_Logical, false, iPmtNb);
+	iPmtNb=7;
+	PMT7PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT7_Body", GXe_Logical, false, iPmtNb);
 
 //**********************************************OPTICAL SURFACES**********************************************
 // see https://indico.cern.ch/event/679723/contributions/2792554/attachments/1559217/2453758/BookForApplicationDevelopers.pdf, p. 219

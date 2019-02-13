@@ -18,14 +18,14 @@
 /xebra/gun/type   Volume  
 /xebra/gun/shape  Cylinder
 # include entire TPC
-#/xebra/gun/center 0. 0. 0. cm
-#/xebra/gun/radius 0.12 m
-#/xebra/gun/halfz  0.25 m
+/xebra/gun/center 0. 0. 0. cm
+/xebra/gun/radius 0.12 m
+/xebra/gun/halfz  0.25 m
 
 # entire setup:
-/xebra/gun/center 0. 0. -0.2 m
-/xebra/gun/radius 0.3 m
-/xebra/gun/halfz  0.8 m
+#/xebra/gun/center 0. 0. -0.2 m
+#/xebra/gun/radius 0.3 m
+#/xebra/gun/halfz  0.8 m
 
 # custom confine:
 # /xebra/gun/center 0. -0.15 0. m
@@ -74,7 +74,7 @@
 # /xebra/gun/confine PMT_R8520_Window
 # /xebra/gun/confine PMT_R8520_Ring
 # /xebra/gun/confine PMT_R8520_Inner_Vacuum
-# /xebra/gun/confine PMT_R8520_Photocathode
+/xebra/gun/confine PMT_R8520_Photocathode
 # /xebra/gun/confine PMT7_Body
 # /xebra/gun/confine PMT*
 # /xebra/gun/confine Cryostat_Inner_SS_BottomPlate
@@ -90,7 +90,7 @@
 # /xebra/gun/confine GXe*
 # /xebra/gun/confine Cryostat_Outer*
 # /xebra/gun/confine Cryostat_Inner*
-/xebra/gun/confine Cryostat_Vacuum*
+# /xebra/gun/confine Cryostat_Vacuum*
 # /xebra/gun/confine LXe_ActiveVolume*
 # /xebra/gun/confine Cryostat_CF*
 # /xebra/gun/confine Cryostat_sampletube*
