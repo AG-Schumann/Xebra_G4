@@ -7,6 +7,8 @@
 #include "XebraLScintSensitiveDetector.hh"
 #include "XebraLXeSensitiveDetector.hh"
 
+#include "XebraPmtSensitiveDetector.hh"
+
 //Additional Header Files
 #include <globals.hh>
 #include <math.h>

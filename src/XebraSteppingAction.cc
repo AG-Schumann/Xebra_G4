@@ -58,7 +58,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
   
-  Int_t SaveBottomPmt = 1; // ToDo: experiment with this flag to see if top pmts are hit
+  Int_t SaveBottomPmt = 0; // ToDo: experiment with this flag to see if top pmts are hit
 	if (SaveBottomPmt){ 
 		if(particle="opticalphoton" && aStep->GetTrack()->GetVolume()->GetName()=="PMT_R11410_Photocathode"){
 				myAnalysisManager->FillParticleInSave(4,
