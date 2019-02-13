@@ -47,8 +47,8 @@ G4bool XebraPmtSensitiveDetector::ProcessHits(G4Step* pStep, G4TouchableHistory 
 
 		pHit->SetPosition(pStep->GetPreStepPoint()->GetPosition());
 		pHit->SetTime(pTrack->GetGlobalTime());
-		pHit->SetPmtNb(pTrack->GetTouchable()->GetVolume(1)->GetCopyNo()); //WaterTank PMTs
-                //pHit->SetPmtNb(pTrack->GetTouchable()->GetVolume(2)->GetCopyNo()); //TPC PMTs
+		pHit->SetPmtNb(pTrack->GetTouchable()->GetVolume(2)->GetCopyNo()); //TPC PMTs 
+                //pHit->SetPmtNb(pTrack->GetTouchable()->GetVolume(1)->GetCopyNo()); //WaterTank PMTs
 
 		m_pPmtHitsCollection->insert(pHit);
 		
