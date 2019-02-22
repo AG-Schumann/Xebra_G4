@@ -18,9 +18,9 @@
 /xebra/gun/type   Volume  
 /xebra/gun/shape  Cylinder
 # include entire TPC
-/xebra/gun/center 0. 0. 0. cm
-/xebra/gun/radius 0.12 m
-/xebra/gun/halfz  0.25 m
+#/xebra/gun/center 0. 0. 0. cm
+#/xebra/gun/radius 0.12 m
+#/xebra/gun/halfz  0.25 m
 
 # entire setup:
 #/xebra/gun/center 0. 0. -0.2 m
@@ -28,15 +28,15 @@
 #/xebra/gun/halfz  0.8 m
 
 # custom confine:
-# /xebra/gun/center 0. -0.15 0. m
-# /xebra/gun/radius 0.1 m
-# /xebra/gun/halfz  0.3 m
+/xebra/gun/center 0. -0.05 0. m
+/xebra/gun/radius 0.05 m
+/xebra/gun/halfz  0.08 m
 
 
 ##################
 # Select the volume to confine the source. E.g. /xebra/gun/confine LXe*
 ## /xebra/gun/confine test*
-# /xebra/gun/confine LXe*
+/xebra/gun/confine LXe*
 # /xebra/gun/confine GXe_TPC*
 ## /xebra/gun/confine LXe_weir*
 ## /xebra/gun/confine GXe_weir*
@@ -74,7 +74,7 @@
 # /xebra/gun/confine PMT_R8520_Window
 # /xebra/gun/confine PMT_R8520_Ring
 # /xebra/gun/confine PMT_R8520_Inner_Vacuum
-/xebra/gun/confine PMT_R8520_Photocathode
+# /xebra/gun/confine PMT_R8520_Photocathode
 # /xebra/gun/confine PMT7_Body
 # /xebra/gun/confine PMT*
 # /xebra/gun/confine Cryostat_Inner_SS_BottomPlate

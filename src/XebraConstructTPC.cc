@@ -25,7 +25,7 @@ XebraConstructTPC::XebraConstructTPC(XebraDetectorConstruction *){
 XebraConstructTPC::~XebraConstructTPC() {;}
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 G4LogicalVolume* XebraConstructTPC::Construct(){
 
@@ -107,7 +107,7 @@ using std::stringstream;
 	// Parameters Electrodes, Field Shaping Rings (FSR) and sensors
 
 
-//**************************************************CONSTRUCT*********************************************************
+//**************************************************CONSTRUCT*******************************************
 
 	// Construct objects
 	// Abbreviations (p...) according to https://wiki.uni-freiburg.de/app/lib/exe/fetch.php?media=start:ultimate:xebra:tpc:labtpc_assembly.pdf
@@ -118,10 +118,12 @@ using std::stringstream;
 		// LXe extra filling see bottom of CONSTRUCT section
 
 	TPC_cylinder = new G4Tubs("TPC_cylinder", 0.*cm, cryostat_innerRadius, cryostat_innerHeight/2, 0.*deg, 360.*deg);  
-	GXe_cylinder = new G4Tubs("GXe_cylinder", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
+	GXe_cylinder_orig = new G4Tubs("GXe_cylinder_orig", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
 	
-	LXe_ActiveVolume_solid = new G4Tubs("LXe_ActiveVolume_solid", 0.*mm, 35.*mm, (68.5*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
+	LXe_ActiveVolume_solid = new G4Tubs("LXe_ActiveVolume_solid", 0.*mm, 35.*mm, (68.5*mm - 0.15*mm)/2 + (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
 	LXe_ActiveVolume_extra_filling_solid = new G4Tubs("LXe_ActiveVolume_extra_filling_solid", 0.*mm, 35.*mm, (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
+	
+	GXe_cylinder = new G4SubtractionSolid("GXe_cylinder", GXe_cylinder_orig, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -GXe_height/2 + (3.*mm - 0.15*mm)/2));
 		
 		// fillings in weir
 		filling_ratio_weir = 0.5; // ratio by how much the weir is filled with LXe, default = 0.5, range = (0,1)
@@ -462,7 +464,8 @@ using std::stringstream;
 	LXe_extra_filling_solid_13 = new G4SubtractionSolid("LXe_extra_filling_solid_13", LXe_extra_filling_solid_12, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_14 = new G4SubtractionSolid("LXe_extra_filling_solid_14", LXe_extra_filling_solid_13, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_15 = new G4SubtractionSolid("LXe_extra_filling_solid_15", LXe_extra_filling_solid_14, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid = LXe_extra_filling_solid_15;
+	LXe_extra_filling_solid_16 = new G4SubtractionSolid("LXe_extra_filling_solid_16", LXe_extra_filling_solid_15, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2));	
+	LXe_extra_filling_solid = LXe_extra_filling_solid_16;
 
 //ToDo: subtract top PMTs from extra filling
 
@@ -470,12 +473,12 @@ using std::stringstream;
 
 // ToDo: Add missing TPC components (LLM and SLMs).
 
-//**************************************************LOGICALVOLUMES*****************************************************
+//**************************************************LOGICALVOLUMES***************************************
 
 	TPC_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "TPC_Logical", 0, 0, 0);
 	LXe_Logical = new G4LogicalVolume(TPC_cylinder, LXe, "LXe_Logical", 0, 0, 0);
 	LXe_ActiveVolume_Logical = new G4LogicalVolume(LXe_ActiveVolume_solid, LXe, "LXe_ActiveVolume_Logical", 0, 0, 0);
-	LXe_ActiveVolume_extra_filling_Logical = new G4LogicalVolume(LXe_ActiveVolume_extra_filling_solid, LXe, "LXe_ActiveVolume_extra_filling_Logical", 0, 0, 0);
+	//LXe_ActiveVolume_extra_filling_Logical = new G4LogicalVolume(LXe_ActiveVolume_extra_filling_solid, LXe, "LXe_ActiveVolume_extra_filling_Logical", 0, 0, 0);
 	GXe_Logical = new G4LogicalVolume(GXe_cylinder, GXe, "GXe_Logical", 0, 0, 0);
 	if (height_LXe_TPC_cylinder > 0.)	
 		{
@@ -532,7 +535,7 @@ using std::stringstream;
 	PMTR8520LogicalVolume = r8520->Construct();
 
   
-//***********************************************PHYSICALVOLUME*******************************************************
+//***********************************************PHYSICALVOLUME********************************************
 
 	// Filling TPC Volume with LXe
 	LXe_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), LXe_Logical,"LXe_TPC", TPC_Logical, false, 0);
@@ -541,8 +544,8 @@ using std::stringstream;
 	GXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., cryostat_innerHeight/2 - GXe_height/2), GXe_Logical,"GXe_TPC", LXe_Logical, false, 0);
 	
 	// Placing LXe Active Volume
-	LXe_ActiveVolume_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., (-TPC_dimension_z / 2 + 152.0*mm + 3.*mm + 0.15*mm + TPC_offset_z) + (68.5*mm - 0.15*mm)/2), LXe_ActiveVolume_Logical,"LXe_ActiveVolume", LXe_Logical, false, 0);
-	LXe_ActiveVolume_extra_filling_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2), LXe_ActiveVolume_extra_filling_Logical,"LXe_ActiveVolume_extra_filling", LXe_extra_filling_log, false, 0);
+	LXe_ActiveVolume_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., (-TPC_dimension_z / 2 + 152.0*mm + 3.*mm + 0.15*mm + TPC_offset_z) + (68.5*mm - 0.15*mm)/2 + (3.*mm - 0.15*mm)/2), LXe_ActiveVolume_Logical,"LXe_ActiveVolume", LXe_Logical, false, 0);
+	//LXe_ActiveVolume_extra_filling_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2), LXe_ActiveVolume_extra_filling_Logical,"LXe_ActiveVolume_extra_filling", LXe_extra_filling_log, false, 0);
 
 	// Filling weir with LXe and GXe
 	if (height_LXe_TPC_cylinder > 0.)
@@ -724,8 +727,8 @@ using std::stringstream;
 
 	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface",
 		LXe_extra_filling_phys, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
-	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface",
-		LXe_ActiveVolume_extra_filling_Physical, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
+	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface2",
+		LXe_ActiveVolume_Physical, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
 
 	// Top PMT Holder
 	if (LXe_extra_filling_height > 16.*mm)	
@@ -796,7 +799,7 @@ using std::stringstream;
 		}
 */
 	LXe_ActiveVolume_Logical->SetSensitiveDetector(pLXeSD);
-	LXe_ActiveVolume_extra_filling_Logical->SetSensitiveDetector(pLXeSD);
+	//LXe_ActiveVolume_extra_filling_Logical->SetSensitiveDetector(pLXeSD);
 	
 	//Sensitive Detector: Setting the PMTs as sensitive detector
 		// PMTs already made SDs in corresponding classes
@@ -859,13 +862,13 @@ using std::stringstream;
 
 //**********************************************
 
-  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg + LXe_ActiveVolume_Logical->GetMass(false, false)/kg + LXe_ActiveVolume_extra_filling_Logical->GetMass(false, false)/kg;
+  LXeMass_TPC = LXe_Logical->GetMass(false, false)/kg + LXe_weir_1_log->GetMass(false, false)/kg + LXe_extra_filling_log->GetMass(false, false)/kg + LXe_ActiveVolume_Logical->GetMass(false, false)/kg;
   LXeVolume_TPC = LXeMass_TPC/(LXe->GetDensity()*m3/kg);
 
   GXeMass_TPC = GXe_Logical->GetMass(false, false)/kg + GXe_weir_1_log->GetMass(false, false)/kg + GXe_weir_2_log->GetMass(false, false)/kg;
   GXeVolume_TPC = GXeMass_TPC/(GXe->GetDensity()*m3/kg);
   
-  LXeMass_ActiveVolume = LXe_ActiveVolume_Logical->GetMass(false, false)/kg + LXe_ActiveVolume_extra_filling_Logical->GetMass(false, false)/kg;
+  LXeMass_ActiveVolume = LXe_ActiveVolume_Logical->GetMass(false, false)/kg;
   LXeVolume_ActiveVolume = LXeMass_ActiveVolume/(LXe->GetDensity()*m3/kg);
 
 
