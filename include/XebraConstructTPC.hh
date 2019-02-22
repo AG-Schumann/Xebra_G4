@@ -110,9 +110,10 @@ private:
  
 	//Solids
 	G4Tubs *TPC_cylinder;
-	G4Tubs *GXe_cylinder; 
+	G4Tubs *GXe_cylinder_orig; 
 	G4Tubs *LXe_ActiveVolume_solid;
 	G4Tubs *LXe_ActiveVolume_extra_filling_solid;
+	G4VSolid *GXe_cylinder; 
 	G4double filling_ratio_weir;
 	G4double height_LXe_TPC_cylinder;
 	G4double height_GXe_TPC_cylinder;
@@ -348,6 +349,7 @@ private:
 	G4VSolid* LXe_extra_filling_solid_13;
 	G4VSolid* LXe_extra_filling_solid_14;
 	G4VSolid* LXe_extra_filling_solid_15;
+	G4VSolid* LXe_extra_filling_solid_16;
 	G4VSolid* LXe_extra_filling_solid;
 
 	G4Tubs* TPC_SS_electrode_mesh_small_solid;
@@ -360,7 +362,7 @@ private:
 	G4LogicalVolume *TPC_Logical;
 	G4LogicalVolume *LXe_Logical;
 	G4LogicalVolume *LXe_ActiveVolume_Logical;
-	G4LogicalVolume *LXe_ActiveVolume_extra_filling_Logical;
+	//G4LogicalVolume *LXe_ActiveVolume_extra_filling_Logical;
 	G4LogicalVolume *GXe_Logical;
 	G4LogicalVolume* LXe_weir_1_log;
 	G4LogicalVolume* GXe_weir_1_log;
@@ -406,7 +408,7 @@ private:
 
 	G4VPhysicalVolume *LXe_Physical;
 	G4VPhysicalVolume *LXe_ActiveVolume_Physical;
-	G4VPhysicalVolume *LXe_ActiveVolume_extra_filling_Physical;
+	//G4VPhysicalVolume *LXe_ActiveVolume_extra_filling_Physical;
 	G4VPhysicalVolume *GXe_Physical; 
 	G4VPhysicalVolume* LXe_weir_1_phys;
 	G4VPhysicalVolume* GXe_weir_1_phys;

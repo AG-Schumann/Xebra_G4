@@ -10,7 +10,6 @@ PMT_R8520_Photocathode R8520_photocathode_log R8520_vacuum_log
 LXe_TPC LXe_Logical TPC_Logical
 GXe_TPC GXe_Logical LXe_Logical
 LXe_ActiveVolume LXe_ActiveVolume_Logical LXe_Logical
-LXe_ActiveVolume_extra_filling LXe_ActiveVolume_extra_filling_Logical LXe_extra_filling_log
 LXe_weir_1 LXe_weir_1_log LXe_Logical
 GXe_weir_1 GXe_weir_1_log LXe_Logical
 GXe_weir_2 GXe_weir_2_log GXe_Logical
