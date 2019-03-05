@@ -331,6 +331,26 @@ private:
 	G4VSolid* TPC_PEEK_weir_LXe2_solid_1;
 	G4VSolid* TPC_PEEK_weir_LXe2_solid_2;
 	G4VSolid* TPC_PEEK_weir_LXe2_solid;
+	
+	G4Box* R8520_body_solid_orig_1;
+	G4Box* R8520_body_solid_orig_2;
+	G4Tubs* R8520_body_solid_orig_3;
+	G4VSolid* R8520_body_solid_orig_a;
+	G4VSolid* R8520_body_solid_orig_b;
+	G4VSolid* R8520_body_solid_orig_c;
+	G4VSolid* R8520_body_solid_orig_d;
+	G4VSolid* R8520_body_solid_orig;
+	G4VSolid* R8520_body_solid_cut1;
+	G4VSolid* R8520_body_solid_sub1;
+	G4Box* R8520_body_solid_cut2_1;
+	G4Box* R8520_body_solid_cut2_2;
+	G4Tubs* R8520_body_solid_cut2_3;
+	G4VSolid* R8520_body_solid_cut2_a;
+	G4VSolid* R8520_body_solid_cut2_b;
+	G4VSolid* R8520_body_solid_cut2_c;
+	G4VSolid* R8520_body_solid_cut2_d;
+	G4VSolid* R8520_body_solid_cut2;
+	G4VSolid* R8520_body_solid;
 
 	G4Tubs* LXe_extra_filling_solid_orig;
 	G4VSolid* LXe_extra_filling_solid_1a;
@@ -350,6 +370,13 @@ private:
 	G4VSolid* LXe_extra_filling_solid_14;
 	G4VSolid* LXe_extra_filling_solid_15;
 	G4VSolid* LXe_extra_filling_solid_16;
+	G4VSolid* LXe_extra_filling_solid_17;
+	G4VSolid* LXe_extra_filling_solid_18;
+	G4VSolid* LXe_extra_filling_solid_19;
+	G4VSolid* LXe_extra_filling_solid_20;
+	G4VSolid* LXe_extra_filling_solid_21;
+	G4VSolid* LXe_extra_filling_solid_22;
+	G4VSolid* LXe_extra_filling_solid_23;
 	G4VSolid* LXe_extra_filling_solid;
 
 	G4Tubs* TPC_SS_electrode_mesh_small_solid;

@@ -28,9 +28,9 @@
 #/xebra/gun/halfz  0.8 m
 
 # custom confine:
-/xebra/gun/center 0. -0.05 0. m
-/xebra/gun/radius 0.05 m
-/xebra/gun/halfz  0.08 m
+/xebra/gun/center 0. 0. 0. m
+/xebra/gun/radius 0.08 m
+/xebra/gun/halfz  0.04 m
 
 
 ##################
@@ -40,7 +40,7 @@
 # /xebra/gun/confine GXe_TPC*
 ## /xebra/gun/confine LXe_weir*
 ## /xebra/gun/confine GXe_weir*
-## /xebra/gun/confine LXe_extra_filling*
+#/xebra/gun/confine LXe_extra_filling*
 # /xebra/gun/confine TPC_SS_PMTfixture*
 # /xebra/gun/confine TPC_Al_filler*
 # /xebra/gun/confine TPC_Cu_FSE*
