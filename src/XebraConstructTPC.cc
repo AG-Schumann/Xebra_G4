@@ -101,8 +101,17 @@ using std::stringstream;
 	TPC_PTFE_pillar_i_position_r = 60.2*mm-(TPC_PTFE_pillar_i_dimension_x/2);
 
 	// Parameters LXe and GXe
-	GXe_height = 86.5*mm + (cryostat_innerHeight - TPC_dimension_z) / 2 - TPC_offset_z; // currently at lower edge of gate ring
-	LXe_extra_filling_height = 5.5 * mm; //5.5 * mm
+		// height GXe without LXe extra filling, currently at lower edge of gate ring
+		// default: 86.5*mm + (cryostat_innerHeight - TPC_dimension_z) / 2 - TPC_offset_z
+	GXe_height = 86.5*mm + (cryostat_innerHeight - TPC_dimension_z) / 2 - TPC_offset_z;
+		// LXe extra filling
+			// dual phase mode -> up to upper edge weir
+			// default: 5.5 * mm
+	LXe_extra_filling_height = 5.5 * mm;
+			// single phase mode -> at least photocathode top PMTs submerged in LXe 
+			// default: 5 mm above lower edge quartz window
+			// = 18. * mm + 5. * mm
+	//LXe_extra_filling_height = 18. * mm + 5. * mm;
 
 	// Parameters Electrodes, Field Shaping Rings (FSR) and sensors
 
@@ -412,6 +421,44 @@ using std::stringstream;
 	TPC_PEEK_weir_LXe2_solid_1 = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid_1", TPC_PEEK_weir_LXe2_solid_orig, TPC_PEEK_weir_LXe2_solid_sub2, 0, G4ThreeVector(0.*mm, 0.*mm, 0*mm));
 	TPC_PEEK_weir_LXe2_solid_2 = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid_2", TPC_PEEK_weir_LXe2_solid_1, TPC_PEEK_weir_LXe2_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(136.*deg), 66.5*mm * sin(136.*deg), 0*mm));
 	TPC_PEEK_weir_LXe2_solid = new G4SubtractionSolid("TPC_PEEK_weir_LXe2_solid", TPC_PEEK_weir_LXe2_solid_2, TPC_PEEK_weir_LXe2_solid_sub1, 0, G4ThreeVector(66.5*mm * cos(164.*deg), 66.5*mm * sin(164.*deg), 0*mm));
+	
+	
+	//------------------------- PMT R8520 body ---------------------
+	// only used for cuts in LXe extra filling, otherwise implemented in XebraPMTsR8520 class
+	
+	const G4double R8520_body_width = 25.7 * mm;
+  const G4double R8520_body_cornerradius = 2. * mm;
+  const G4double R8520_height = 28.25 * mm;
+  const G4double R8520_window_height = 1.2 * mm;
+  const G4double R8520_window_width = 24. * mm;
+  const G4double R8520_body_height = R8520_height; // without subtracted Al ring and window
+	
+		// general outer dimensions PMT
+	R8520_body_solid_orig_1 = new G4Box("R8520_body_solid_orig_1", R8520_body_width / 2 - R8520_body_cornerradius, R8520_body_width / 2, R8520_body_height / 2);
+	R8520_body_solid_orig_2 = new G4Box("R8520_body_solid_orig_2", R8520_body_width / 2, R8520_body_width / 2 - R8520_body_cornerradius, R8520_body_height / 2);
+	R8520_body_solid_orig_3 = new G4Tubs("R8520_body_solid_orig_3", 0.*mm, R8520_body_cornerradius, R8520_body_height / 2, 0.*deg, 360.*deg);
+	R8520_body_solid_orig_a = new G4UnionSolid("R8520_body_solid_orig_a", R8520_body_solid_orig_1, R8520_body_solid_orig_2, 0, G4ThreeVector(0., 0., 0.));
+	R8520_body_solid_orig_b = new G4UnionSolid("R8520_body_solid_orig_b", R8520_body_solid_orig_a, R8520_body_solid_orig_3, 0, G4ThreeVector((R8520_body_width / 2 - R8520_body_cornerradius), (R8520_body_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_orig_c = new G4UnionSolid("R8520_body_solid_orig_c", R8520_body_solid_orig_b, R8520_body_solid_orig_3, 0, G4ThreeVector(-(R8520_body_width / 2 - R8520_body_cornerradius), (R8520_body_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_orig_d = new G4UnionSolid("R8520_body_solid_orig_d", R8520_body_solid_orig_c, R8520_body_solid_orig_3, 0, G4ThreeVector((R8520_body_width / 2 - R8520_body_cornerradius), -(R8520_body_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_orig = new G4UnionSolid("R8520_body_solid_orig", R8520_body_solid_orig_d, R8520_body_solid_orig_3, 0, G4ThreeVector(-(R8520_body_width / 2 - R8520_body_cornerradius), -(R8520_body_width / 2 - R8520_body_cornerradius), 0.));
+
+		// subtract edge outside of window
+	R8520_body_solid_cut1 = new G4Box("R8520_body_solid_cut1", R8520_body_width / 2, R8520_body_width / 2, R8520_window_height / 2);
+	R8520_body_solid_sub1 = new G4SubtractionSolid("R8520_body_solid_sub1", R8520_body_solid_orig, R8520_body_solid_cut1, 0, G4ThreeVector(0.,0.,(R8520_body_height - R8520_window_height)/2));
+
+	R8520_body_solid_cut2_1 = new G4Box("R8520_body_solid_cut2_1", R8520_window_width / 2 - R8520_body_cornerradius, R8520_window_width / 2, R8520_window_height / 2);
+	R8520_body_solid_cut2_2 = new G4Box("R8520_body_solid_cut2_2", R8520_window_width / 2, R8520_window_width / 2 - R8520_body_cornerradius, R8520_window_height / 2);
+	R8520_body_solid_cut2_3 = new G4Tubs("R8520_body_solid_cut2_3", 0.*mm, R8520_body_cornerradius, R8520_window_height / 2, 0.*deg, 360.*deg);
+	R8520_body_solid_cut2_a = new G4UnionSolid("R8520_body_solid_cut2_a", R8520_body_solid_cut2_1, R8520_body_solid_cut2_2, 0, G4ThreeVector(0., 0., 0.));
+	R8520_body_solid_cut2_b = new G4UnionSolid("R8520_body_solid_cut2_b", R8520_body_solid_cut2_a, R8520_body_solid_cut2_3, 0, G4ThreeVector((R8520_window_width / 2 - R8520_body_cornerradius), (R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_cut2_c = new G4UnionSolid("R8520_body_solid_cut2_c", R8520_body_solid_cut2_b, R8520_body_solid_cut2_3, 0, G4ThreeVector(-(R8520_window_width / 2 - R8520_body_cornerradius), (R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_cut2_d = new G4UnionSolid("R8520_body_solid_cut2_d", R8520_body_solid_cut2_c, R8520_body_solid_cut2_3, 0, G4ThreeVector((R8520_window_width / 2 - R8520_body_cornerradius), -(R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+	R8520_body_solid_cut2 = new G4UnionSolid("R8520_body_solid_cut2", R8520_body_solid_cut2_d, R8520_body_solid_cut2_3, 0, G4ThreeVector(-(R8520_window_width / 2 - R8520_body_cornerradius), -(R8520_window_width / 2 - R8520_body_cornerradius), 0.));
+
+	R8520_body_solid = new G4UnionSolid("R8520_body_solid", R8520_body_solid_sub1, R8520_body_solid_cut2, 0, G4ThreeVector(0., 0., (R8520_body_height - R8520_window_height)/2));
+	
+	// ----------------------------------
 
 
 
@@ -465,7 +512,14 @@ using std::stringstream;
 	LXe_extra_filling_solid_14 = new G4SubtractionSolid("LXe_extra_filling_solid_14", LXe_extra_filling_solid_13, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_15 = new G4SubtractionSolid("LXe_extra_filling_solid_15", LXe_extra_filling_solid_14, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_16 = new G4SubtractionSolid("LXe_extra_filling_solid_16", LXe_extra_filling_solid_15, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2));	
-	LXe_extra_filling_solid = LXe_extra_filling_solid_16;
+	LXe_extra_filling_solid_17 = new G4SubtractionSolid("LXe_extra_filling_solid_17", LXe_extra_filling_solid_16, R8520_body_solid, 0, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));	
+	LXe_extra_filling_solid_18 = new G4SubtractionSolid("LXe_extra_filling_solid_18", LXe_extra_filling_solid_17, R8520_body_solid, 0, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
+	LXe_extra_filling_solid_19 = new G4SubtractionSolid("LXe_extra_filling_solid_19", LXe_extra_filling_solid_18, R8520_body_solid, 0, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
+	LXe_extra_filling_solid_20 = new G4SubtractionSolid("LXe_extra_filling_solid_20", LXe_extra_filling_solid_19, R8520_body_solid, 0, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));	
+	LXe_extra_filling_solid_21 = new G4SubtractionSolid("LXe_extra_filling_solid_21", LXe_extra_filling_solid_20, R8520_body_solid, 0, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
+	LXe_extra_filling_solid_22 = new G4SubtractionSolid("LXe_extra_filling_solid_22", LXe_extra_filling_solid_21, R8520_body_solid, 0, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
+	LXe_extra_filling_solid_23 = new G4SubtractionSolid("LXe_extra_filling_solid_23", LXe_extra_filling_solid_22, R8520_body_solid, 0, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
+	LXe_extra_filling_solid = LXe_extra_filling_solid_23;
 
 //ToDo: subtract top PMTs from extra filling
 

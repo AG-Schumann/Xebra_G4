@@ -47,6 +47,7 @@ G4LogicalVolume* XebraPMTsR8520::Construct()
   G4Material *Aluminium = G4Material::GetMaterial("Aluminium");
 
   //------------------------- PMT body ---------------------
+  // implement eventual changes also in XebraConstructTPC where the body solid is used for cuts in the LXe extra filling
 	
 	// general outer dimensions PMT
 	R8520_body_solid_orig_1 = new G4Box("R8520_body_solid_orig_1", R8520_body_width / 2 - R8520_body_cornerradius, R8520_body_width / 2, R8520_body_height / 2);
