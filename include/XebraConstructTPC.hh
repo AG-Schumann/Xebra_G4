@@ -42,6 +42,7 @@ private:
 	G4Material *Torlon;
 	G4Material *GridMeshSS316LSteelLXe;
 	G4Material *GridMeshSS316LSteelGXe;
+	G4Material *WireMeshGoldLXe;
 	
 	G4double LXeMass_TPC;
 	G4double LXeVolume_TPC;
@@ -106,6 +107,10 @@ private:
 	G4RotationMatrix* rmz285;
 	G4RotationMatrix* rmz300;
 	G4RotationMatrix* rmy90;
+	
+	bool useThinWireMesh;
+	G4double AnodeThicknessThinWire;
+	G4double AnodeThicknessGridMesh;
 	
  
 	//Solids
@@ -381,6 +386,7 @@ private:
 
 	G4Tubs* TPC_SS_electrode_mesh_small_solid;
 	G4Tubs* TPC_SS_electrode_mesh_large_solid;
+	G4Tubs* TPC_Au_electrode_mesh_small_solid;
 
 
 	//LogicalVolumes
@@ -423,6 +429,7 @@ private:
 	G4LogicalVolume* TPC_SS_electrode_mesh_LXe_large_log;
 	G4LogicalVolume* TPC_SS_electrode_mesh_GXe_small_log;
 	G4LogicalVolume* TPC_SS_electrode_mesh_GXe_large_log;
+	G4LogicalVolume* TPC_Au_electrode_mesh_LXe_small_log;
 
 	G4LogicalVolume *PMTR11410LogicalVolume;
 	G4LogicalVolume *PMTR8520LogicalVolume;
@@ -468,6 +475,7 @@ private:
 	G4VPhysicalVolume* TPC_SS_cathode_mesh_phys;
 	G4VPhysicalVolume* TPC_SS_anode_ring_phys;
 	G4VPhysicalVolume* TPC_SS_anode_mesh_phys;
+	G4VPhysicalVolume* TPC_Au_anode_mesh_phys;
 	G4VPhysicalVolume* TPC_SS_TopMesh_ring_phys;
 	G4VPhysicalVolume* TPC_SS_TopMesh_mesh_phys;
 	G4VPhysicalVolume* TPC_Torlon_rod_1_phys;

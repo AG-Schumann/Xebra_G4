@@ -6,6 +6,8 @@
 #include <G4NistManager.hh>
 #include <G4SystemOfUnits.hh>
 
+#include <math.h>
+
 XebraMaterials::XebraMaterials() { ; }
 
 XebraMaterials::~XebraMaterials() { ; }
@@ -1104,7 +1106,6 @@ void XebraMaterials::DefineMaterials() {
 		GridMeshSS316LSteelLXe->AddElement(Mo, 0.021);
 
 		G4double pdGridMeshPhotonMomentumLXe[] = {6.91*eV, 6.98*eV, 7.05*eV};
-		
 		G4double *pdGridMeshRefractiveIndexLXe = pdLXeRefractiveIndex;
 		G4double dAbsortionLengthLXe = 1.39*mm; // exp(-GridMeshThickness/AbsortionLength) = transparency  lambda=-thickness/ln(transparency) transparency=1-(AreadGrid/AreaVoid)=0.898
 		G4double pdGridMeshAbsortionLengthLXe[] = {dAbsortionLengthLXe, dAbsortionLengthLXe, dAbsortionLengthLXe};
@@ -1134,5 +1135,24 @@ void XebraMaterials::DefineMaterials() {
 	 	pGridMeshGXePropertiesTable->AddProperty("RINDEX", pdGridMeshPhotonMomentumGXe, pdGridMeshRefractiveIndexGXe, iNbEntries);
 		pGridMeshGXePropertiesTable->AddProperty("ABSLENGTH", pdGridMeshPhotonMomentumGXe, pdGridMeshAbsortionLengthGXe, iNbEntries);
 		GridMeshSS316LSteelGXe->SetMaterialPropertiesTable(pGridMeshGXePropertiesTable);
+		
+		//----------------------------- thin wire mesh gold in LXe for single phase setup Patrick ------------------------------
+		// actual material: gold plated tungsten
+		G4Element *Au = new G4Element("Gold", "Au", 79., 196.966570 * g / mole);
+		
+		G4Material *WireMeshGoldLXe = new G4Material("WireMeshGoldLXe", 19.30*g/cm3, 1, kStateSolid); // used density at room temperature
+		WireMeshGoldLXe->AddElement(Au, 1.0);
+
+		G4double pdWireMeshPhotonMomentumLXe[] = {6.91*eV, 6.98*eV, 7.05*eV};
+		G4double *pdWireMeshRefractiveIndexLXe = pdLXeRefractiveIndex;
+		G4double dAbsortionLengthLXeAu = 75.67*mm; // exp(-WireMeshThickness/AbsortionLength) = transparency  lambda=-thickness/ln(transparency) transparency=1-(AreadWire/AreaVoid)=0.998
+		// thickness = 10 um, pitch = 5 mm
+		G4double pdWireMeshAbsortionLengthLXe[] = {dAbsortionLengthLXeAu, dAbsortionLengthLXeAu, dAbsortionLengthLXeAu};
+
+	 	G4MaterialPropertiesTable *pWireMeshLXePropertiesTable = new G4MaterialPropertiesTable();
+
+	 	pWireMeshLXePropertiesTable->AddProperty("RINDEX", pdWireMeshPhotonMomentumLXe, pdWireMeshRefractiveIndexLXe, iNbEntries);
+		pWireMeshLXePropertiesTable->AddProperty("ABSLENGTH", pdWireMeshPhotonMomentumLXe, pdWireMeshAbsortionLengthLXe, iNbEntries);
+		WireMeshGoldLXe->SetMaterialPropertiesTable(pWireMeshLXePropertiesTable);
     
 }
