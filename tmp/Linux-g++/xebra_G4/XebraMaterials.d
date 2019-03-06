@@ -238,4 +238,5 @@
  /usr/local/geant4/include/Geant4/G4NistMaterialBuilder.hh \
  /usr/local/geant4/include/Geant4/G4Threading.hh \
  /usr/local/geant4/include/Geant4/G4Pow.hh \
- /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh
+ /usr/local/geant4/include/Geant4/G4SystemOfUnits.hh \
+ /usr/include/c++/6/math.h

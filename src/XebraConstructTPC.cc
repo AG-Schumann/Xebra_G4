@@ -43,6 +43,7 @@ using std::stringstream;
 	Torlon  = G4Material::GetMaterial("Torlon");
 	GridMeshSS316LSteelLXe  = G4Material::GetMaterial("GridMeshSS316LSteelLXe");
 	GridMeshSS316LSteelGXe  = G4Material::GetMaterial("GridMeshSS316LSteelGXe");
+	WireMeshGoldLXe  = G4Material::GetMaterial("WireMeshGoldLXe");
   G4Material *GXeTeflon = G4Material::GetMaterial("GXeTeflon");
 
 	// General useful functions
@@ -108,12 +109,14 @@ using std::stringstream;
 			// dual phase mode -> up to upper edge weir
 			// default: 5.5 * mm
 	LXe_extra_filling_height = 5.5 * mm;
+	useThinWireMesh = false;
 			// single phase mode -> at least photocathode top PMTs submerged in LXe 
-			// default: 5 mm above lower edge quartz window
-			// = 18. * mm + 5. * mm
+			// default: 5 mm above lower edge quartz window = 18. * mm + 5. * mm
 	//LXe_extra_filling_height = 18. * mm + 5. * mm;
-
-	// Parameters Electrodes, Field Shaping Rings (FSR) and sensors
+	//useThinWireMesh = true;
+	
+	AnodeThicknessGridMesh = 0.15 * mm;
+	AnodeThicknessThinWire = 10 * um;
 
 
 //**************************************************CONSTRUCT*******************************************
@@ -129,10 +132,10 @@ using std::stringstream;
 	TPC_cylinder = new G4Tubs("TPC_cylinder", 0.*cm, cryostat_innerRadius, cryostat_innerHeight/2, 0.*deg, 360.*deg);  
 	GXe_cylinder_orig = new G4Tubs("GXe_cylinder_orig", 0.*cm, cryostat_innerRadius, GXe_height/2, 0.*deg, 360.*deg);
 	
-	LXe_ActiveVolume_solid = new G4Tubs("LXe_ActiveVolume_solid", 0.*mm, 35.*mm, (68.5*mm - 0.15*mm)/2 + (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
-	LXe_ActiveVolume_extra_filling_solid = new G4Tubs("LXe_ActiveVolume_extra_filling_solid", 0.*mm, 35.*mm, (3.*mm - 0.15*mm)/2, 0.*deg, 360.*deg);
+	LXe_ActiveVolume_solid = new G4Tubs("LXe_ActiveVolume_solid", 0.*mm, 35.*mm, (68.5*mm - AnodeThicknessGridMesh)/2 + (3.*mm - AnodeThicknessGridMesh)/2, 0.*deg, 360.*deg);
+	LXe_ActiveVolume_extra_filling_solid = new G4Tubs("LXe_ActiveVolume_extra_filling_solid", 0.*mm, 35.*mm, (3.*mm - AnodeThicknessGridMesh)/2, 0.*deg, 360.*deg);
 	
-	GXe_cylinder = new G4SubtractionSolid("GXe_cylinder", GXe_cylinder_orig, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -GXe_height/2 + (3.*mm - 0.15*mm)/2));
+	GXe_cylinder = new G4SubtractionSolid("GXe_cylinder", GXe_cylinder_orig, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -GXe_height/2 + (3.*mm - AnodeThicknessGridMesh)/2));
 		
 		// fillings in weir
 		filling_ratio_weir = 0.5; // ratio by how much the weir is filled with LXe, default = 0.5, range = (0,1)
@@ -397,8 +400,10 @@ using std::stringstream;
 	TPC_SS_TopMesh_ring_solid = new G4Tubs("TPC_SS_TopMesh_ring_solid", 50.*mm, 60.*mm, 3.*mm / 2, 0.*deg, 360.*deg);
 
 	// Electrode Meshes
-	TPC_SS_electrode_mesh_small_solid = new G4Tubs("TPC_SS_electrode_mesh_small_solid", 0.*mm, 50.*mm, 0.15*mm / 2, 0.*deg, 360.*deg);
-	TPC_SS_electrode_mesh_large_solid = new G4Tubs("TPC_SS_electrode_mesh_large_solid", 0.*mm, (118./2)*mm, 0.15*mm / 2, 0.*deg, 360.*deg);
+	TPC_SS_electrode_mesh_small_solid = new G4Tubs("TPC_SS_electrode_mesh_small_solid", 0.*mm, 50.*mm, AnodeThicknessGridMesh / 2, 0.*deg, 360.*deg);
+	TPC_SS_electrode_mesh_large_solid = new G4Tubs("TPC_SS_electrode_mesh_large_solid", 0.*mm, (118./2)*mm, AnodeThicknessGridMesh / 2, 0.*deg, 360.*deg);
+	
+	TPC_Au_electrode_mesh_small_solid = new G4Tubs("TPC_Au_electrode_mesh_small_solid", 0.*mm, 50.*mm, AnodeThicknessThinWire / 2, 0.*deg, 360.*deg);
 
 	// Rod (p7)
 	TPC_Torlon_rod_solid_orig = new G4Orb("TPC_Torlon_rod_solid_orig", 1.1*mm);
@@ -508,10 +513,17 @@ using std::stringstream;
 		name << "LXe_extra_filling_solid_12_" << a;
 		LXe_extra_filling_solid_12 =  new G4SubtractionSolid(name.str(), LXe_extra_filling_solid_12, TPC_SS_pillar_solid, 0, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm + 25.0*mm / 2  + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
 	}
-	LXe_extra_filling_solid_13 = new G4SubtractionSolid("LXe_extra_filling_solid_13", LXe_extra_filling_solid_12, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_14 = new G4SubtractionSolid("LXe_extra_filling_solid_14", LXe_extra_filling_solid_13, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_15 = new G4SubtractionSolid("LXe_extra_filling_solid_15", LXe_extra_filling_solid_14, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + 0.15*mm / 2 + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_16 = new G4SubtractionSolid("LXe_extra_filling_solid_16", LXe_extra_filling_solid_15, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2));	
+	LXe_extra_filling_solid_13 = new G4SubtractionSolid("LXe_extra_filling_solid_13", LXe_extra_filling_solid_12, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - AnodeThicknessGridMesh / 2 + (GXe_height - LXe_extra_filling_height)/2));	
+	if (useThinWireMesh == true)	
+	{
+		LXe_extra_filling_solid_14 = new G4SubtractionSolid("LXe_extra_filling_solid_14", LXe_extra_filling_solid_13, TPC_Au_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + AnodeThicknessThinWire / 2 + (GXe_height - LXe_extra_filling_height)/2));
+	}
+	else
+	{
+		LXe_extra_filling_solid_14 = new G4SubtractionSolid("LXe_extra_filling_solid_14", LXe_extra_filling_solid_13, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + AnodeThicknessGridMesh / 2 + (GXe_height - LXe_extra_filling_height)/2));
+	}
+	LXe_extra_filling_solid_15 = new G4SubtractionSolid("LXe_extra_filling_solid_15", LXe_extra_filling_solid_14, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + AnodeThicknessGridMesh / 2 + (GXe_height - LXe_extra_filling_height)/2));
+	LXe_extra_filling_solid_16 = new G4SubtractionSolid("LXe_extra_filling_solid_16", LXe_extra_filling_solid_15, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - AnodeThicknessGridMesh)/2));	
 	LXe_extra_filling_solid_17 = new G4SubtractionSolid("LXe_extra_filling_solid_17", LXe_extra_filling_solid_16, R8520_body_solid, 0, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));	
 	LXe_extra_filling_solid_18 = new G4SubtractionSolid("LXe_extra_filling_solid_18", LXe_extra_filling_solid_17, R8520_body_solid, 0, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_19 = new G4SubtractionSolid("LXe_extra_filling_solid_19", LXe_extra_filling_solid_18, R8520_body_solid, 0, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
@@ -520,10 +532,6 @@ using std::stringstream;
 	LXe_extra_filling_solid_22 = new G4SubtractionSolid("LXe_extra_filling_solid_22", LXe_extra_filling_solid_21, R8520_body_solid, 0, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_23 = new G4SubtractionSolid("LXe_extra_filling_solid_23", LXe_extra_filling_solid_22, R8520_body_solid, 0, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid = LXe_extra_filling_solid_23;
-
-//ToDo: subtract top PMTs from extra filling
-
-
 
 // ToDo: Add missing TPC components (LLM and SLMs).
 
@@ -579,6 +587,8 @@ using std::stringstream;
 	TPC_SS_electrode_mesh_LXe_large_log = new G4LogicalVolume(TPC_SS_electrode_mesh_large_solid, GridMeshSS316LSteelLXe, "TPC_SS_electrode_mesh_LXe_large_log");
 	TPC_SS_electrode_mesh_GXe_small_log = new G4LogicalVolume(TPC_SS_electrode_mesh_small_solid, GridMeshSS316LSteelGXe, "TPC_SS_electrode_mesh_GXe_small_log");
 	TPC_SS_electrode_mesh_GXe_large_log = new G4LogicalVolume(TPC_SS_electrode_mesh_large_solid, GridMeshSS316LSteelGXe, "TPC_SS_electrode_mesh_GXe_large_log");
+	
+	TPC_Au_electrode_mesh_LXe_small_log = new G4LogicalVolume(TPC_Au_electrode_mesh_small_solid, WireMeshGoldLXe, "TPC_Au_electrode_mesh_LXe_small_log");
 
   // Create Logical XebraPMTsR11410 Volume from corresponding class
 	XebraPMTsR11410 *r11410 = new XebraPMTsR11410(this);
@@ -598,8 +608,8 @@ using std::stringstream;
 	GXe_Physical = new G4PVPlacement(0, G4ThreeVector(0.,0., cryostat_innerHeight/2 - GXe_height/2), GXe_Logical,"GXe_TPC", LXe_Logical, false, 0);
 	
 	// Placing LXe Active Volume
-	LXe_ActiveVolume_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., (-TPC_dimension_z / 2 + 152.0*mm + 3.*mm + 0.15*mm + TPC_offset_z) + (68.5*mm - 0.15*mm)/2 + (3.*mm - 0.15*mm)/2), LXe_ActiveVolume_Logical,"LXe_ActiveVolume", LXe_Logical, false, 0);
-	//LXe_ActiveVolume_extra_filling_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - 0.15*mm)/2), LXe_ActiveVolume_extra_filling_Logical,"LXe_ActiveVolume_extra_filling", LXe_extra_filling_log, false, 0);
+	LXe_ActiveVolume_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., (-TPC_dimension_z / 2 + 152.0*mm + 3.*mm + AnodeThicknessGridMesh + TPC_offset_z) + (68.5*mm - AnodeThicknessGridMesh)/2 + (3.*mm - AnodeThicknessGridMesh)/2), LXe_ActiveVolume_Logical,"LXe_ActiveVolume", LXe_Logical, false, 0);
+	//LXe_ActiveVolume_extra_filling_Physical = new G4PVPlacement(0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - AnodeThicknessGridMesh)/2), LXe_ActiveVolume_extra_filling_Logical,"LXe_ActiveVolume_extra_filling", LXe_extra_filling_log, false, 0);
 
 	// Filling weir with LXe and GXe
 	if (height_LXe_TPC_cylinder > 0.)
@@ -638,7 +648,7 @@ using std::stringstream;
 	TPC_PTFE_BottomPMTHolder_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.*mm + 5.*mm / 2 + TPC_offset_z), TPC_PTFE_BottomPMTHolder_log,"TPC_PTFE_BottomPMTHolder", LXe_Logical, 0, 0);
 	TPC_PTFE_reflector_LXe_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 155.5*mm + 68.*mm / 2 + TPC_offset_z), TPC_PTFE_reflector_LXe_log,"TPC_PTFE_reflector_LXe", LXe_Logical, 0, 0);
 	TPC_SS_cathode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 152.0*mm + 3.*mm / 2 + TPC_offset_z), TPC_SS_cathode_ring_log,"TPC_SS_cathode_ring", LXe_Logical, 0, 0);
-	TPC_SS_cathode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 152.0*mm + 3.*mm + 0.15*mm / 2 + TPC_offset_z), TPC_SS_electrode_mesh_LXe_large_log,"TPC_SS_cathode_mesh", LXe_Logical, 0, 0);
+	TPC_SS_cathode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 152.0*mm + 3.*mm + AnodeThicknessGridMesh / 2 + TPC_offset_z), TPC_SS_electrode_mesh_LXe_large_log,"TPC_SS_cathode_mesh", LXe_Logical, 0, 0);
 	TPC_PEEK_weir_LXe_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -TPC_dimension_z / 2 + 140.0*mm + 83.5*mm / 2 + TPC_offset_z), TPC_PEEK_weir_LXe_log,"TPC_PEEK_weir_LXe", LXe_Logical, 0, 0);
 	TPC_Torlon_rod_1_phys =  new G4PVPlacement(rmz300,G4ThreeVector((50.+40.)*mm / 2 * cos(60.*deg), (50.+40.)*mm / 2 * sin(60.*deg), -TPC_dimension_z / 2 + 170.0*mm + TPC_offset_z), TPC_Torlon_rod_log,"TPC_Torlon_rod_1", LXe_Logical, 0, 0);
 	TPC_Torlon_rod_2_phys =  new G4PVPlacement(rmz300,G4ThreeVector((50.+40.)*mm / 2 * cos(60.*deg), (50.+40.)*mm / 2 * sin(60.*deg), -TPC_dimension_z / 2 + 222.0*mm + TPC_offset_z), TPC_Torlon_rod_log,"TPC_Torlon_rod_2", LXe_Logical, 0, 0);
@@ -677,32 +687,41 @@ using std::stringstream;
 	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2 + TPC_offset_z), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
 	TPC_PTFE_reflector_GXe_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + (70.-68.)*mm / 2), TPC_PTFE_reflector_GXe_log,"TPC_PTFE_reflector_GXe", GXe_Logical, 0, 0);
 	TPC_SS_gate_ring_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm / 2), TPC_SS_gate_ring_log,"TPC_SS_gate_ring", GXe_Logical, 0, 0);
-	if (LXe_extra_filling_height > 3.*mm - 0.15*mm)	
+	if (LXe_extra_filling_height > 3.*mm - AnodeThicknessGridMesh)	
 	{
-	TPC_SS_gate_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - 0.15*mm / 2), TPC_SS_electrode_mesh_LXe_small_log,"TPC_SS_gate_mesh", GXe_Logical, 0, 0);
+	TPC_SS_gate_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_LXe_small_log,"TPC_SS_gate_mesh", GXe_Logical, 0, 0);
 	}
 	else
 	{
-	TPC_SS_gate_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - 0.15*mm / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_gate_mesh", GXe_Logical, 0, 0);	
+	TPC_SS_gate_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_gate_mesh", GXe_Logical, 0, 0);	
 	}
 	TPC_PTFE_TopPMTHolder_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2 + TPC_offset_z), TPC_PTFE_TopPMTHolder_log,"TPC_PTFE_TopPMTHolder", GXe_Logical, 0, 0);
 	TPC_SS_anode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 75.5*mm - 3.0*mm / 2 + TPC_offset_z), TPC_SS_anode_ring_log,"TPC_SS_anode_ring", GXe_Logical, 0, 0);
+	
 	if (LXe_extra_filling_height > 8.*mm)	
 	{
-	TPC_SS_anode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + 0.15*mm / 2), TPC_SS_electrode_mesh_LXe_small_log,"TPC_SS_anode_mesh", GXe_Logical, 0, 0);
+		if (useThinWireMesh == true)	
+		{
+		TPC_Au_anode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + AnodeThicknessThinWire / 2), TPC_Au_electrode_mesh_LXe_small_log,"TPC_Au_anode_mesh", GXe_Logical, 0, 0);
+		}
+		else
+		{
+		TPC_SS_anode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_LXe_small_log,"TPC_SS_anode_mesh", GXe_Logical, 0, 0);
+		}
 	}
 	else
 	{
-	TPC_SS_anode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + 0.15*mm / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_anode_mesh", GXe_Logical, 0, 0);	
+	TPC_SS_anode_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 8.*mm + AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_anode_mesh", GXe_Logical, 0, 0);	
 	}
+	
 	TPC_SS_TopMesh_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm - 3.0*mm / 2 + TPC_offset_z), TPC_SS_TopMesh_ring_log,"TPC_SS_TopMesh_ring", GXe_Logical, 0, 0);
 	if (LXe_extra_filling_height > 13.*mm)	
 	{
-	TPC_SS_TopMesh_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + 0.15*mm / 2), TPC_SS_electrode_mesh_LXe_small_log,"TPC_SS_TopMesh_mesh", GXe_Logical, 0, 0);
+	TPC_SS_TopMesh_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_LXe_small_log,"TPC_SS_TopMesh_mesh", GXe_Logical, 0, 0);
 	}
 	else
 	{
-	TPC_SS_TopMesh_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + 0.15*mm / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_TopMesh_mesh", GXe_Logical, 0, 0);	
+	TPC_SS_TopMesh_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_TopMesh_mesh", GXe_Logical, 0, 0);	
 	}
 	TPC_PEEK_weir_LXe2_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, -GXe_height / 2 + 5.5*mm / 2), TPC_PEEK_weir_LXe2_log,"TPC_PEEK_weir_LXe2", GXe_Logical, 0, 0);
 
