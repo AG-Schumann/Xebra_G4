@@ -115,7 +115,7 @@ using std::stringstream;
 	//LXe_extra_filling_height = 18. * mm + 5. * mm;
 	//useThinWireMesh = true;
 	
-	AnodeThicknessGridMesh = 0.15 * mm;
+	AnodeThicknessGridMesh = 0.15 * mm; // also implement changes in XebraDetectorConstruction::DefineGeometryParameters
 	AnodeThicknessThinWire = 10 * um;
 
 

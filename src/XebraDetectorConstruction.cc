@@ -27,6 +27,9 @@ G4double XebraDetectorConstruction::GetGeometryParameter(const char *szParameter
 
 G4VPhysicalVolume* XebraDetectorConstruction::Construct()
 {
+
+		DefineGeometryParameters();		
+		
     //////////////// Define Materials //////////////////////
     XebraMaterials *Materials = new XebraMaterials();
     Materials->DefineMaterials();
@@ -387,6 +390,69 @@ void XebraDetectorConstruction::SetSS304LSteelReflectivity(G4double dSteelReflec
     }
 }
 
+
+
+
+
+// Set GXeMeshTransparency
+
+void XebraDetectorConstruction::SetGXeMeshTransparency(G4double dTransparency)
+{
+  G4Material *pMeshMaterial = G4Material::GetMaterial(G4String("GridMeshSS316LSteelGXe"));
+  
+  if(pMeshMaterial)
+    {
+      G4cout << "----> Setting GXe grid transparency to " << dTransparency*100 << " %" << G4endl;
+      G4double dAbsorptionLength =  ((G4double)GetGeometryParameter("GridMeshThickness"))/(-log(dTransparency)); 
+      G4cout << "----> Setting GXe grid absorption length to " << dAbsorptionLength/mm << " mm" << G4endl;
+      G4MaterialPropertiesTable *pGateMeshPropertiesTable = pMeshMaterial->GetMaterialPropertiesTable();
+      const G4int iNbEntries = 3;
+      G4double pdMeshPhotonMomentum[iNbEntries] = {6.91*eV, 6.98*eV, 7.05*eV};
+      G4double pdMeshAbsorptionLength[iNbEntries] = {dAbsorptionLength, dAbsorptionLength, dAbsorptionLength};
+      pGateMeshPropertiesTable->RemoveProperty("ABSLENGTH");
+      pGateMeshPropertiesTable->AddProperty("ABSLENGTH", pdMeshPhotonMomentum, pdMeshAbsorptionLength, iNbEntries);
+   }
+  else
+    {
+      G4cout << "ls!> GridMeshSS316LSteelGXe not found!" << G4endl;
+      exit(-1);
+    }
+}
+
+// Set GXeMeshTransparency
+
+void XebraDetectorConstruction::SetLXeMeshTransparency(G4double dTransparency)
+{
+  G4Material *pMeshMaterial = G4Material::GetMaterial(G4String("GridMeshSS316LSteelLXe"));
+  
+  if(pMeshMaterial)
+    {
+      G4cout << "----> Setting LXe grid transparency to " << dTransparency*100 << " %" << G4endl;
+      G4double dAbsorptionLength =  ((G4double)GetGeometryParameter("GridMeshThickness"))/(-log(dTransparency)); 
+      G4cout << "----> Setting LXe grid absorption length to " << dAbsorptionLength/mm << " mm" << G4endl;
+      G4MaterialPropertiesTable *pGateMeshPropertiesTable = pMeshMaterial->GetMaterialPropertiesTable();
+      const G4int iNbEntries = 3;
+      G4double pdMeshPhotonMomentum[iNbEntries] = {6.91*eV, 6.98*eV, 7.05*eV};
+      G4double pdMeshAbsorptionLength[iNbEntries] = {dAbsorptionLength, dAbsorptionLength, dAbsorptionLength};
+      pGateMeshPropertiesTable->RemoveProperty("ABSLENGTH");
+      pGateMeshPropertiesTable->AddProperty("ABSLENGTH", pdMeshPhotonMomentum, pdMeshAbsorptionLength, iNbEntries);
+   }
+  else
+    {
+      G4cout << "ls!> GridMeshSS316LSteelLXe not found!" << G4endl;
+      exit(-1);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 //******************************************************************/
 // DefineGeometryParameters
 //******************************************************************/
@@ -397,6 +463,8 @@ void XebraDetectorConstruction::DefineGeometryParameters() {
   m_hGeometryParameters["NbTopPmts"] = 7;
   
   m_hGeometryParameters["NbBottomPmts"] = 1;
+  
+  m_hGeometryParameters["GridMeshThickness"] = 0.15*mm;
 }
 
 //***********************End of code************************
