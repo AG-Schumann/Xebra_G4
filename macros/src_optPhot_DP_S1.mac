@@ -15,6 +15,9 @@
 
 /Xe/detector/setLXeRefractionIndex 1.63
 
+/Xe/detector/setLXeMeshTransparency 0.89770509
+/Xe/detector/setGXeMeshTransparency 0.89770509
+
 #################
 # verbosity
 /control/verbose 0

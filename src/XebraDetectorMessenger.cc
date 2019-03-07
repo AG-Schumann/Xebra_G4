@@ -263,14 +263,13 @@ void XebraDetectorMessenger::SetNewValue(G4UIcommand *pUIcommand, G4String hNewV
 
 	if(pUIcommand == m_pLXeRayScatterLengthCmd)
 		m_pXeDetector->SetLXeRayScatterLength(m_pLXeRayScatterLengthCmd->GetNewDoubleValue(hNewValue));
-/*
+
 	if(pUIcommand == m_pLXeMeshTransparencyCmd)
 		m_pXeDetector->SetLXeMeshTransparency(m_pLXeMeshTransparencyCmd->GetNewDoubleValue(hNewValue));
-*/
-/*
+
 	if(pUIcommand == m_pGXeMeshTransparencyCmd)
 		m_pXeDetector->SetGXeMeshTransparency(m_pGXeMeshTransparencyCmd->GetNewDoubleValue(hNewValue));
-*/
+
 	if(pUIcommand == m_pLXeRefractionIndexCmd)
       m_pXeDetector->SetLXeRefractionIndex(m_pLXeRefractionIndexCmd->GetNewDoubleValue(hNewValue));	
 
