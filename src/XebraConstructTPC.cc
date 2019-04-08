@@ -773,16 +773,17 @@ using std::stringstream;
 // see https://indico.cern.ch/event/679723/contributions/2792554/attachments/1559217/2453758/BookForApplicationDevelopers.pdf, p. 219
 // ToDo: check and maybe change / remove
 
-  G4double dSigmaAlpha = 0.1;
-	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface",
-		unified, ground, dielectric_metal, dSigmaAlpha);		
-	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", 
-		unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+  G4double dSigmaAlpha = 0.1; // defines roughness of the surface (microfacets)
+		
+
+// Teflon surfaces in LXe / GXe
+
+	//G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, ground, dielectric_metal, dSigmaAlpha); //old/wrong
+	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
 		
 	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
 	pGXeTeflonOpticalSurface->SetMaterialPropertiesTable(GXeTeflon->GetMaterialPropertiesTable());
-
-// Teflon surfaces in LXe / GXe
 
 	// PTFE Filler
 	new G4LogicalBorderSurface("LXe_PTFEFiller_LogicalBorderSurface",
@@ -839,7 +840,7 @@ using std::stringstream;
 		GXe_Physical, TPC_PTFE_spacer2_phys, pGXeTeflonOpticalSurface);
 	}
 
-	// PTFE pillars	
+	// PTFE pillars	-> has to be put into for loop if used, but most likely irrelevant since outside of reflectors / spacers
 	/*
 	new G4LogicalBorderSurface("LXe_PTFEpillarLXe_LogicalBorderSurface",
 		LXe_Physical, TPC_PTFE_pillar_LXe_phys, pTeflonOpticalSurface);

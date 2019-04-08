@@ -19,20 +19,20 @@ void XebraMaterials::DefineMaterials() {
     //================================== elements
     //===================================
     pNistManager->FindOrBuildElement("U");
-    G4Element *Xe = new G4Element("Xenon", "Xe", 54., 131.293 * g / mole);
-    G4Element *H = new G4Element("Hydrogen", "H", 1., 1.0079 * g / mole);
-    G4Element *C = new G4Element("Carbon", "C", 6., 12.011 * g / mole);
-    G4Element *N = new G4Element("Nitrogen", "N", 7., 14.007 * g / mole);
-    G4Element *O = new G4Element("Oxygen", "O", 8., 15.999 * g / mole);
-    G4Element *F = new G4Element("Fluorine", "F", 9., 18.998 * g / mole);
-    G4Element *Al = new G4Element("Aluminium", "Al", 13., 26.982 * g / mole);
-    G4Element *Si = new G4Element("Silicon", "Si", 14., 28.086 * g / mole);
-    G4Element *Cr = new G4Element("Chromium", "Cr", 24., 51.996 * g / mole);
-    G4Element *Mn = new G4Element("Manganese", "Mn", 25., 54.938 * g / mole);
-    G4Element *Fe = new G4Element("Iron", "Fe", 26., 55.85 * g / mole);
-    G4Element *Ni = new G4Element("Nickel", "Ni", 28., 58.693 * g / mole);
-    G4Element *Cu = new G4Element("Copper", "Cu", 29., 63.546 * g / mole);
-    // G4Element *Pb = new G4Element("Lead",      "Pb", 82., 207.2*g/mole);
+		G4Element *Xe = new G4Element("Xenon",     "Xe", 54., 131.293*g/mole);
+		G4Element *H  = new G4Element("Hydrogen",  "H",  1.,  1.0079*g/mole);
+		G4Element *C  = new G4Element("Carbon",    "C",  6.,  12.011*g/mole);
+		G4Element *N  = new G4Element("Nitrogen",  "N",  7.,  14.007*g/mole);
+		G4Element *O  = new G4Element("Oxygen",    "O",  8.,  15.999*g/mole);
+		G4Element *F  = new G4Element("Fluorine",  "F",  9.,  18.998*g/mole);
+		G4Element *Al = new G4Element("Aluminium", "Al", 13., 26.982*g/mole);
+		G4Element *Si = new G4Element("Silicon",   "Si", 14., 28.086*g/mole);
+		G4Element *Cr = new G4Element("Chromium",  "Cr", 24., 51.996*g/mole);
+		G4Element *Mn = new G4Element("Manganese", "Mn", 25., 54.938*g/mole);
+		G4Element *Fe = new G4Element("Iron",      "Fe", 26., 55.85*g/mole);
+		G4Element *Ni = new G4Element("Nickel",    "Ni", 28., 58.693*g/mole);
+		G4Element *Cu = new G4Element("Copper",    "Cu", 29., 63.546*g/mole);
+		//G4Element *Pb = new G4Element("Lead",      "Pb", 82., 207.2*g/mole);
     G4Element *B = pNistManager->FindOrBuildElement("B");
     G4Element *Gd = pNistManager->FindOrBuildElement("Gd");
     
@@ -248,8 +248,9 @@ void XebraMaterials::DefineMaterials() {
     //---------------------------------
     //    G4Material *LXe = new G4Material("LXe", 2.9172*g/cm3, 1, kStateLiquid,
     // 168.15*kelvin, 1.5*atmosphere);
+    // G4Material *LXe = new G4Material("LXe", 2.862 * g / cm3, 1, kStateLiquid, 177.05 * kelvin, 1.5 * atmosphere); // DR 20180518 - Density according to: https://xe1t-wiki.lngs.infn.it/doku.php?id=xenon:xenon1t:deg:tpc:targetmass, https://xe1t-wiki.lngs.infn.it/doku.php?id=xenon:xenon1t:analysis:sciencerun1:sc_summary
     G4Material *LXe = new G4Material("LXe", 2.85 * g / cm3, 1, kStateLiquid,
-                                     168.15 * kelvin, 1.5 * atmosphere); //ToDo: Check density
+                                     168.15 * kelvin, 1.5 * atmosphere);
     LXe->AddElement(Xe, 1);
     
     G4double pdLXePhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV}; //178nm
@@ -275,7 +276,7 @@ void XebraMaterials::DefineMaterials() {
     pLXePropertiesTable->AddProperty("RAYLEIGH", pdLXePhotonMomentum,
                                      pdLXeScatteringLength, iNbEntries);
     
-    pLXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 0. / keV);
+    pLXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 0. / keV); // No scintillation process when generating optical photons
     pLXePropertiesTable->AddConstProperty("RESOLUTIONSCALE", 0);
     pLXePropertiesTable->AddConstProperty("FASTTIMECONSTANT", 3. * ns);
     pLXePropertiesTable->AddConstProperty("SLOWTIMECONSTANT", 27. * ns);
@@ -308,7 +309,7 @@ void XebraMaterials::DefineMaterials() {
     //-------------------------------- gaseous xenon
     //--------------------------------
     G4Material *GXe = new G4Material("GXe", 0.005887 * g / cm3, 1, kStateGas,
-                                     173.15 * kelvin, 1.5 * atmosphere); //ToDo: check density
+                                     173.15 * kelvin, 1.5 * atmosphere);
     GXe->AddElement(Xe, 1);
     
     G4double pdGXePhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
@@ -331,7 +332,7 @@ void XebraMaterials::DefineMaterials() {
     pGXePropertiesTable->AddProperty("RAYLEIGH", pdGXePhotonMomentum,
                                      pdGXeScatteringLength, iNbEntries);
     
-    pGXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 0. / (keV));
+    pGXePropertiesTable->AddConstProperty("SCINTILLATIONYIELD", 0. / (keV)); // n/a for optical photon generation
     pGXePropertiesTable->AddConstProperty("RESOLUTIONSCALE", 0);
     pGXePropertiesTable->AddConstProperty("FASTTIMECONSTANT", 3. * ns);
     pGXePropertiesTable->AddConstProperty("SLOWTIMECONSTANT", 27. * ns);
@@ -777,11 +778,13 @@ void XebraMaterials::DefineMaterials() {
     
     G4double pdTeflonPhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
     G4double pdTeflonRefractiveIndex[iNbEntries] = {1.63, 1.61, 1.58};
-    G4double pdTeflonReflectivity[iNbEntries] = {0.99, 0.99, 0.99};
+    //G4double pdTeflonReflectivity[iNbEntries] = {0.99, 0.99, 0.99};
+    G4double pdTeflonReflectivity[iNbEntries] = {0.95, 0.95, 0.95};
     G4double pdTeflonSpecularLobe[iNbEntries] = {0.01, 0.01, 0.01};
     G4double pdTeflonSpecularSpike[iNbEntries] = {0.01, 0.01, 0.01};
     G4double pdTeflonBackscatter[iNbEntries] = {0.01, 0.01, 0.01};
     G4double pdTeflonEfficiency[iNbEntries] = {1.0, 1.0, 1.0};
+    G4double pdTeflonAbsorbtionLength[iNbEntries] = {0.1 * cm, 0.1 * cm, 0.1 * cm};
     
     G4MaterialPropertiesTable *pTeflonPropertiesTable = new G4MaterialPropertiesTable();
     
@@ -789,6 +792,8 @@ void XebraMaterials::DefineMaterials() {
                                         pdTeflonRefractiveIndex, iNbEntries);
     pTeflonPropertiesTable->AddProperty("REFLECTIVITY", pdTeflonPhotonMomentum,
                                         pdTeflonReflectivity, iNbEntries);
+    pTeflonPropertiesTable->AddProperty("ABSLENGTH", pdTeflonPhotonMomentum,
+                                        pdTeflonAbsorbtionLength, iNbEntries);
     pTeflonPropertiesTable->AddProperty("SPECULARLOBECONSTANT",
                                         pdTeflonPhotonMomentum,
                                         pdTeflonSpecularLobe, iNbEntries);
@@ -1097,7 +1102,7 @@ void XebraMaterials::DefineMaterials() {
     //----------------------------------
 
 		//----------------------------- grid mesh steel in LXe------------------------------
-		G4Material *GridMeshSS316LSteelLXe = new G4Material("GridMeshSS316LSteelLXe", 8.00*g/cm3, 6, kStateSolid);
+		G4Material *GridMeshSS316LSteelLXe = new G4Material("GridMeshSS316LSteelLXe", 0.816*g/cm3, 6, kStateSolid); // density is (100.-89.8)/100. * 8.g/cm3
 		GridMeshSS316LSteelLXe->AddElement(Fe, 0.682);
 		GridMeshSS316LSteelLXe->AddElement(Cr, 0.172);
 		GridMeshSS316LSteelLXe->AddElement(Ni, 0.109);
@@ -1117,7 +1122,7 @@ void XebraMaterials::DefineMaterials() {
 		GridMeshSS316LSteelLXe->SetMaterialPropertiesTable(pGridMeshLXePropertiesTable);
 
 		//----------------------------- grid mesh steel in GXe------------------------------
-		G4Material *GridMeshSS316LSteelGXe = new G4Material("GridMeshSS316LSteelGXe", 8.00*g/cm3, 6, kStateSolid);
+		G4Material *GridMeshSS316LSteelGXe = new G4Material("GridMeshSS316LSteelGXe", 0.816*g/cm3, 6, kStateSolid); // density is (100.-89.8)/100. * 8.g/cm3
 		GridMeshSS316LSteelGXe->AddElement(Fe, 0.682);
 		GridMeshSS316LSteelGXe->AddElement(Cr, 0.172);
 		GridMeshSS316LSteelGXe->AddElement(Ni, 0.109);
