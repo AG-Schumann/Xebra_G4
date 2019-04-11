@@ -39,14 +39,21 @@
 /xebra/gun/shape   Cylinder
 
 #################
-# only the active volume (z: 0<>-71.5|r: 35)
-/xebra/gun/center 0. 0. -35.75 mm
-/xebra/gun/radius 35.0 mm
-/xebra/gun/halfz  35.75 mm
+### S1
+## active volume (z: 0<>-71.5|r: 35)
+#/xebra/gun/center 0. 0. -35.75 mm
+#/xebra/gun/radius 35.0 mm
+#/xebra/gun/halfz  35.75 mm
+## select the volume to confine the source
+#/xebra/gun/confine LXe*
 
-##################
-# select the volume to confine the source
-/xebra/gun/confine LXe*
+### S2 
+## active volume (z: 2.5<>5.0|r: 35)
+/xebra/gun/center 0. 0. 3.75 mm
+/xebra/gun/radius 35.0 mm
+/xebra/gun/halfz  1.25 mm
+## select the volume to confine the source
+/xebra/gun/confine GXe*
 
 ##################
 # particle type + energy spectrum
