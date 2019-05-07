@@ -1,0 +1,3 @@
+# ignore all ROOT Files
+*.root
+*.root_GEN
