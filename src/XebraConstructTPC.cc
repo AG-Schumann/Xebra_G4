@@ -31,8 +31,9 @@ G4LogicalVolume* XebraConstructTPC::Construct(){
 
 using std::stringstream;
 	stringstream name;
+	stringstream namesurface;
 
-	//Materials
+	// Materials
 	LXe = G4Material::GetMaterial("LXe");
 	GXe = G4Material::GetMaterial("GXe");
 	Teflon = G4Material::GetMaterial("Teflon");
@@ -45,6 +46,18 @@ using std::stringstream;
 	GridMeshSS316LSteelGXe  = G4Material::GetMaterial("GridMeshSS316LSteelGXe");
 	WireMeshGoldLXe  = G4Material::GetMaterial("WireMeshGoldLXe");
   G4Material *GXeTeflon = G4Material::GetMaterial("GXeTeflon");
+  
+  // Optical Surfaces
+  // see https://indico.cern.ch/event/679723/contributions/2792554/attachments/1559217/2453758/BookForApplicationDevelopers.pdf, p. 219
+  
+  G4double dSigmaAlpha = 0.1; // defines roughness of the surface (microfacets)
+  
+	//G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, ground, dielectric_metal, dSigmaAlpha); //old/wrong
+	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+		
+	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
+	pGXeTeflonOpticalSurface->SetMaterialPropertiesTable(GXeTeflon->GetMaterialPropertiesTable());
 
 	// General useful functions
 	rmz45 = new G4RotationMatrix();
@@ -101,7 +114,7 @@ using std::stringstream;
 	TPC_PTFE_pillar_i_dimension_z = 10.0 * mm;
 	TPC_PTFE_pillar_i_position_r = 60.2*mm-(TPC_PTFE_pillar_i_dimension_x/2);
 
-	// Parameters LXe and GXe
+	// Parameters LXe and GXe + meshes
 		// height GXe without LXe extra filling, currently at lower edge of gate ring
 		// default: 86.5*mm + (cryostat_innerHeight - TPC_dimension_z) / 2 - TPC_offset_z
 	GXe_height = 86.5*mm + (cryostat_innerHeight - TPC_dimension_z) / 2 - TPC_offset_z;
@@ -117,6 +130,19 @@ using std::stringstream;
 	
 	AnodeThicknessGridMesh = 0.15 * mm; // also implement changes in XebraDetectorConstruction::DefineGeometryParameters
 	AnodeThicknessThinWire = 10 * um;
+	
+	// extra gap to PMTs for position reconstruction improvement
+		// PTFE spacer 3 thickness
+		TPC_PTFE_spacer3_height        = 4.5 * mm; // <= 5.*mm, otherwise collision with pillar, if on top of top mesh; default 0.*mm
+		TPC_PTFE_spacer3_radius_inner  = 35.* mm; // 35.* mm
+		TPC_PTFE_spacer3_radius_outer  = 60.* mm; // 60.* mm
+		TPC_PTFE_spacer3_extragap      = 0. * mm; // 0. *mm if on top of top mesh
+		
+		// size extra gap
+		TPC_TopPMTs_extragap           = 4.5 * mm; // >= TPC_PTFE_spacer3_height
+		
+		G4cout << "---> Heigth spacer 3:          " << TPC_PTFE_spacer3_height << " mm" << G4endl;
+		G4cout << "---> Heigth extra gap to PMTs: " << TPC_TopPMTs_extragap << " mm" << G4endl;
 
 
 //**************************************************CONSTRUCT*******************************************
@@ -310,6 +336,12 @@ using std::stringstream;
 
 	// PTFE spacer 2 (p4) - "the lower one"
 	TPC_PTFE_spacer2_solid = new G4Tubs("TPC_PTFE_spacer2_solid", 35.*mm, 60.*mm, 5.*mm / 2, 0.*deg, 360.*deg);
+	
+	// PTFE spacer 3 - added for improved position reconstruction, might deteriorate due to refelctions, but needed to shild external interactions and better than unknown material
+	if (TPC_PTFE_spacer3_height > 0)
+	{
+		TPC_PTFE_spacer3_solid = new G4Tubs("TPC_PTFE_spacer3_solid", TPC_PTFE_spacer3_radius_inner, TPC_PTFE_spacer3_radius_outer, TPC_PTFE_spacer3_height / 2, 0.*deg, 360.*deg);
+	}
 
 	// Reflector (p6)
 	TPC_PTFE_reflector_LXe_solid = new G4Tubs("TPC_PTFE_reflector_LXe_solid", 35.*mm, 40.*mm, 68.*mm / 2, 0.*deg, 360.*deg);
@@ -487,7 +519,7 @@ using std::stringstream;
 	LXe_extra_filling_solid_4 =  new G4SubtractionSolid("LXe_extra_filling_solid_4", LXe_extra_filling_solid_3, TPC_PTFE_spacer2_solid, 0, G4ThreeVector(0.*mm, 0.*mm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2  + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
 	LXe_extra_filling_solid_5 =  new G4SubtractionSolid("LXe_extra_filling_solid_5", LXe_extra_filling_solid_4, TPC_PTFE_reflector_GXe_solid, 0, G4ThreeVector(0.*mm, 0.*mm, - GXe_height / 2 + (70.-68.)*mm / 2  + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_6 =  new G4SubtractionSolid("LXe_extra_filling_solid_6", LXe_extra_filling_solid_5, TPC_SS_gate_ring_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  - GXe_height / 2 + 3.*mm / 2  + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_7 =  new G4SubtractionSolid("LXe_extra_filling_solid_7", LXe_extra_filling_solid_6, TPC_PTFE_TopPMTHolder_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2  + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
+	LXe_extra_filling_solid_7 =  new G4SubtractionSolid("LXe_extra_filling_solid_7", LXe_extra_filling_solid_6, TPC_PTFE_TopPMTHolder_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2  + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z + TPC_TopPMTs_extragap));
 	LXe_extra_filling_solid_8 =  new G4SubtractionSolid("LXe_extra_filling_solid_8", LXe_extra_filling_solid_7, TPC_SS_anode_ring_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 75.5*mm - 3.0*mm / 2  + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
 	LXe_extra_filling_solid_9 =  new G4SubtractionSolid("LXe_extra_filling_solid_9", LXe_extra_filling_solid_8, TPC_SS_TopMesh_ring_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm - 3.0*mm / 2  + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
 	LXe_extra_filling_solid_10 =  new G4SubtractionSolid("LXe_extra_filling_solid_10", LXe_extra_filling_solid_9, TPC_PEEK_weir_LXe2_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  -GXe_height / 2 + 5.5*mm / 2  + (GXe_height - LXe_extra_filling_height)/2));
@@ -524,14 +556,22 @@ using std::stringstream;
 	}
 	LXe_extra_filling_solid_15 = new G4SubtractionSolid("LXe_extra_filling_solid_15", LXe_extra_filling_solid_14, TPC_SS_electrode_mesh_small_solid, 0, G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 13.*mm + AnodeThicknessGridMesh / 2 + (GXe_height - LXe_extra_filling_height)/2));
 	LXe_extra_filling_solid_16 = new G4SubtractionSolid("LXe_extra_filling_solid_16", LXe_extra_filling_solid_15, LXe_ActiveVolume_extra_filling_solid, 0, G4ThreeVector(0., 0., -LXe_extra_filling_height/2 + (3.*mm - AnodeThicknessGridMesh)/2));	
-	LXe_extra_filling_solid_17 = new G4SubtractionSolid("LXe_extra_filling_solid_17", LXe_extra_filling_solid_16, R8520_body_solid, 0, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));	
-	LXe_extra_filling_solid_18 = new G4SubtractionSolid("LXe_extra_filling_solid_18", LXe_extra_filling_solid_17, R8520_body_solid, 0, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_19 = new G4SubtractionSolid("LXe_extra_filling_solid_19", LXe_extra_filling_solid_18, R8520_body_solid, 0, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_20 = new G4SubtractionSolid("LXe_extra_filling_solid_20", LXe_extra_filling_solid_19, R8520_body_solid, 0, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));	
-	LXe_extra_filling_solid_21 = new G4SubtractionSolid("LXe_extra_filling_solid_21", LXe_extra_filling_solid_20, R8520_body_solid, 0, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_22 = new G4SubtractionSolid("LXe_extra_filling_solid_22", LXe_extra_filling_solid_21, R8520_body_solid, 0, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid_23 = new G4SubtractionSolid("LXe_extra_filling_solid_23", LXe_extra_filling_solid_22, R8520_body_solid, 0, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2));
-	LXe_extra_filling_solid = LXe_extra_filling_solid_23;
+	LXe_extra_filling_solid_17 = new G4SubtractionSolid("LXe_extra_filling_solid_17", LXe_extra_filling_solid_16, R8520_body_solid, 0, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));	
+	LXe_extra_filling_solid_18 = new G4SubtractionSolid("LXe_extra_filling_solid_18", LXe_extra_filling_solid_17, R8520_body_solid, 0, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));
+	LXe_extra_filling_solid_19 = new G4SubtractionSolid("LXe_extra_filling_solid_19", LXe_extra_filling_solid_18, R8520_body_solid, 0, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));
+	LXe_extra_filling_solid_20 = new G4SubtractionSolid("LXe_extra_filling_solid_20", LXe_extra_filling_solid_19, R8520_body_solid, 0, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));	
+	LXe_extra_filling_solid_21 = new G4SubtractionSolid("LXe_extra_filling_solid_21", LXe_extra_filling_solid_20, R8520_body_solid, 0, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));
+	LXe_extra_filling_solid_22 = new G4SubtractionSolid("LXe_extra_filling_solid_22", LXe_extra_filling_solid_21, R8520_body_solid, 0, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));
+	LXe_extra_filling_solid_23 = new G4SubtractionSolid("LXe_extra_filling_solid_23", LXe_extra_filling_solid_22, R8520_body_solid, 0, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));
+	if (TPC_PTFE_spacer3_height > 0)
+	{
+		LXe_extra_filling_solid_24 = new G4SubtractionSolid("LXe_extra_filling_solid_24", LXe_extra_filling_solid_23, TPC_PTFE_spacer3_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm + TPC_PTFE_spacer3_height / 2 + TPC_PTFE_spacer3_extragap + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
+	}
+	else
+	{
+		LXe_extra_filling_solid_24 = LXe_extra_filling_solid_23;
+	}
+	LXe_extra_filling_solid = LXe_extra_filling_solid_24;
 
 // ToDo: Add missing TPC components (LLM and SLMs).
 
@@ -572,6 +612,10 @@ using std::stringstream;
 	TPC_PTFE_BottomPMTHolder_log = new G4LogicalVolume(TPC_PTFE_BottomPMTHolder_solid, Teflon, "TPC_PTFE_BottomPMTHolder_log");
 	TPC_PTFE_spacer1_log = new G4LogicalVolume(TPC_PTFE_spacer1_solid, GXeTeflon, "TPC_PTFE_spacer1_log");
 	TPC_PTFE_spacer2_log = new G4LogicalVolume(TPC_PTFE_spacer2_solid, GXeTeflon, "TPC_PTFE_spacer2_log");
+	if (TPC_PTFE_spacer3_height > 0)
+	{
+		TPC_PTFE_spacer3_log = new G4LogicalVolume(TPC_PTFE_spacer3_solid, GXeTeflon, "TPC_PTFE_spacer3_log");
+	}
 	TPC_PTFE_reflector_LXe_log = new G4LogicalVolume(TPC_PTFE_reflector_LXe_solid, Teflon, "TPC_PTFE_reflector_LXe_log");
 	TPC_PTFE_reflector_GXe_log = new G4LogicalVolume(TPC_PTFE_reflector_GXe_solid, Teflon, "TPC_PTFE_reflector_GXe_log");
 	TPC_SS_gate_ring_log = new G4LogicalVolume(TPC_SS_gate_ring_solid, SS304LSteel, "TPC_SS_gate_ring_log");
@@ -669,7 +713,45 @@ using std::stringstream;
 
 		name.str("");
 		name << "TPC_PTFE_pillar_LXe_" << a;
-		TPC_PTFE_pillar_LXe_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+		namesurface.str("");
+		namesurface << "LXe_PTFEpillarLXe_LogicalBorderSurface_" << a;
+		
+		if (a==0)
+		{
+			TPC_PTFE_pillar_LXe_0_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+			new G4LogicalBorderSurface(namesurface.str(), LXe_Physical, TPC_PTFE_pillar_LXe_0_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==1)
+		{
+			TPC_PTFE_pillar_LXe_1_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+			new G4LogicalBorderSurface(namesurface.str(), LXe_Physical, TPC_PTFE_pillar_LXe_1_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==2)
+		{
+			TPC_PTFE_pillar_LXe_2_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+			new G4LogicalBorderSurface(namesurface.str(), LXe_Physical, TPC_PTFE_pillar_LXe_2_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==3)
+		{
+			TPC_PTFE_pillar_LXe_3_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+			new G4LogicalBorderSurface(namesurface.str(), LXe_Physical, TPC_PTFE_pillar_LXe_3_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==4)
+		{
+			TPC_PTFE_pillar_LXe_4_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+			new G4LogicalBorderSurface(namesurface.str(), LXe_Physical, TPC_PTFE_pillar_LXe_4_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==5)
+		{
+			TPC_PTFE_pillar_LXe_5_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep,-TPC_dimension_z / 2 + 140.0*mm + TPC_PTFE_pillar_a_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_LXe_log, name.str(), LXe_Logical, false, 0);
+			new G4LogicalBorderSurface(namesurface.str(), LXe_Physical, TPC_PTFE_pillar_LXe_5_phys, pTeflonOpticalSurface);
+		}
+		
 	}
 
 	//Placing PMT R11410
@@ -685,6 +767,10 @@ using std::stringstream;
 	TPC_SS_TopRing_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 5.0*mm / 2 + TPC_offset_z), TPC_SS_TopRing_log, "TPC_SS_TopRing", GXe_Logical, false, 0);
 	TPC_PTFE_spacer1_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 73.5*mm - 2.0*mm / 2 + TPC_offset_z), TPC_PTFE_spacer1_log, "TPC_PTFE_spacer1", GXe_Logical, false, 0);
 	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2 + TPC_offset_z), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
+	if (TPC_PTFE_spacer3_height > 0)
+	{	
+		TPC_PTFE_spacer3_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , (GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm + TPC_offset_z) + TPC_PTFE_spacer3_height / 2 + TPC_PTFE_spacer3_extragap), TPC_PTFE_spacer3_log, "TPC_PTFE_spacer3", GXe_Logical, false, 0);
+	}
 	TPC_PTFE_reflector_GXe_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + (70.-68.)*mm / 2), TPC_PTFE_reflector_GXe_log,"TPC_PTFE_reflector_GXe", GXe_Logical, 0, 0);
 	TPC_SS_gate_ring_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm / 2), TPC_SS_gate_ring_log,"TPC_SS_gate_ring", GXe_Logical, 0, 0);
 	if (LXe_extra_filling_height > 3.*mm - AnodeThicknessGridMesh)	
@@ -695,7 +781,7 @@ using std::stringstream;
 	{
 	TPC_SS_gate_mesh_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm - AnodeThicknessGridMesh / 2), TPC_SS_electrode_mesh_GXe_small_log,"TPC_SS_gate_mesh", GXe_Logical, 0, 0);	
 	}
-	TPC_PTFE_TopPMTHolder_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2 + TPC_offset_z), TPC_PTFE_TopPMTHolder_log,"TPC_PTFE_TopPMTHolder", GXe_Logical, 0, 0);
+	TPC_PTFE_TopPMTHolder_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 62.5*mm - 8.0*mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap), TPC_PTFE_TopPMTHolder_log,"TPC_PTFE_TopPMTHolder", GXe_Logical, 0, 0);
 	TPC_SS_anode_ring_phys = new G4PVPlacement(nullptr,G4ThreeVector(0*cm, 0*cm, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 75.5*mm - 3.0*mm / 2 + TPC_offset_z), TPC_SS_anode_ring_log,"TPC_SS_anode_ring", GXe_Logical, 0, 0);
 	
 	if (LXe_extra_filling_height > 8.*mm)	
@@ -737,7 +823,91 @@ using std::stringstream;
 
 		name.str("");
 		name << "TPC_PTFE_pillar_GXe_" << a;
-		TPC_PTFE_pillar_GXe_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+		
+		if (a==0)
+		{
+			TPC_PTFE_pillar_GXe_0_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+			
+			// optical surfaces
+			namesurface.str("");
+			namesurface << "GXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), GXe_Physical, TPC_PTFE_pillar_GXe_0_phys, pGXeTeflonOpticalSurface);
+			
+			namesurface.str("");
+			namesurface << "LXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_0_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==1)
+		{
+			TPC_PTFE_pillar_GXe_1_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+			
+			// optical surfaces
+			namesurface.str("");
+			namesurface << "GXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), GXe_Physical, TPC_PTFE_pillar_GXe_1_phys, pGXeTeflonOpticalSurface);
+			
+			namesurface.str("");
+			namesurface << "LXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_1_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==2)
+		{
+			TPC_PTFE_pillar_GXe_2_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+			
+			// optical surfaces
+			namesurface.str("");
+			namesurface << "GXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), GXe_Physical, TPC_PTFE_pillar_GXe_2_phys, pGXeTeflonOpticalSurface);
+			
+			namesurface.str("");
+			namesurface << "LXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_2_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==3)
+		{
+			TPC_PTFE_pillar_GXe_3_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+			
+			// optical surfaces
+			namesurface.str("");
+			namesurface << "GXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), GXe_Physical, TPC_PTFE_pillar_GXe_3_phys, pGXeTeflonOpticalSurface);
+			
+			namesurface.str("");
+			namesurface << "LXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_3_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==4)
+		{
+			TPC_PTFE_pillar_GXe_4_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+			
+			// optical surfaces
+			namesurface.str("");
+			namesurface << "GXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), GXe_Physical, TPC_PTFE_pillar_GXe_4_phys, pGXeTeflonOpticalSurface);
+			
+			namesurface.str("");
+			namesurface << "LXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_4_phys, pTeflonOpticalSurface);
+		}
+		
+		if (a==5)
+		{
+			TPC_PTFE_pillar_GXe_5_phys = new G4PVPlacement(pillarRotation, G4ThreeVector(pillars_XStep, pillars_YStep, GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 30.0 * mm - TPC_PTFE_pillar_h_dimension_z / 2 + TPC_offset_z), TPC_PTFE_pillar_GXe_log, name.str(), GXe_Logical, false, 0);
+			
+			// optical surfaces
+			namesurface.str("");
+			namesurface << "GXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), GXe_Physical, TPC_PTFE_pillar_GXe_5_phys, pGXeTeflonOpticalSurface);
+			
+			namesurface.str("");
+			namesurface << "LXe_PTFEpillarGXe_LogicalBorderSurface_" << a;
+			new G4LogicalBorderSurface(namesurface.str(), LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_5_phys, pTeflonOpticalSurface);
+		}
+		
 	}
 
 		// Placing steel pillars fully emerged in GXe around active TPC
@@ -755,35 +925,24 @@ using std::stringstream;
 
 	//Placing PMT R8520
 	iPmtNb=1;
-	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT1_Body", GXe_Logical, false, iPmtNb);
+	PMT1PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT1_Body", GXe_Logical, false, iPmtNb);
 	iPmtNb=2;
-	PMT2PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT2_Body", GXe_Logical, false, iPmtNb);
+	PMT2PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT2_Body", GXe_Logical, false, iPmtNb);
 	iPmtNb=3;
-	PMT3PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT3_Body", GXe_Logical, false, iPmtNb);
+	PMT3PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(-14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT3_Body", GXe_Logical, false, iPmtNb);
 	iPmtNb=4;
-	PMT4PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT4_Body", GXe_Logical, false, iPmtNb);
+	PMT4PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT4_Body", GXe_Logical, false, iPmtNb);
 	iPmtNb=5;
-	PMT5PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT5_Body", GXe_Logical, false, iPmtNb);
+	PMT5PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(28.*mm,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT5_Body", GXe_Logical, false, iPmtNb);
 	iPmtNb=6;
-	PMT6PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT6_Body", GXe_Logical, false, iPmtNb);
+	PMT6PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(14.*mm,-28.*mm,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT6_Body", GXe_Logical, false, iPmtNb);
 	iPmtNb=7;
-	PMT7PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z)), PMTR8520LogicalVolume,"PMT7_Body", GXe_Logical, false, iPmtNb);
+	PMT7PhysicalVolume = new G4PVPlacement(rmy180, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z + TPC_TopPMTs_extragap)), PMTR8520LogicalVolume,"PMT7_Body", GXe_Logical, false, iPmtNb);
 
 //**********************************************OPTICAL SURFACES**********************************************
-// see https://indico.cern.ch/event/679723/contributions/2792554/attachments/1559217/2453758/BookForApplicationDevelopers.pdf, p. 219
-// ToDo: check and maybe change / remove
 
-  G4double dSigmaAlpha = 0.1; // defines roughness of the surface (microfacets)
-		
-
+// G4OpticalSurfaces defined above together with materials
 // Teflon surfaces in LXe / GXe
-
-	//G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, ground, dielectric_metal, dSigmaAlpha); //old/wrong
-	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
-	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
-		
-	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
-	pGXeTeflonOpticalSurface->SetMaterialPropertiesTable(GXeTeflon->GetMaterialPropertiesTable());
 
 	// PTFE Filler
 	new G4LogicalBorderSurface("LXe_PTFEFiller_LogicalBorderSurface",
@@ -839,8 +998,17 @@ using std::stringstream;
 	new G4LogicalBorderSurface("GXe_Spacer2_LogicalBorderSurface",
 		GXe_Physical, TPC_PTFE_spacer2_phys, pGXeTeflonOpticalSurface);
 	}
+	
+	// PTFE spacer 3 - added for improved position reconstruction
+	if (TPC_PTFE_spacer3_height > 0)
+	{
+	new G4LogicalBorderSurface("LXe_Spacer3_LogicalBorderSurface",
+		LXe_extra_filling_phys, TPC_PTFE_spacer3_phys, pTeflonOpticalSurface);
+	new G4LogicalBorderSurface("GXe_Spacer3_LogicalBorderSurface",
+		GXe_Physical, TPC_PTFE_spacer3_phys, pGXeTeflonOpticalSurface);
+	}
 
-	// PTFE pillars	-> has to be put into for loop if used, but most likely irrelevant since outside of reflectors / spacers
+	// PTFE pillars	-> put into for loop where implemented
 	/*
 	new G4LogicalBorderSurface("LXe_PTFEpillarLXe_LogicalBorderSurface",
 		LXe_Physical, TPC_PTFE_pillar_LXe_phys, pTeflonOpticalSurface);
