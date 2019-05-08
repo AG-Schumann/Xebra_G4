@@ -447,12 +447,31 @@ void XebraMaterials::DefineMaterials() {
     SS304LSteel->AddElement(Mn, 0.02);
     SS304LSteel->AddElement(Si, 0.01);
     
-     G4double pdSteelPhotonMomentum[] = {6.91*eV, 6.98*eV, 7.05*eV};
+    // Parameters from DARWIN MC
+/*     G4double pdSteelPhotonMomentum[] = {6.91*eV, 6.98*eV, 7.05*eV};
      G4double pdSteelReflectivity[]   = {0.15,    0.2,     0.15};
      G4MaterialPropertiesTable *pSteelPropertiesTable = new G4MaterialPropertiesTable();
      
      pSteelPropertiesTable->AddProperty("REFLECTIVITY", pdSteelPhotonMomentum,pdSteelReflectivity, iNbEntries);
      SS304LSteel->SetMaterialPropertiesTable(pSteelPropertiesTable);
+*/     
+
+    // Parameters from Xurich MC
+    // reflectivity consistent with http://www-eng.lbl.gov/~shuman/NEXT/MATERIALS&COMPONENTS/VUV_light-sources/VUV_reflectance_172_Siena06.pdf
+     G4double pdSteelPhotonMomentum[] = {6.91*eV, 6.98*eV, 7.05*eV};
+     G4double pdSteelRefractiveIndex[] = {2.0,    2.0,    2.0};
+     G4double pdSteelReflectivity[]   = {0.57,    0.57,     0.57};
+     G4double pdSteelSpecularLobe[]    = {0.01,    0.01,    0.01};
+     G4double pdSteelSpecularSpike[]   = {0.01,    0.01,    0.01};
+     G4double pdSteelBackscatter[]     = {0.01,    0.01,    0.01};
+     G4double pdSteelEfficiency[iNbEntries]      = {1.0,     1.0,     1.0};
+     
+     pSteelPropertiesTable->AddProperty("RINDEX", pdSteelPhotonMomentum, pdSteelRefractiveIndex, iNbEntries);
+     pSteelPropertiesTable->AddProperty("REFLECTIVITY", pdSteelPhotonMomentum, pdSteelReflectivity, iNbEntries);
+     pSteelPropertiesTable->AddProperty("SPECULARLOBECONSTANT", pdSteelPhotonMomentum, pdSteelSpecularLobe, iNbEntries);
+     pSteelPropertiesTable->AddProperty("SPECULARSPIKECONSTANT", pdSteelPhotonMomentum, pdSteelSpecularSpike, iNbEntries);
+     pSteelPropertiesTable->AddProperty("BACKSCATTERCONSTANT", pdSteelPhotonMomentum, pdSteelBackscatter, iNbEntries);
+     pSteelPropertiesTable->AddProperty("EFFICIENCY", pdSteelPhotonMomentum, pdSteelEfficiency, iNbEntries);
 
 		//------------------------------- stainless steel -------------------------------
 		G4Material *SS316LSteel = new G4Material("SS316LSteel", 8.00*g/cm3, 6, kStateSolid);

@@ -244,6 +244,7 @@ private:
 	G4Tubs* TPC_PTFE_spacer1_solid;
 	G4Tubs* TPC_PTFE_spacer2_solid;
 	G4Tubs* TPC_PTFE_spacer3_solid;
+	G4Tubs* TPC_SS_spacer3_solid;
 
 	G4Tubs* TPC_PTFE_reflector_LXe_solid;
 	G4Tubs* TPC_PTFE_reflector_GXe_solid;
@@ -424,6 +425,7 @@ private:
 	G4LogicalVolume* TPC_PTFE_spacer1_log;
 	G4LogicalVolume* TPC_PTFE_spacer2_log;
 	G4LogicalVolume* TPC_PTFE_spacer3_log;
+	G4LogicalVolume* TPC_SS_spacer3_log;
 	G4LogicalVolume* TPC_PTFE_reflector_LXe_log;
 	G4LogicalVolume* TPC_PTFE_reflector_GXe_log;
 	G4LogicalVolume* TPC_SS_gate_ring_log;
@@ -486,6 +488,7 @@ private:
 	G4VPhysicalVolume* TPC_PTFE_spacer1_phys;
 	G4VPhysicalVolume* TPC_PTFE_spacer2_phys;
 	G4VPhysicalVolume* TPC_PTFE_spacer3_phys;
+	G4VPhysicalVolume* TPC_SS_spacer3_phys;
 	G4VPhysicalVolume* TPC_PTFE_reflector_LXe_phys;
 	G4VPhysicalVolume* TPC_PTFE_reflector_GXe_phys;
 	G4VPhysicalVolume* TPC_SS_gate_ring_phys;

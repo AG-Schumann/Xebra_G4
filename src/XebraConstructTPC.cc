@@ -55,9 +55,11 @@ using std::stringstream;
 	//G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, ground, dielectric_metal, dSigmaAlpha); //old/wrong
 	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
 	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+	G4OpticalSurface *pSS304LSteelOpticalSurface = new G4OpticalSurface("SS304LSteelOpticalSurface", unified, groundbackpainted, dielectric_metal, dSigmaAlpha);
 		
 	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
-	pGXeTeflonOpticalSurface->SetMaterialPropertiesTable(GXeTeflon->GetMaterialPropertiesTable());
+	pGXeTeflonOpticalSurface->SetMaterialPropertiesTable(GXeTeflon->GetMaterialPropertiesTable());	
+	pSS304LSteelOpticalSurface->SetMaterialPropertiesTable(SS304LSteel->GetMaterialPropertiesTable());
 
 	// General useful functions
 	rmz45 = new G4RotationMatrix();
@@ -132,17 +134,19 @@ using std::stringstream;
 	AnodeThicknessThinWire = 10 * um;
 	
 	// extra gap to PMTs for position reconstruction improvement
-		// PTFE spacer 3 thickness
-		TPC_PTFE_spacer3_height        = 4.5 * mm; // <= 5.*mm, otherwise collision with pillar, if on top of top mesh; default 0.*mm
+		// spacer 3 dimensions
+		TPC_PTFE_spacer3_height        = 4.5 * mm; // <= 5.*mm, otherwise collision with pillar, if on top of top mesh; old 0.*mm, new 4.5 * mm
 		TPC_PTFE_spacer3_radius_inner  = 35.* mm; // 35.* mm
 		TPC_PTFE_spacer3_radius_outer  = 60.* mm; // 60.* mm
 		TPC_PTFE_spacer3_extragap      = 0. * mm; // 0. *mm if on top of top mesh
-		
+	
 		// size extra gap
-		TPC_TopPMTs_extragap           = 4.5 * mm; // >= TPC_PTFE_spacer3_height
+		TPC_TopPMTs_extragap           = 4.5 * mm; // >= TPC_PTFE_spacer3_height, new 4.5 * mm
 		
 		G4cout << "---> Heigth spacer 3:          " << TPC_PTFE_spacer3_height << " mm" << G4endl;
 		G4cout << "---> Heigth extra gap to PMTs: " << TPC_TopPMTs_extragap << " mm" << G4endl;
+		
+		G4String Spacer3MaterialString = "Steel"; // "Steel" or "PTFE"
 
 
 //**************************************************CONSTRUCT*******************************************
@@ -340,7 +344,14 @@ using std::stringstream;
 	// PTFE spacer 3 - added for improved position reconstruction, might deteriorate due to refelctions, but needed to shild external interactions and better than unknown material
 	if (TPC_PTFE_spacer3_height > 0)
 	{
+		if (Spacer3MaterialString == "PTFE")
+		{
 		TPC_PTFE_spacer3_solid = new G4Tubs("TPC_PTFE_spacer3_solid", TPC_PTFE_spacer3_radius_inner, TPC_PTFE_spacer3_radius_outer, TPC_PTFE_spacer3_height / 2, 0.*deg, 360.*deg);
+		}
+		if (Spacer3MaterialString == "Steel")
+		{
+		TPC_SS_spacer3_solid = new G4Tubs("TPC_SS_spacer3_solid", TPC_PTFE_spacer3_radius_inner, TPC_PTFE_spacer3_radius_outer, TPC_PTFE_spacer3_height / 2, 0.*deg, 360.*deg);
+		}
 	}
 
 	// Reflector (p6)
@@ -565,7 +576,14 @@ using std::stringstream;
 	LXe_extra_filling_solid_23 = new G4SubtractionSolid("LXe_extra_filling_solid_23", LXe_extra_filling_solid_22, R8520_body_solid, 0, G4ThreeVector(0.,0.,(GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 68.5*mm + 28.25 * mm / 2 + TPC_offset_z) + (GXe_height - LXe_extra_filling_height)/2 + TPC_TopPMTs_extragap));
 	if (TPC_PTFE_spacer3_height > 0)
 	{
+		if (Spacer3MaterialString == "PTFE")
+		{
 		LXe_extra_filling_solid_24 = new G4SubtractionSolid("LXe_extra_filling_solid_24", LXe_extra_filling_solid_23, TPC_PTFE_spacer3_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm + TPC_PTFE_spacer3_height / 2 + TPC_PTFE_spacer3_extragap + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
+		}
+		if (Spacer3MaterialString == "Steel")
+		{
+		LXe_extra_filling_solid_24 = new G4SubtractionSolid("LXe_extra_filling_solid_24", LXe_extra_filling_solid_23, TPC_SS_spacer3_solid, 0, G4ThreeVector(0.*mm, 0.*mm,  GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm + TPC_PTFE_spacer3_height / 2 + TPC_PTFE_spacer3_extragap + (GXe_height - LXe_extra_filling_height)/2 + TPC_offset_z));
+		}
 	}
 	else
 	{
@@ -614,7 +632,14 @@ using std::stringstream;
 	TPC_PTFE_spacer2_log = new G4LogicalVolume(TPC_PTFE_spacer2_solid, GXeTeflon, "TPC_PTFE_spacer2_log");
 	if (TPC_PTFE_spacer3_height > 0)
 	{
+		if (Spacer3MaterialString == "PTFE")
+		{
 		TPC_PTFE_spacer3_log = new G4LogicalVolume(TPC_PTFE_spacer3_solid, GXeTeflon, "TPC_PTFE_spacer3_log");
+		}
+		if (Spacer3MaterialString == "Steel")
+		{
+		TPC_SS_spacer3_log = new G4LogicalVolume(TPC_SS_spacer3_solid, GXeTeflon, "TPC_SS_spacer3_log");
+		}
 	}
 	TPC_PTFE_reflector_LXe_log = new G4LogicalVolume(TPC_PTFE_reflector_LXe_solid, Teflon, "TPC_PTFE_reflector_LXe_log");
 	TPC_PTFE_reflector_GXe_log = new G4LogicalVolume(TPC_PTFE_reflector_GXe_solid, Teflon, "TPC_PTFE_reflector_GXe_log");
@@ -769,7 +794,14 @@ using std::stringstream;
 	TPC_PTFE_spacer2_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 78.5*mm - 5.0*mm / 2 + TPC_offset_z), TPC_PTFE_spacer2_log, "TPC_PTFE_spacer2", GXe_Logical, false, 0);
 	if (TPC_PTFE_spacer3_height > 0)
 	{	
+		if (Spacer3MaterialString == "PTFE")
+		{
 		TPC_PTFE_spacer3_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , (GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm + TPC_offset_z) + TPC_PTFE_spacer3_height / 2 + TPC_PTFE_spacer3_extragap), TPC_PTFE_spacer3_log, "TPC_PTFE_spacer3", GXe_Logical, false, 0);
+		}
+		if (Spacer3MaterialString == "Steel")
+		{
+		TPC_SS_spacer3_phys = new G4PVPlacement(0, G4ThreeVector(0., 0. , (GXe_height / 2 - (cryostat_innerHeight - TPC_dimension_z) / 2 - 70.5*mm + TPC_offset_z) + TPC_PTFE_spacer3_height / 2 + TPC_PTFE_spacer3_extragap), TPC_SS_spacer3_log, "TPC_SS_spacer3", GXe_Logical, false, 0);
+		}
 	}
 	TPC_PTFE_reflector_GXe_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + (70.-68.)*mm / 2), TPC_PTFE_reflector_GXe_log,"TPC_PTFE_reflector_GXe", GXe_Logical, 0, 0);
 	TPC_SS_gate_ring_phys = new G4PVPlacement(0,G4ThreeVector(0*cm, 0*cm, - GXe_height / 2 + 3.*mm / 2), TPC_SS_gate_ring_log,"TPC_SS_gate_ring", GXe_Logical, 0, 0);
@@ -1002,10 +1034,20 @@ using std::stringstream;
 	// PTFE spacer 3 - added for improved position reconstruction
 	if (TPC_PTFE_spacer3_height > 0)
 	{
-	new G4LogicalBorderSurface("LXe_Spacer3_LogicalBorderSurface",
-		LXe_extra_filling_phys, TPC_PTFE_spacer3_phys, pTeflonOpticalSurface);
-	new G4LogicalBorderSurface("GXe_Spacer3_LogicalBorderSurface",
-		GXe_Physical, TPC_PTFE_spacer3_phys, pGXeTeflonOpticalSurface);
+		if (Spacer3MaterialString == "PTFE")
+		{
+		new G4LogicalBorderSurface("LXe_Spacer3_LogicalBorderSurface",
+			LXe_extra_filling_phys, TPC_PTFE_spacer3_phys, pTeflonOpticalSurface);
+		new G4LogicalBorderSurface("GXe_Spacer3_LogicalBorderSurface",
+			GXe_Physical, TPC_PTFE_spacer3_phys, pGXeTeflonOpticalSurface);
+		}
+		if (Spacer3MaterialString == "Steel")
+		{
+		new G4LogicalBorderSurface("LXe_Spacer3_LogicalBorderSurface",
+			LXe_extra_filling_phys, TPC_SS_spacer3_phys, pSS304LSteelOpticalSurface);
+		new G4LogicalBorderSurface("GXe_Spacer3_LogicalBorderSurface",
+			GXe_Physical, TPC_SS_spacer3_phys, pSS304LSteelOpticalSurface)
+		}
 	}
 
 	// PTFE pillars	-> put into for loop where implemented
