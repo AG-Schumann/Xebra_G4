@@ -133,13 +133,13 @@ using std::stringstream;
 	
 	// extra gap to PMTs for position reconstruction improvement
 		// PTFE spacer 3 thickness
-		TPC_PTFE_spacer3_height        = 15. * mm; // <= 5.*mm, otherwise collision with pillar, if on top of top mesh; default 0.*mm
+		TPC_PTFE_spacer3_height        = 4.5 * mm; // <= 5.*mm, otherwise collision with pillar, if on top of top mesh; default 0.*mm
 		TPC_PTFE_spacer3_radius_inner  = 35.* mm; // 35.* mm
 		TPC_PTFE_spacer3_radius_outer  = 60.* mm; // 60.* mm
 		TPC_PTFE_spacer3_extragap      = 0. * mm; // 0. *mm if on top of top mesh
 		
 		// size extra gap
-		TPC_TopPMTs_extragap           = 15. * mm; // >= TPC_PTFE_spacer3_height
+		TPC_TopPMTs_extragap           = 4.5 * mm; // >= TPC_PTFE_spacer3_height
 		
 		G4cout << "---> Heigth spacer 3:          " << TPC_PTFE_spacer3_height << " mm" << G4endl;
 		G4cout << "---> Heigth extra gap to PMTs: " << TPC_TopPMTs_extragap << " mm" << G4endl;
