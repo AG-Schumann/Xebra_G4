@@ -466,12 +466,16 @@ void XebraMaterials::DefineMaterials() {
      G4double pdSteelBackscatter[]     = {0.01,    0.01,    0.01};
      G4double pdSteelEfficiency[iNbEntries]      = {1.0,     1.0,     1.0};
      
+     G4MaterialPropertiesTable *pSteelPropertiesTable = new G4MaterialPropertiesTable();
+     
      pSteelPropertiesTable->AddProperty("RINDEX", pdSteelPhotonMomentum, pdSteelRefractiveIndex, iNbEntries);
      pSteelPropertiesTable->AddProperty("REFLECTIVITY", pdSteelPhotonMomentum, pdSteelReflectivity, iNbEntries);
      pSteelPropertiesTable->AddProperty("SPECULARLOBECONSTANT", pdSteelPhotonMomentum, pdSteelSpecularLobe, iNbEntries);
      pSteelPropertiesTable->AddProperty("SPECULARSPIKECONSTANT", pdSteelPhotonMomentum, pdSteelSpecularSpike, iNbEntries);
      pSteelPropertiesTable->AddProperty("BACKSCATTERCONSTANT", pdSteelPhotonMomentum, pdSteelBackscatter, iNbEntries);
      pSteelPropertiesTable->AddProperty("EFFICIENCY", pdSteelPhotonMomentum, pdSteelEfficiency, iNbEntries);
+     
+     SS304LSteel->SetMaterialPropertiesTable(pSteelPropertiesTable);
 
 		//------------------------------- stainless steel -------------------------------
 		G4Material *SS316LSteel = new G4Material("SS316LSteel", 8.00*g/cm3, 6, kStateSolid);
