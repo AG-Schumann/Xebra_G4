@@ -1046,7 +1046,7 @@ using std::stringstream;
 		new G4LogicalBorderSurface("LXe_Spacer3_LogicalBorderSurface",
 			LXe_extra_filling_phys, TPC_SS_spacer3_phys, pSS304LSteelOpticalSurface);
 		new G4LogicalBorderSurface("GXe_Spacer3_LogicalBorderSurface",
-			GXe_Physical, TPC_SS_spacer3_phys, pSS304LSteelOpticalSurface)
+			GXe_Physical, TPC_SS_spacer3_phys, pSS304LSteelOpticalSurface);
 		}
 	}
 
