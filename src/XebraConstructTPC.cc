@@ -146,7 +146,7 @@ using std::stringstream;
 		G4cout << "---> Heigth spacer 3:          " << TPC_PTFE_spacer3_height << " mm" << G4endl;
 		G4cout << "---> Heigth extra gap to PMTs: " << TPC_TopPMTs_extragap << " mm" << G4endl;
 		
-		G4String Spacer3MaterialString = "PTFE"; // "Steel" or "PTFE"
+		G4String Spacer3MaterialString = "PTFE"; // "Steel" or "PTFE", will be implemented as "PTFE"
 
 
 //**************************************************CONSTRUCT*******************************************
