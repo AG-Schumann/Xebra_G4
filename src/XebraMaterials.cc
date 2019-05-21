@@ -895,6 +895,44 @@ void XebraMaterials::DefineMaterials() {
     //    }
     //#endif
     
+    //------------------------------------ teflon unpolished
+    //-----------------------------------
+    G4Material *TeflonUnpolished = new G4Material("TeflonUnpolished", 2.2 * g / cm3, 2, kStateSolid);
+    TeflonUnpolished->AddElement(C, 0.240183);
+    TeflonUnpolished->AddElement(F, 0.759817);
+    
+    G4double pdTeflonUnpolishedPhotonMomentum[iNbEntries] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
+    G4double pdTeflonUnpolishedRefractiveIndex[iNbEntries] = {1.63, 1.61, 1.58};
+    G4double pdTeflonUnpolishedReflectivity[iNbEntries] = {0.05, 0.05, 0.05};  // To be adjusted
+    G4double pdTeflonUnpolishedSpecularLobe[iNbEntries] = {0.01, 0.01, 0.01};
+    G4double pdTeflonUnpolishedSpecularSpike[iNbEntries] = {0.01, 0.01, 0.01};
+    G4double pdTeflonUnpolishedBackscatter[iNbEntries] = {0.01, 0.01, 0.01};
+    G4double pdTeflonUnpolishedEfficiency[iNbEntries] = {1.0, 1.0, 1.0};
+    G4double pdTeflonUnpolishedAbsorbtionLength[iNbEntries] = {0.1 * cm, 0.1 * cm, 0.1 * cm};
+    
+    G4MaterialPropertiesTable *pTeflonUnpolishedPropertiesTable = new G4MaterialPropertiesTable();
+    
+    pTeflonUnpolishedPropertiesTable->AddProperty("RINDEX", pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedRefractiveIndex, iNbEntries);
+    pTeflonUnpolishedPropertiesTable->AddProperty("REFLECTIVITY", pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedReflectivity, iNbEntries);
+    pTeflonUnpolishedPropertiesTable->AddProperty("ABSLENGTH", pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedAbsorbtionLength, iNbEntries);
+    pTeflonUnpolishedPropertiesTable->AddProperty("SPECULARLOBECONSTANT",
+                                        pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedSpecularLobe, iNbEntries);
+    pTeflonUnpolishedPropertiesTable->AddProperty("SPECULARSPIKECONSTANT",
+                                        pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedSpecularSpike, iNbEntries);
+    pTeflonUnpolishedPropertiesTable->AddProperty("BACKSCATTERCONSTANT",
+                                        pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedBackscatter, iNbEntries);
+    pTeflonUnpolishedPropertiesTable->AddProperty("EFFICIENCY", pdTeflonUnpolishedPhotonMomentum,
+                                        pdTeflonUnpolishedEfficiency, iNbEntries);
+    
+    TeflonUnpolished->SetMaterialPropertiesTable(pTeflonUnpolishedPropertiesTable);
+        
+    
     //------------------------------------ copper
     //-----------------------------------
     G4Material *Copper = new G4Material("Copper", 8.92 * g / cm3, 1);
