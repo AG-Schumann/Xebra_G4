@@ -55,6 +55,7 @@ using std::stringstream;
 	//G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, ground, dielectric_metal, dSigmaAlpha); //old/wrong
 	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
 	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+	G4OpticalSurface *pTeflonUnpolishedOpticalSurface = new G4OpticalSurface("TeflonUnpolishedOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
 	G4OpticalSurface *pSS304LSteelOpticalSurface = new G4OpticalSurface("SS304LSteelOpticalSurface", unified, groundbackpainted, dielectric_metal, dSigmaAlpha);
 		
 	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
@@ -994,42 +995,44 @@ using std::stringstream;
 		LXe_extra_filling_phys, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
 	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface2",
 		LXe_ActiveVolume_Physical, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
+	new G4LogicalBorderSurface("LXe_PTFEReflectorGXe_LogicalBorderSurface3",
+		GXe_Physical, TPC_PTFE_reflector_GXe_phys, pTeflonOpticalSurface);
 
 	// Top PMT Holder
-	if (LXe_extra_filling_height > 16.*mm)	
-	{
+	//if (LXe_extra_filling_height > 16.*mm)	
+	//{
 	new G4LogicalBorderSurface("LXe_TopPMTHolder_LogicalBorderSurface",
 		LXe_extra_filling_phys, TPC_PTFE_TopPMTHolder_phys, pTeflonOpticalSurface);
-	}
-	if (LXe_extra_filling_height < 24.*mm)
-	{
-	new G4LogicalBorderSurface("GXe_TopPMTHolder_LogicalBorderSurface",
+	//}
+	//if (LXe_extra_filling_height < 24.*mm)
+	//{
+	new G4LogicalBorderSurface("GXe_TopPMTHolder_LogicalBorderSurface2",
 		GXe_Physical, TPC_PTFE_TopPMTHolder_phys, pGXeTeflonOpticalSurface);
-	}
+	//}
 
 	// PTFE spacer 1 - "the upper one"
-	if (LXe_extra_filling_height > 11.*mm)	
-	{
+	//if (LXe_extra_filling_height > 11.*mm)	
+	//{
 	new G4LogicalBorderSurface("LXe_Spacer1_LogicalBorderSurface",
 		LXe_extra_filling_phys, TPC_PTFE_spacer1_phys, pTeflonOpticalSurface);
-	}
-	if (LXe_extra_filling_height < 13.*mm)	
-	{
-	new G4LogicalBorderSurface("GXe_Spacer1_LogicalBorderSurface",
+	//}
+	//if (LXe_extra_filling_height < 13.*mm)	
+	//{
+	new G4LogicalBorderSurface("GXe_Spacer1_LogicalBorderSurface2",
 		GXe_Physical, TPC_PTFE_spacer1_phys, pGXeTeflonOpticalSurface);
-	}
+	//}
 
 	// PTFE spacer 2 - "the lower one"
-	if (LXe_extra_filling_height > 3.*mm)	
-	{
+	//if (LXe_extra_filling_height > 3.*mm)	
+	//{
 	new G4LogicalBorderSurface("LXe_Spacer2_LogicalBorderSurface",
 		LXe_extra_filling_phys, TPC_PTFE_spacer2_phys, pTeflonOpticalSurface);
-	}
-	if (LXe_extra_filling_height < 8.*mm)	
-	{
-	new G4LogicalBorderSurface("GXe_Spacer2_LogicalBorderSurface",
+	//}
+	//if (LXe_extra_filling_height < 8.*mm)	
+	//{
+	new G4LogicalBorderSurface("GXe_Spacer2_LogicalBorderSurface2",
 		GXe_Physical, TPC_PTFE_spacer2_phys, pGXeTeflonOpticalSurface);
-	}
+	//}
 	
 	// PTFE spacer 3 - added for improved position reconstruction
 	if (TPC_PTFE_spacer3_height > 0)
@@ -1049,17 +1052,13 @@ using std::stringstream;
 			GXe_Physical, TPC_SS_spacer3_phys, pSS304LSteelOpticalSurface);
 		}
 	}
-
-	// PTFE pillars	-> put into for loop where implemented
 	/*
-	new G4LogicalBorderSurface("LXe_PTFEpillarLXe_LogicalBorderSurface",
-		LXe_Physical, TPC_PTFE_pillar_LXe_phys, pTeflonOpticalSurface);
-	new G4LogicalBorderSurface("GXe_PTFEpillarGXe_LogicalBorderSurface",
-		GXe_Physical, TPC_PTFE_pillar_GXe_phys, pGXeTeflonOpticalSurface);
-	new G4LogicalBorderSurface("LXe_PTFEpillarGXe_LogicalBorderSurface",
-		LXe_extra_filling_phys, TPC_PTFE_pillar_GXe_phys, pTeflonOpticalSurface);
-	*/
-
+	// remove again after simulation!!!
+	new G4LogicalBorderSurface("LXe_Spacer3_LogicalBorderSurface",
+			LXe_extra_filling_phys, TPC_PTFE_spacer3_phys, pTeflonUnpolishedOpticalSurface);
+	new G4LogicalBorderSurface("GXe_Spacer3_LogicalBorderSurface",
+			GXe_Physical, TPC_PTFE_spacer3_phys, pTeflonUnpolishedOpticalSurface);
+	*/	
 
 //**********************************************SENSITIVE DETECTORS**********************************************
 
