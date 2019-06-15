@@ -55,7 +55,7 @@ using std::stringstream;
 	//G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, ground, dielectric_metal, dSigmaAlpha); //old/wrong
 	G4OpticalSurface *pTeflonOpticalSurface = new G4OpticalSurface("TeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
 	G4OpticalSurface *pGXeTeflonOpticalSurface = new G4OpticalSurface("GXeTeflonOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
-	G4OpticalSurface *pTeflonUnpolishedOpticalSurface = new G4OpticalSurface("TeflonUnpolishedOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
+	//G4OpticalSurface *pTeflonUnpolishedOpticalSurface = new G4OpticalSurface("TeflonUnpolishedOpticalSurface", unified, groundbackpainted, dielectric_dielectric, dSigmaAlpha);
 	G4OpticalSurface *pSS304LSteelOpticalSurface = new G4OpticalSurface("SS304LSteelOpticalSurface", unified, groundbackpainted, dielectric_metal, dSigmaAlpha);
 		
 	pTeflonOpticalSurface->SetMaterialPropertiesTable(Teflon->GetMaterialPropertiesTable());
@@ -1082,6 +1082,7 @@ using std::stringstream;
 		}
 */
 	LXe_ActiveVolume_Logical->SetSensitiveDetector(pLXeSD);
+    //GXe_Logical->SetSensitiveDetector(pLXeSD);
 	//LXe_ActiveVolume_extra_filling_Logical->SetSensitiveDetector(pLXeSD);
 	
 	//Sensitive Detector: Setting the PMTs as sensitive detector
