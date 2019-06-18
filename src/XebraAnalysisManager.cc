@@ -430,7 +430,8 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
  //    //APC	m_pTree->Fill();
  //    //APC	m_pEventData->Clear();
  //  }
-  
+
+ }
  //  // also write the header information + primary vertex of the empty events....
  m_pEventData->m_iNbSteps = iNbSteps;
  m_pEventData->m_iLScintNbSteps = iLScintNbSteps;
@@ -453,7 +454,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
 	//if ( pEvent->GetEventID() % 10000 == 0)
 		//m_pTree->AutoSave();
   
-  }
+
   m_pEventData->Clear(); 
   m_pTreeFile->cd();
 }
