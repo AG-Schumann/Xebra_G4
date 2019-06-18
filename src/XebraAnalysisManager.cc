@@ -425,13 +425,14 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
     m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbBottomPmts, 0);
     m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbBottomPmts, m_pEventData->m_pPmtHits->begin()+iNbBottomPmts+iNbTopPmts, 0);
 
+  }
+  
  //    //if((fTotalEnergyDeposited > 0. || iNbPmtHits > 0) && !FilterEvent(m_pEventData))
  //    //APC	if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0)
  //    //APC	m_pTree->Fill();
  //    //APC	m_pEventData->Clear();
  //  }
 
- }
  //  // also write the header information + primary vertex of the empty events....
  m_pEventData->m_iNbSteps = iNbSteps;
  m_pEventData->m_iLScintNbSteps = iLScintNbSteps;
