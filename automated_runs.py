@@ -1,0 +1,127 @@
+
+#!/usr/bin/python
+
+import sys
+import os
+
+
+'''
+Study influence optical parameters on S1 LCE
+execute with "python3 automated_runs.py" inside the Xebra_G4 directory
+'''
+
+
+##### Input parameters #####
+
+## List with PTFE reflectivities
+p_PTFE_Reflectivity_list    = [0.90, 0.95, 0.99]
+
+## List with LXe absorption lengths in cm
+p_LXe_AbsorptionLenght_list = [0, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000]
+
+## Number of events to be simulated
+p_EventCount = 1e7
+
+## Signal region i.e. S1 or S2
+p_SignalRegion = "S1" # 'S1' or 'S2'
+
+## Spacer 3 in mm
+p_PMTGap = 4.5
+
+
+##### Iteratively create and execute macro #####
+
+## Loop over parameter lists
+for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
+    for p_PTFE_Reflectivity in p_PTFE_Reflectivity_list:
+        
+        ## Create / specify save directory for macros
+        PATH = "./macros"
+        os.makedirs(PATH, exist_ok=True)
+        
+        ## Create macro
+        MACRONAME = PATH + "/" + "src_optPhot_DP_automated" + ".mac"
+        f = open(MACRONAME, "w")
+        
+        ## Write macro
+        f.write('#################\n')
+        f.write('# Macro to simulate optical photons in the LXe phase of a dual phase setup\n')
+        f.write('#################\n')
+        f.write('\n')
+        f.write('##################\n')
+        f.write('# optical properties\n')
+        f.write('/Xe/detector/setTeflonReflectivity '+str(p_PTFE_Reflectivity)+'\n')
+        f.write('/Xe/detector/setGXeTeflonReflectivity '+str(p_PTFE_Reflectivity)+'\n')
+        f.write('/Xe/detector/setLXeAbsorbtionLength '+str(p_LXe_AbsorptionLenght)+' cm \n')
+        f.write('/Xe/detector/setGXeAbsorbtionLength 100 m\n')
+        f.write('/Xe/detector/setLXeRayScatterLength 30 cm\n')
+        f.write('/Xe/detector/setLXeRefractionIndex 1.63\n')
+        f.write('/Xe/detector/setLXeMeshTransparency 0.89770509\n')
+        f.write('/Xe/detector/setGXeMeshTransparency 0.89770509\n')
+        f.write('\n')
+        f.write('#################\n')
+        f.write('# verbosity\n')
+        f.write('/control/verbose 0\n')
+        f.write('/run/verbose 0\n')
+        f.write('/event/verbose 0\n')
+        f.write('/tracking/verbose 0\n')
+        f.write('/xebra/gun/verbose 0\n')
+        f.write('\n')
+        f.write('#################\n')
+        f.write('# seed\n')
+        f.write('/run/random/setRandomSeed 0\n')
+        f.write('\n')
+        f.write('#################\n')
+        f.write('# gun\n')
+        f.write('/xebra/gun/angtype iso\n')
+        f.write('/xebra/gun/type    Volume \n')
+        f.write('/xebra/gun/shape   Cylinder\n')
+        f.write('\n')
+        if p_SignalRegion == "S1":        
+            f.write('### S1\n')
+            f.write('## active volume (z: 0<>-71.5|r: 35)\n')
+            f.write('/xebra/gun/center 0. 0. -35.75 mm\n')
+            f.write('/xebra/gun/radius 35.0 mm\n')
+            f.write('/xebra/gun/halfz  35.75 mm\n')
+            f.write('## select the volume to confine the source\n')
+            f.write('/xebra/gun/confine LXe*\n')
+        if p_SignalRegion == "S2":
+            f.write('### S2\n')
+            f.write('## active volume (z: 2.5<>5.0|r: 35)\n')
+            f.write('/xebra/gun/center 0. 0. 3.75 mm\n')
+            f.write('/xebra/gun/radius 35.0 mm\n')
+            f.write('/xebra/gun/halfz  1.25 mm\n')
+            f.write('## select the volume to confine the source\n')
+            f.write('/xebra/gun/confine GXe*\n')
+        f.write('\n')
+        f.write('##################\n')
+        f.write('# particle type + energy spectrum\n')
+        f.write('/xebra/gun/energy   6.98 eV\n')
+        f.write('/xebra/gun/particle opticalphoton\n')
+        f.write('\n')
+        f.write('##################\n')
+        f.write('# scintillation processes in the LXe\n')
+        f.write('/Xe/detector/setLXeScintillation false\n')
+        f.write('\n')  
+        f.write('##################\n')
+        f.write('# tree Filling options\n')
+        f.write('/run/writeEmpty true\n')
+        f.write('\n')   
+        
+        f.close()
+        
+        
+        # Name of output ROOT file
+        filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+".root"
+        
+        # Create outputs folder
+        os.makedirs("./outputs", exist_ok=True)
+        
+        # Execute macro
+        os.system("./automated_runs.sh %i %s"%(int(p_EventCount), filename))
+        
+        # Print feedback in terminal
+        sys.stdout.write(filename+" successfully simulated.\n")
+        
+sys.stdout.write("Done.\n")
+
