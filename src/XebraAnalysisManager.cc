@@ -405,6 +405,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
       }
 	} */
 
+  }
 
 		G4int iNbTopPmts = 7;
 		G4int iNbBottomPmts = 1;
@@ -425,7 +426,7 @@ void XebraAnalysisManager::EndOfEvent(const G4Event *pEvent)
     m_pEventData->m_iNbBottomPmtHits = accumulate(m_pEventData->m_pPmtHits->begin(), m_pEventData->m_pPmtHits->begin()+iNbBottomPmts, 0);
     m_pEventData->m_iNbTopPmtHits = accumulate(m_pEventData->m_pPmtHits->begin()+iNbBottomPmts, m_pEventData->m_pPmtHits->begin()+iNbBottomPmts+iNbTopPmts, 0);
 
-  }
+//  }
   
  //    //if((fTotalEnergyDeposited > 0. || iNbPmtHits > 0) && !FilterEvent(m_pEventData))
  //    //APC	if(fTotalEnergyDeposited > 0. || iNbPmtHits > 0)
