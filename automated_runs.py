@@ -14,18 +14,20 @@ execute with "python3 automated_runs.py" inside the Xebra_G4 directory
 ##### Input parameters #####
 
 ## List with PTFE reflectivities
-p_PTFE_Reflectivity_list    = [0.90, 0.95, 0.99]
+#p_PTFE_Reflectivity_list    = [0.90, 0.95, 0.99]
 #p_PTFE_Reflectivity_list    = [0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.85, 0.925, 0.975, 1.0]
 #p_PTFE_Reflectivity_list    = [0.95, 0.99]
+p_PTFE_Reflectivity_list    = [0.95]
 
 ## List with LXe absorption lengths in cm
-#p_LXe_AbsorptionLenght_list = [0, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 5000]
+#p_LXe_AbsorptionLenght_list = [0, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 10000]
 #p_LXe_AbsorptionLenght_list = [10, 100, 1000]
-p_LXe_AbsorptionLenght_list = [3000, 4000, 10000]
+#p_LXe_AbsorptionLenght_list = [100, 1000]
+p_LXe_AbsorptionLenght_list = [100]
 
 ## List with mesh transparencies
 p_Mesh_Transparency_list = [0.89770509]
-#p_Mesh_Transparency_list = [0.89770509, 0.8, 0.85, 0.93, 0.97, 0.999]
+#p_Mesh_Transparency_list = [0.8, 0.825, 0.85, 0.875, 0.93, 0.95, 0.97, 0.999]
 
 ## Number of events to be simulated
 p_EventCount = 1e7
