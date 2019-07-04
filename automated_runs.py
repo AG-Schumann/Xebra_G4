@@ -30,13 +30,16 @@ p_Mesh_Transparency_list = [0.89770509]
 #p_Mesh_Transparency_list = [0.8, 0.825, 0.85, 0.875, 0.93, 0.95, 0.97, 0.999]
 
 ## Number of events to be simulated
-p_EventCount = 1e7
+p_EventCount = 1e6
 
 ## Signal region i.e. S1 or S2
-p_SignalRegion = "S1" # 'S1' or 'S2'
+p_SignalRegion = "S2" # 'S1' or 'S2'
 
 ## Spacer 3 in mm
 p_PMTGap = 4.5
+
+## Write empty events 'true' or 'false'
+p_writeEmpty = 'false'
 
 
 ##### Iteratively create and execute macro #####
@@ -116,7 +119,7 @@ for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
             f.write('\n')  
             f.write('##################\n')
             f.write('# tree Filling options\n')
-            f.write('/run/writeEmpty true\n')
+            f.write('/run/writeEmpty '+p_writeEmpty+'\n')
             f.write('\n')   
             
             f.close()
@@ -124,7 +127,11 @@ for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
             
             # Name of output ROOT file
             #filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+".root"
-            filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+".root"
+            
+            if p_writeEmpty == 'false':
+                filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_writeEmptyFalse.root"
+            else:
+                filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+".root"
             
             # Create outputs folder
             os.makedirs("./outputs", exist_ok=True)
