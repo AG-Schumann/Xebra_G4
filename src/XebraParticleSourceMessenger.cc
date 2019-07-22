@@ -189,6 +189,15 @@ XebraParticleSourceMessenger::XebraParticleSourceMessenger(XebraParticleSource *
 	m_pVerbosityCmd->SetGuidance(" 2 : Detailed information");
 	m_pVerbosityCmd->SetParameterName("level", false);
 	m_pVerbosityCmd->SetRange("level>=0 && level <=2");
+    
+    // number of particles to be generated per event
+    m_pNumberOfParticlesToBeGeneratedCmd =
+        new G4UIcmdWithAnInteger("/xebra/gun/numberofparticles", this);
+    m_pNumberOfParticlesToBeGeneratedCmd->SetGuidance(
+        "Number of particles generated in one event");
+    m_pNumberOfParticlesToBeGeneratedCmd->SetParameterName("NumParticles", true,
+                                                           true);
+    m_pNumberOfParticlesToBeGeneratedCmd->SetDefaultValue(1);
 }
 
 XebraParticleSourceMessenger::~XebraParticleSourceMessenger()
@@ -343,6 +352,12 @@ XebraParticleSourceMessenger::SetNewValue(G4UIcommand * command, G4String newVal
 		m_pParticleSource->SetPosDisType("Point");
 		m_pParticleSource->SetCenterCoords(m_pPositionCmd->GetNew3VectorValue(newValues));
 	}
+    
+    else if (command == m_pNumberOfParticlesToBeGeneratedCmd) {
+        m_pParticleSource->SetNumberOfParticlesToBeGenerated(
+            m_pNumberOfParticlesToBeGeneratedCmd->GetNewIntValue(newValues));
+    }
+    
 	else
 		G4cout << "Error entering command" << G4endl;
 }

@@ -73,6 +73,11 @@ public:
 
 	void GenerateMonoEnergetic();
 	void GenerateEnergyFromSpectrum();
+    
+    void SetNumberOfParticlesToBeGenerated(
+        G4int iNumberOfParticlesToBeGenerated) {
+      m_iNumberOfParticlesToBeGenerated = iNumberOfParticlesToBeGenerated;
+    }
 
 private:
 	G4String m_hSourcePosType;

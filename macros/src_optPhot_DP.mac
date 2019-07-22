@@ -37,6 +37,9 @@
 /xebra/gun/angtype iso
 /xebra/gun/type    Volume  
 /xebra/gun/shape   Cylinder
+#/xebra/gun/numberofparticles 10000
+#/xebra/gun/numberofparticles 2500
+/xebra/gun/numberofparticles 1
 
 #################
 ### S1
