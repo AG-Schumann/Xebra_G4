@@ -147,7 +147,8 @@ for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
             os.makedirs("./outputs", exist_ok=True)
             
             # Execute macro
-            os.system("./automated_runs.sh %i %s"%(int(p_EventCount), filename))
+            #os.system("./automated_runs.sh %i %s"%(int(p_EventCount), filename))
+            os.system("sbatch -o /sc/userdata/abismark/job.out automated_runs_pcfr31.sh %i %s"%(int(p_EventCount), filename))
             
             # Print feedback in terminal
             sys.stdout.write(filename+" successfully simulated.\n")
