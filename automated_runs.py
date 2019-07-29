@@ -30,7 +30,7 @@ p_Mesh_Transparency_list = [0.89770509]
 #p_Mesh_Transparency_list = [0.8, 0.825, 0.85, 0.875, 0.93, 0.95, 0.97, 0.999]
 
 ## Number of events to be simulated
-p_EventCount = 1e5
+p_EventCount = 1e4
 
 ## Signal region i.e. S1 or S2
 p_SignalRegion = "S2" # 'S1' or 'S2'
@@ -43,8 +43,8 @@ p_writeEmpty = 'false'
 
 ## Number of particles generated in one event
 #p_NumberOfParticles = 1
-#p_NumberOfParticles = 10000
-p_NumberOfParticles = 2500
+#p_NumberOfParticles = 2500
+p_NumberOfParticles = 10000
 
 
 ##### Iteratively create and execute macro #####

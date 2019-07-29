@@ -538,46 +538,46 @@ XebraParticleSource::GeneratePrimaryVertex(G4Event * evt)
 			srcconf = true;		//Avoids an infinite loop
 		}
 	}
-
-	// Angular stuff
-	if(m_hAngDistType == "iso")
-		GenerateIsotropicFlux();
-	else if(m_hAngDistType == "direction")
-		SetParticleMomentumDirection(m_hParticleMomentumDirection);
-	else
-		G4cout << "Error: AngDistType has unusual value" << G4endl;
-	// Energy stuff
-	if(m_hEnergyDisType == "Mono")
-		GenerateMonoEnergetic();
-	else if(m_hEnergyDisType == "Spectrum")
-		GenerateEnergyFromSpectrum();
-	else
-		G4cout << "Error: EnergyDisType has unusual value" << G4endl;
-
-	// create a new vertex
+    
+    // create a new vertex
 	G4PrimaryVertex *vertex = new G4PrimaryVertex(m_hParticlePosition, m_dParticleTime);
+    
+    for(G4int i = 0; i < m_iNumberOfParticlesToBeGenerated; i++){
+        // Angular stuff
+        if(m_hAngDistType == "iso")
+            GenerateIsotropicFlux();
+        else if(m_hAngDistType == "direction")
+            SetParticleMomentumDirection(m_hParticleMomentumDirection);
+        else
+            G4cout << "Error: AngDistType has unusual value" << G4endl;
+        
+        // Energy stuff
+        if(m_hEnergyDisType == "Mono")
+            GenerateMonoEnergetic();
+        else if(m_hEnergyDisType == "Spectrum")
+            GenerateEnergyFromSpectrum();
+        else
+            G4cout << "Error: EnergyDisType has unusual value" << G4endl;
+    
+        if(m_iVerbosityLevel >= 2)
+            G4cout << "Creating primaries and assigning to vertex" << G4endl;
+        // create new primaries and set them to the vertex
+        G4double mass = m_pParticleDefinition->GetPDGMass();
+        G4double energy = m_dParticleEnergy + mass;
+        G4double pmom = std::sqrt(energy * energy - mass * mass);
+        G4double px = pmom * m_hParticleMomentumDirection.x();
+        G4double py = pmom * m_hParticleMomentumDirection.y();
+        G4double pz = pmom * m_hParticleMomentumDirection.z();
+    
+        if(m_iVerbosityLevel >= 1)
+        {
+            G4cout << "Particle name: " << m_pParticleDefinition->GetParticleName() << G4endl;
+            G4cout << "       Energy: " << m_dParticleEnergy << G4endl;
+            G4cout << "     Position: " << m_hParticlePosition << G4endl;
+            G4cout << "    Direction: " << m_hParticleMomentumDirection << G4endl;
+            G4cout << " NumberOfParticlesToBeGenerated: " << m_iNumberOfParticlesToBeGenerated << G4endl;
+        }
 
-	if(m_iVerbosityLevel >= 2)
-		G4cout << "Creating primaries and assigning to vertex" << G4endl;
-	// create new primaries and set them to the vertex
-	G4double mass = m_pParticleDefinition->GetPDGMass();
-	G4double energy = m_dParticleEnergy + mass;
-	G4double pmom = std::sqrt(energy * energy - mass * mass);
-	G4double px = pmom * m_hParticleMomentumDirection.x();
-	G4double py = pmom * m_hParticleMomentumDirection.y();
-	G4double pz = pmom * m_hParticleMomentumDirection.z();
-
-	if(m_iVerbosityLevel >= 1)
-	{
-		G4cout << "Particle name: " << m_pParticleDefinition->GetParticleName() << G4endl;
-		G4cout << "       Energy: " << m_dParticleEnergy << G4endl;
-		G4cout << "     Position: " << m_hParticlePosition << G4endl;
-		G4cout << "    Direction: " << m_hParticleMomentumDirection << G4endl;
-		G4cout << " NumberOfParticlesToBeGenerated: " << m_iNumberOfParticlesToBeGenerated << G4endl;
-	}
-
-	for(G4int i = 0; i < m_iNumberOfParticlesToBeGenerated; i++)
-	{
 		G4PrimaryParticle *particle = new G4PrimaryParticle(m_pParticleDefinition, px, py, pz);
 		particle->SetMass(mass);
 		particle->SetCharge(m_dParticleCharge);
