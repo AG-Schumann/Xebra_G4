@@ -30,7 +30,7 @@ p_Mesh_Transparency_list = [0.89770509]
 #p_Mesh_Transparency_list = [0.8, 0.825, 0.85, 0.875, 0.93, 0.95, 0.97, 0.999]
 
 ## Number of events to be simulated
-p_EventCount = 1e4
+p_EventCount = 1e5
 
 ## Signal region i.e. S1 or S2
 p_SignalRegion = "S2" # 'S1' or 'S2'
@@ -132,16 +132,16 @@ for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
             
             
             # Name of output ROOT file
-            #filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+".root"
+            #filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)
             
             if p_writeEmpty == 'false':
-                filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_writeEmptyFalse.root"
+                filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_writeEmptyFalse"
                 if p_NumberOfParticles > 1:
-                    filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_writeEmptyFalse_nop_"+"{:.1e}".format(p_NumberOfParticles)+".root"
+                    filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_writeEmptyFalse_nop_"+"{:.1e}".format(p_NumberOfParticles)
             else:
-                filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+".root"
+                filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)
                 if p_NumberOfParticles > 1:
-                    filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_nop_"+"{:.1e}".format(p_NumberOfParticles)+".root"
+                    filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_nop_"+"{:.1e}".format(p_NumberOfParticles)
             
             # Create outputs folder
             os.makedirs("./outputs", exist_ok=True)
