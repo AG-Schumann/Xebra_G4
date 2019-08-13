@@ -33,13 +33,17 @@ p_Mesh_Transparency_list = [0.89770509]
 p_EventCount = 1e5
 
 ## Signal region i.e. S1 or S2
-p_SignalRegion = "S2" # 'S1' or 'S2'
+p_SignalRegion = "S1" # 'S1' or 'S2'
 
 ## Spacer 3 in mm
 p_PMTGap = 4.5
 
+## Directional ('direction' -> 'up' or 'down') or isotropic ('iso')
+p_angtype = 'iso'
+#p_direction = 'up'
+
 ## Write empty events 'true' or 'false'
-p_writeEmpty = 'false'
+p_writeEmpty = 'true'
 
 ## Number of particles generated in one event
 #p_NumberOfParticles = 1
@@ -92,7 +96,14 @@ for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
             f.write('\n')
             f.write('#################\n')
             f.write('# gun\n')
-            f.write('/xebra/gun/angtype iso\n')
+            if p_angtype == 'direction':
+                f.write('/xebra/gun/angtype direction\n')
+                if p_direction == 'up':
+                    f.write('/xebra/gun/direction  0 0 1\n')
+                elif p_direction == 'down':
+                    f.write('/xebra/gun/direction  0 0 -1\n')
+            else:
+                f.write('/xebra/gun/angtype iso\n')
             f.write('/xebra/gun/type    Volume \n')
             f.write('/xebra/gun/shape   Cylinder\n')
             f.write('/xebra/gun/numberofparticles '+str(p_NumberOfParticles)+'\n')
@@ -143,12 +154,15 @@ for p_LXe_AbsorptionLenght in p_LXe_AbsorptionLenght_list:
                 if p_NumberOfParticles > 1:
                     filename = "optPhot_"+p_SignalRegion+"_"+"{:.1e}".format(p_EventCount)+"_pmtGap"+str(p_PMTGap)+"_RPTFE"+str(p_PTFE_Reflectivity)+"_LXeAbs"+str(p_LXe_AbsorptionLenght)+"_Tmesh"+str(p_Mesh_Transparency)+"_nop_"+"{:.1e}".format(p_NumberOfParticles)
             
+            if p_angtype == 'direction':
+                filename = filename + '_' + p_direction
+            
             # Create outputs folder
             os.makedirs("./outputs", exist_ok=True)
             
             # Execute macro
-            #os.system("./automated_runs.sh %i %s"%(int(p_EventCount), filename))
-            os.system("sbatch -o /sc/userdata/abismark/job.out automated_runs_pcfr31.sh %i %s"%(int(p_EventCount), filename))
+            os.system("./automated_runs.sh %i %s"%(int(p_EventCount), filename))
+            #os.system("sbatch -o /sc/userdata/abismark/job.out automated_runs_pcfr31.sh %i %s"%(int(p_EventCount), filename))
             
             # Print feedback in terminal
             sys.stdout.write(filename+" successfully simulated.\n")
