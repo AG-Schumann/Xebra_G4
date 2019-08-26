@@ -1,5 +1,5 @@
 #################
-# Macro to simulate external radioactive point sources for a dual phase setup
+# Macro to simulate external radioactive point sources
 # by Alex
 #################
 
@@ -33,7 +33,7 @@
 /xebra/gun/type    Point
 
 #################
-# place inside sample tube assuming that centered in z-ccordinate wrt to active volume
+# place inside sample tube assuming that centered in z-coordinate wrt to active volume
 ## position centered in sample tube
 /xebra/gun/center 0. -122. -35.75 mm
 ## position centered in LXe outside of reflector
@@ -44,7 +44,7 @@
 /xebra/gun/energy 0 keV
 /xebra/gun/particle ion
 
-# for 137Cs
+# for Cs137
 /xebra/gun/ion 55 137 0 0
 
 # for Co57
