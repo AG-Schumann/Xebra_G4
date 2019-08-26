@@ -30,7 +30,7 @@ XebraStackingAction::ClassifyNewTrack(const G4Track *pTrack)
 
 	if(pTrack->GetDefinition()->GetParticleType() == "nucleus" && !pTrack->GetDefinition()->GetPDGStable())
 	{
-		if(pTrack->GetParentID() > 0 && pTrack->GetCreatorProcess()->GetProcessName() == "RadioactiveDecay")
+		if(pTrack->GetParentID() > 0 && pTrack->GetCreatorProcess()->GetProcessName() == "RadioactiveDecay" && pTrack->GetDefinition()->GetPDGLifeTime()/ns > 10.)
 			hTrackClassification = fPostpone;
 	}
 

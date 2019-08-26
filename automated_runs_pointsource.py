@@ -14,11 +14,11 @@ Execute with "python3 automated_runs_pointsource.py" inside the Xebra_G4 directo
 ##### Input parameters #####
 
 ## Number of events to be simulated
-p_EventCount = 1e3
+p_EventCount = 1e5
 
 ## Particle type
 ## Select from: 'Cs137', 'Co57', 'Co60', 'K40', 'U238->Ra226', 'Ar110m', 'Rb83->Kr83', 'Kr85'
-p_ParticleType_list = ['Cs137']
+p_ParticleType_list = ['Cs137', 'Co57', 'Co60']
 
 ## Source position
 ## place inside sample tube assuming that centered in z-coordinate wrt to active volume
