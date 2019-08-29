@@ -15,6 +15,9 @@
 
 /Xe/detector/setLXeRefractionIndex 1.63
 
+/Xe/detector/setLXeMeshTransparency 0.89770509
+/Xe/detector/setGXeMeshTransparency 0.89770509
+
 #################
 # verbosity
 /control/verbose 0
@@ -32,6 +35,7 @@
 /xebra/gun/angtype iso
 /xebra/gun/type    Volume  
 /xebra/gun/shape   Cylinder
+/xebra/gun/numberofparticles 1
 
 #################
 # only the active volume (z: 0<>-71.5|r: 35)
@@ -57,5 +61,5 @@
 
 ##################
 # tree Filling options
-/run/writeEmpty true
+/run/writeEmpty false
 
