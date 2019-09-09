@@ -23,6 +23,8 @@ p_ParticleType_list = ['Cs137', 'Co57', 'Co60']
 ## Source position
 ## place inside sample tube assuming that centered in z-coordinate wrt to active volume
 p_SourcePosition_list = ['0. -122. -35.75 mm']
+## place outside outer cryostat assuming that centered in z-coordinate wrt to active volume
+#p_SourcePosition_list = ['250. 0. -35.75 mm']
 ## position centered in LXe outside of reflector
 #p_SourcePosition_list = ['0. -45. -35.75 mm']
 ## other

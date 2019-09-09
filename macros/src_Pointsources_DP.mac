@@ -36,6 +36,8 @@
 # place inside sample tube assuming that centered in z-coordinate wrt to active volume
 ## position centered in sample tube
 /xebra/gun/center 0. -122. -35.75 mm
+## position outside outer cryostat
+#/xebra/gun/center 250. 0. -35.75 mm
 ## position centered in LXe outside of reflector
 #/xebra/gun/center 0. -45. -35.75 mm
 
