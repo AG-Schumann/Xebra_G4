@@ -186,8 +186,6 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 
-G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;
-
 Int_t Save_PMT0_Body = 1;
 	if (Save_PMT0_Body){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT0_Body") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
@@ -201,6 +199,8 @@ Int_t Save_PMT0_Body = 1;
 				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
 		}
 	}
+	
+//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;
 
 /*
 Legend flags:
