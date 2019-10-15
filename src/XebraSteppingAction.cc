@@ -44,66 +44,180 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 							aStep->GetPostStepPoint()->GetMomentum().y()/MomModulo , 
 							aStep->GetPostStepPoint()->GetMomentum().z()/MomModulo );
         
-  Int_t SaveTopPmt = 0; // ToDo: experiment with this flag to see if top pmts are hit
-	if (SaveTopPmt){    
-		if(particle="opticalphoton" && aStep->GetTrack()->GetVolume()->GetName()=="PMT_R8520_Photocathode"){
-				myAnalysisManager->FillParticleInSave(3,
+
+
+  Int_t Save_PMT0_Photocathode = 1;
+	if (Save_PMT0_Photocathode){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT0_Photocathode") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(1,
 									particlePDGcode,
 									aStep->GetPostStepPoint()->GetPosition(),
-									//aStep->GetPostStepPoint()->GetMomentum(),
-									direction,
-									eP,
-									timeP,
-									trackID);      
-		}
-	}
-  
-  Int_t SaveBottomPmt = 0; // ToDo: experiment with this flag to see if top pmts are hit
-	if (SaveBottomPmt){ 
-		if(particle="opticalphoton" && aStep->GetTrack()->GetVolume()->GetName()=="PMT_R11410_Photocathode"){
-				myAnalysisManager->FillParticleInSave(4,
-									particlePDGcode,
-									aStep->GetPostStepPoint()->GetPosition(),
-									//aStep->GetPostStepPoint()->GetMomentum(),
-									direction,
-									eP,
-									timeP,
-									trackID);      
-		}
-	}
-        
-	Int_t SaveCryo = 0;
-	if (SaveCryo){
-		// Get information when a particle cross the whole shield and hit the external part of the outer cryostat
-		if(particle!="opticalphoton" &&
-		aStep->GetTrack()->GetVolume()->GetName()=="Water" &&    // this is for the Water shield
-		aStep->GetTrack()->GetNextVolume()->GetName()=="OuterCryostat" ){
-			myAnalysisManager->FillParticleInSave(1, // 1==Particle inside the shield, hittin gthe outer cryo from outside
-							  particlePDGcode,
-							  aStep->GetPostStepPoint()->GetPosition(),
-							  //aStep->GetPostStepPoint()->GetMomentum(),
-							  direction,
-							  eP,
-							  timeP,
-							  trackID);
-                              //aStep->GetTrack()->SetTrackStatus(fStopAndKill);
-		}
-	}
-        
-	Int_t SaveCapture = 0;
-	if (SaveCapture){
-	
-		if(trackID==1 && particle!="neutron"){
-			myAnalysisManager->FillParticleInSave(2, // 2==Primary particle is not a neutron, but a secondary particle postponed from event track.
-									particlePDGcode,
-									aStep->GetPostStepPoint()->GetPosition(),
-									//aStep->GetPostStepPoint()->GetMomentum(),
 									direction,
 									eP,
 									timeP,
 									trackID);
-		} 
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_PMT_R8520_Photocathode = 1;
+	if (Save_PMT_R8520_Photocathode){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT_R8520_Photocathode") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(2,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_SS_gate_mesh = 1;
+	if (Save_TPC_SS_gate_mesh){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_gate_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(3,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_SS_cathode_mesh = 1;
+	if (Save_TPC_SS_cathode_mesh){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_cathode_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(4,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_SS_anode_mesh = 1;
+	if (Save_TPC_SS_anode_mesh){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_anode_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(5,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_SS_TopMesh_mesh = 1;
+	if (Save_TPC_SS_TopMesh_mesh){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_TopMesh_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(6,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_LXe = 1;
+	if (Save_LXe){ 
+		if((particle=="opticalphoton") && ((((aStep->GetTrack()->GetNextVolume()->GetName()=="LXe_ActiveVolume")||(aStep->GetTrack()->GetNextVolume()->GetName()=="LXe_extra_filling"))||(aStep->GetTrack()->GetNextVolume()->GetName()=="LXe_TPC")) && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
+		myAnalysisManager->FillParticleInSave(7,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_PTFE_reflector = 1;
+	if (Save_TPC_PTFE_reflector){ 
+		if((particle=="opticalphoton") && (((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_reflector_LXe")||(aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_reflector_GXe")) && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
+		myAnalysisManager->FillParticleInSave(8,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_PTFE_TopPMTHolder = 1;
+	if (Save_TPC_PTFE_TopPMTHolder){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_TopPMTHolder") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
+		myAnalysisManager->FillParticleInSave(9,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+	
+	Int_t Save_TPC_PTFE_spacer = 1;
+	if (Save_TPC_PTFE_spacer){ 
+		if((particle=="opticalphoton") && ((((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_spacer1")||(aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_spacer2"))||(aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_spacer3")) && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
+		myAnalysisManager->FillParticleInSave(10,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
 
-    }
+G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;
+
+Int_t Save_PMT0_Body = 1;
+	if (Save_PMT0_Body){ 
+		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT0_Body") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
+		myAnalysisManager->FillParticleInSave(11,
+									particlePDGcode,
+									aStep->GetPostStepPoint()->GetPosition(),
+									direction,
+									eP,
+									timeP,
+									trackID);
+				//G4cout << " Process " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() <<" in " << aStep->GetTrack()->GetNextVolume()->GetName() << G4endl;     
+		}
+	}
+
+/*
+Legend flags:
+
+ 1  PMT0_Photocathode
+ 2  PMT_R8520_Photocathode
+ 3  TPC_SS_gate_mesh
+ 4  TPC_SS_cathode_mesh
+ 5  TPC_SS_anode_mesh
+ 6  TPC_SS_TopMesh_mesh
+ 7  LXe (LXe_ActiveVolume / LXe_extra_filling / LXe_TPC)
+ 8  TPC_PTFE_reflector
+ 9  TPC_PTFE_TopPMTHolder
+10  TPC_PTFE_spacer
+11  PMT0_Body // usually directly after Transportation in PMT0_Window
+
+*/
+
 
 }
