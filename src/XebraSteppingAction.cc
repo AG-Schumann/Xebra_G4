@@ -46,7 +46,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
         
 
 
-  Int_t Save_PMT0_Photocathode = 1;
+  Int_t Save_PMT0_Photocathode = 0;
 	if (Save_PMT0_Photocathode){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT0_Photocathode") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(1,
@@ -60,7 +60,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_PMT_R8520_Photocathode = 1;
+	Int_t Save_PMT_R8520_Photocathode = 0;
 	if (Save_PMT_R8520_Photocathode){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT_R8520_Photocathode") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(2,
@@ -74,7 +74,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_SS_gate_mesh = 1;
+	Int_t Save_TPC_SS_gate_mesh = 0;
 	if (Save_TPC_SS_gate_mesh){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_gate_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(3,
@@ -88,7 +88,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_SS_cathode_mesh = 1;
+	Int_t Save_TPC_SS_cathode_mesh = 0;
 	if (Save_TPC_SS_cathode_mesh){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_cathode_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(4,
@@ -102,7 +102,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_SS_anode_mesh = 1;
+	Int_t Save_TPC_SS_anode_mesh = 0;
 	if (Save_TPC_SS_anode_mesh){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_anode_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(5,
@@ -116,7 +116,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_SS_TopMesh_mesh = 1;
+	Int_t Save_TPC_SS_TopMesh_mesh = 0;
 	if (Save_TPC_SS_TopMesh_mesh){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_SS_TopMesh_mesh") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(6,
@@ -130,7 +130,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_LXe = 1;
+	Int_t Save_LXe = 0;
 	if (Save_LXe){ 
 		if((particle=="opticalphoton") && ((((aStep->GetTrack()->GetNextVolume()->GetName()=="LXe_ActiveVolume")||(aStep->GetTrack()->GetNextVolume()->GetName()=="LXe_extra_filling"))||(aStep->GetTrack()->GetNextVolume()->GetName()=="LXe_TPC")) && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="OpAbsorption"))){
 		myAnalysisManager->FillParticleInSave(7,
@@ -144,7 +144,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_PTFE_reflector = 1;
+	Int_t Save_TPC_PTFE_reflector = 0;
 	if (Save_TPC_PTFE_reflector){ 
 		if((particle=="opticalphoton") && (((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_reflector_LXe")||(aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_reflector_GXe")) && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
 		myAnalysisManager->FillParticleInSave(8,
@@ -158,7 +158,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_PTFE_TopPMTHolder = 1;
+	Int_t Save_TPC_PTFE_TopPMTHolder = 0;
 	if (Save_TPC_PTFE_TopPMTHolder){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_TopPMTHolder") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
 		myAnalysisManager->FillParticleInSave(9,
@@ -172,7 +172,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 	
-	Int_t Save_TPC_PTFE_spacer = 1;
+	Int_t Save_TPC_PTFE_spacer = 0;
 	if (Save_TPC_PTFE_spacer){ 
 		if((particle=="opticalphoton") && ((((aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_spacer1")||(aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_spacer2"))||(aStep->GetTrack()->GetNextVolume()->GetName()=="TPC_PTFE_spacer3")) && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
 		myAnalysisManager->FillParticleInSave(10,
@@ -186,7 +186,7 @@ void XebraSteppingAction::UserSteppingAction(const G4Step* aStep)
 		}
 	}
 
-Int_t Save_PMT0_Body = 1;
+Int_t Save_PMT0_Body = 0;
 	if (Save_PMT0_Body){ 
 		if((particle=="opticalphoton") && ((aStep->GetTrack()->GetNextVolume()->GetName()=="PMT0_Body") && (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName()=="Transportation")) && (aStep->GetTrack()->GetTrackStatus()==fStopAndKill)){
 		myAnalysisManager->FillParticleInSave(11,
