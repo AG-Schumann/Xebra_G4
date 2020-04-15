@@ -1,0 +1,53 @@
+#################
+# Macro to simulate neutrons from AmBe
+# by Alex
+#################
+
+##################
+# optical properties
+/Xe/detector/setTeflonReflectivity 0.95
+/Xe/detector/setGXeTeflonReflectivity 0.95
+
+/Xe/detector/setLXeAbsorbtionLength 100 cm 
+/Xe/detector/setGXeAbsorbtionLength 100 m 
+
+/Xe/detector/setLXeRayScatterLength 30 cm
+
+/Xe/detector/setLXeRefractionIndex 1.63
+
+#################
+# verbosity
+/control/verbose 0
+/run/verbose 0
+/event/verbose 0
+/tracking/verbose 0
+/xebra/gun/verbose 0
+
+#################
+# seed
+/run/random/setRandomSeed 0
+
+#################
+# gun
+/xebra/gun/angtype iso
+/xebra/gun/type    Point
+
+#################
+## position outside outer cryostat assuming that centered in z-coordinate wrt to active volume
+/xebra/gun/center 250. 0. -35.75 mm
+
+#################
+## particle type + energy spectrum
+/xebra/gun/energytype Spectrum
+/xebra/gun/energyspectrum ./macros/spectra/AmBe_ISO.dat
+/xebra/gun/particle neutron
+
+##################
+# scintillation processes in the LXe
+/Xe/detector/setLXeScintillation false
+#/Xe/detector/setLXeScintillation true
+
+##################
+# tree Filling options
+/run/writeEmpty false
+
